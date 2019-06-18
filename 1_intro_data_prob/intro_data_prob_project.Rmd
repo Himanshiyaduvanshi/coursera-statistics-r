@@ -32,6 +32,16 @@ load("brfss2013.RData")
 
 ## Part 1: Data
 
+Describe how the observations in the sample are collected, and the implications of this data collection method on the scope of inference (generalizability / causality).
+
+The **Behavioral Risk Factor Surveillance System (BRFSS)** is an ongoing system designed to measure behavioral risk factors for the adult population (> 18 years old) in the US. It collects state data about U.S. residents regarding their health-related risk behaviors, chronic health conditions, and use of preventive services through telephone surveys.
+
+Initiated in 1984, BRFSS collected surveillance data on risk behaviors through monthly telephone interviews with 15 states; by 2001, 50 states, the District of Columbia, Puerto Rico, Guam, and the US Virgin Islands were participating in the BRFSS. Today, all 50 states, the District of Columbia, Puerto Rico, and Guam collect data annually and American Samoa, Federated States of Micronesia, and Palau collect survey data over a limited point- in-time** (usually one to three months).
+
+generabizability - random sampling??
+reservations?
+
+causality - random assignment?
 
 * * *
 
