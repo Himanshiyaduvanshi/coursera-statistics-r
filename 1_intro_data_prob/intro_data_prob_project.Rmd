@@ -68,24 +68,16 @@ Is clear why this is of interest to the author / audience (1 pt)
 
 **Research quesion 1:**
 
-drvisits: Doctor Visits Past 12 Months
+Relationship and health? 
+different sex
+different age
 
-poorhlth: Poor Physical Or Mental Health
-
-sleptim1: How Much Time Do You Sleep
-On average, how many hours of sleep do you get in a 24-hour period? 
-
-income2: Income Level
-Is your annual household income from all sources
-
+marital: Marital Status
 menthlth: Number Of Days Mental Health Not Good
-Now thinking about your mental health, which includes stress, depression, and problems
-with emotions, for how many days during the past 30 days was your mental health not
-good?
-
 physhlth: Number Of Days Physical Health Not Good
 
 sex: Respondents Sex
+X_age_g: Imputed Age In Six Groups
 
 **Research quesion 2:**
 
@@ -102,26 +94,35 @@ _Perform exploratory data analysis (EDA) that addresses each of the three resear
 
 ```{r}
 brfss2013 %>% 
-  filter(!is.na(income2)) %>% 
-  group_by(income2) %>% 
-  summarise(mean_menthlth = mean(menthlth, na.rm=T))
+  filter(!is.na(marital), !is.na(X_age_g)) %>% 
+  group_by(marital) %>% 
+  summarize(mean_men = mean(menthlth, na.rm=T), mean_phy = mean(physhlth, na.rm=T)) %>%
+  tidyr::gather(key, value, -marital) %>% 
+  ggplot() + geom_col(aes(marital, value, fill=key), position = 'dodge') +
+  scale_fill_brewer(palette = 'Set2')
 ```
-
 
 ```{r}
 brfss2013 %>% 
-  group_by(menthlth) %>% 
-  summarise(mean_sleptim1 = mean(sleptim1, na.rm=T))
+  filter(!is.na(marital), !is.na(X_age_g)) %>% 
+  group_by(marital, sex) %>% 
+  summarize(mean_men = mean(menthlth, na.rm=T), mean_phy = mean(physhlth, na.rm=T)) %>%
+  tidyr::gather(key, value, -marital, -sex) %>% 
+  ggplot() + geom_col(aes(marital, value, fill=key), position = 'dodge') +
+  facet_wrap(~sex) +
+  scale_fill_brewer(palette = 'Set2')
 ```
-
 
 ```{r}
 brfss2013 %>% 
-  filter(!is.na(income2)) %>% 
-  group_by(income2) %>% 
-  summarise(mean_sleptim1 = mean(sleptim1, na.rm=T))
+  filter(!is.na(marital), !is.na(X_age_g)) %>% 
+  group_by(marital, X_age_g) %>% 
+  summarize(mean_men = mean(menthlth, na.rm=T), mean_phy = mean(physhlth, na.rm=T)) %>%
+  tidyr::gather(key, value, -marital, -X_age_g) %>% 
+  ggplot() + geom_col(aes(marital, value, fill=key), position = 'dodge') +
+  facet_wrap(~X_age_g) +
+  scale_fill_brewer(palette = 'Set2')
 ```
-
 
 
 **Research quesion 2:**

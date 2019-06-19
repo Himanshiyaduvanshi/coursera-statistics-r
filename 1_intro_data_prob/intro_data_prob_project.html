@@ -476,34 +476,30 @@ $(document).ready(function () {
 <div id="part-1-data" class="section level2">
 <h2>Part 1: Data</h2>
 <p><em>Describe how the observations in the sample are collected, and the implications of this data collection method on the scope of inference (generalizability / causality).</em></p>
-<div id="overview" class="section level3">
-<h3>Overview</h3>
+<p><strong>Overview</strong></p>
 <p>The Behavioral Risk Factor Surveillance System (BRFSS) is an ongoing system designed to measure behavioral risk factors for the adult population (&gt; 18 years old) in the US. It collects state data about U.S. residents regarding their health-related risk behaviors, chronic health conditions, and use of preventive services through telephone surveys. Initiated in 1984, BRFSS collected surveillance data on risk behaviors through monthly telephone interviews with 15 states. BRFSS now collects data in all 50 states as well as the District of Columbia and three U.S. territories. BRFSS completes more than 400,000 adult interviews each year.</p>
-</div>
-<div id="survey-method" class="section level3">
-<h3>Survey Method</h3>
+<p><strong>Survey Method</strong></p>
 <p>The data is collected through telephone surveys. The surveys are conducted using Random Digit Dialing (RDD) techniques on both landlines and cell phones. RDD is a method for selecting people for involvement in telephone statistical surveys by generating telephone numbers at random.</p>
-</div>
-<div id="generalizability" class="section level3">
-<h3>Generalizability</h3>
+<p><strong>Generalizability</strong></p>
 <p>Regarding the survey method, data is collected through random sampling and hence can be generalized to the entire population. However, certain issues suggested potential bias of the results.</p>
 <p>Assuming the US has a high telephone-ownership rate, when phone numbers are generated at random, each case in the population has an equal chance of being included and there is no implied connection between the cases in the sample. Hence, the data collected is regarded as random sample and it is believed to be representative of the population. Observational results from the sample can be generalized to the population.</p>
 <p>Nevertheless, under a few circumstance, it is unclear whether the results are representative of the entire population. First, there would be bias introduced by non-responders. Non-response bias can be a problem if responders differ from non-responders for the measured variables. For example, non-responders may not have been contacted because they work multiple minimum-wage jobs. There would also be bias of voluntary responses, as people more interested in the subject tend to pay more attention and answer the questions. Further, it may occur that participants do not honestly answer some of the most sensitive questions about their health status, which carries the risk of a response bias.</p>
-</div>
-<div id="causality" class="section level3">
-<h3>Causality</h3>
+<p><strong>Causality</strong></p>
 <p>Inference of a causal connection can only be done through experiment with random assignment. There is no evidence that random assignment is used with reference to the survey method. Hence, the data is not applicable to causal inference.</p>
 <hr />
-</div>
 </div>
 <div id="part-2-research-questions" class="section level2">
 <h2>Part 2: Research questions</h2>
 <p><em>Come up with at least three research questions that you want to answer using these data. You should phrase your research questions in a way that matches up with the scope of inference your dataset allows for. Make sure that at least two of these questions involve at least three variables. You are welcomed to create new variables based on existing ones. With each question include a brief discussion (1-2 sentences) as to why this question is of interest to you and/or your audience.</em></p>
 <p>3 pts for each research question (x 3) non-causal way (1 pt) Should be well defined / not vague (1 pt) Is clear why this is of interest to the author / audience (1 pt) 2 pts for at least two of the questions involving three variables</p>
 <p><strong>Research quesion 1:</strong></p>
+<p>drvisits: Doctor Visits Past 12 Months</p>
+<p>poorhlth: Poor Physical Or Mental Health</p>
 <p>sleptim1: How Much Time Do You Sleep On average, how many hours of sleep do you get in a 24-hour period?</p>
 <p>income2: Income Level Is your annual household income from all sources</p>
 <p>menthlth: Number Of Days Mental Health Not Good Now thinking about your mental health, which includes stress, depression, and problems with emotions, for how many days during the past 30 days was your mental health not good?</p>
+<p>physhlth: Number Of Days Physical Health Not Good</p>
+<p>sex: Respondents Sex</p>
 <p><strong>Research quesion 2:</strong></p>
 <p><strong>Research quesion 3:</strong></p>
 <hr />
@@ -511,10 +507,9 @@ $(document).ready(function () {
 <div id="part-3-exploratory-data-analysis" class="section level2">
 <h2>Part 3: Exploratory data analysis</h2>
 <p><em>Perform exploratory data analysis (EDA) that addresses each of the three research questions you outlined above. Your EDA should contain numerical summaries and visualizations. Each R output and plot should be accompanied by a brief interpretation.</em></p>
-<p>NOTE: Insert code chunks as needed by clicking on the “Insert a new code chunk” button (green button with orange arrow) above. Make sure that your code is visible in the project you submit. Delete this note when before you submit your work.</p>
 <p><strong>Research quesion 1:</strong></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">brfss2013 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(income2)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(income2)) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="st">  </span><span class="kw">group_by</span>(income2) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_menthlth =</span> <span class="kw">mean</span>(menthlth, <span class="dt">na.rm=</span>T))</a></code></pre></div>
 <pre><code>## # A tibble: 8 x 2
