@@ -32,7 +32,7 @@ load("brfss2013.RData")
 
 ## Part 1: Data
 
-**Describe how the observations in the sample are collected, and the implications of this data collection method on the scope of inference (generalizability / causality).**
+_Describe how the observations in the sample are collected, and the implications of this data collection method on the scope of inference (generalizability / causality)._
 
 ### Overview
 
@@ -44,21 +44,26 @@ The data is collected through telephone surveys. The surveys are conducted using
 
 ### Generalizability
 
-Regarding the survey method, data is collected through random sampling and hence can be generalized to the entire population. However, if non-response rate is high, the results would be bias.
+Regarding the survey method, data is collected through random sampling and hence can be generalized to the entire population. However, certain issues suggested potential bias of the results.
 
 Assuming the US has a high telephone-ownership rate, when phone numbers are generated at random, each case in the population has an equal chance of being included and there is no implied connection between the cases in the sample. Hence, the data collected is regarded as random sample and it is believed to be representative of the population. Observational results from the sample can be generalized to the population.
 
-Nevertheless, an important consideration in random digit dialing surveys is bias introduced by non-responders. Non-response bias can be a problem if responders differ from non-responders for the measured variables. For example, non-responders may not have been contacted because they work multiple minimum-wage jobs. Under this circumstance, it is unclear whether the results are representative of the entire population.
+Nevertheless, under a few circumstance, it is unclear whether the results are representative of the entire population. First, there would be bias introduced by non-responders. Non-response bias can be a problem if responders differ from non-responders for the measured variables. For example, non-responders may not have been contacted because they work multiple minimum-wage jobs. There would also be bias of voluntary responses, as people more interested in the subject tend to pay more attention and answer the questions. Further, it may occur that participants do not honestly answer some of the most sensitive questions about their health status, which carries the risk of a response bias.
 
 ### Causality
 
-Inference of a causal connection can only be done through experiment with random assignment. There is no evidence that random assignment is used with reference to the survey method. Hence, the data is not applicable to causation studies.
+Inference of a causal connection can only be done through experiment with random assignment. There is no evidence that random assignment is used with reference to the survey method. Hence, the data is not applicable to causal inference.
 
 * * *
 
 ## Part 2: Research questions
 
-**Come up with at least three research questions that you want to answer using these data. You should phrase your research questions in a way that matches up with the scope of inference your dataset allows for. Make sure that at least two of these questions involve at least three variables. You are welcomed to create new variables based on existing ones. With each question include a brief discussion (1-2 sentences) as to why this question is of interest to you and/or your audience.**
+_Come up with at least three research questions that you want to answer using these data. You should phrase your research questions in a way that matches up with the scope of inference your dataset allows for. Make sure that at least two of these questions involve at least three variables. You are welcomed to create new variables based on existing ones. With each question include a brief discussion (1-2 sentences) as to why this question is of interest to you and/or your audience._
+
+3 pts for each research question (x 3)non-causal way (1 pt)
+Should be well defined / not vague (1 pt)
+Is clear why this is of interest to the author / audience (1 pt)
+2 pts for at least two of the questions involving three variables
 
 **Research quesion 1:**
 
@@ -71,7 +76,7 @@ Inference of a causal connection can only be done through experiment with random
 
 ## Part 3: Exploratory data analysis
 
-**Perform exploratory data analysis (EDA) that addresses each of the three research questions you outlined above. Your EDA should contain numerical summaries and visualizations. Each R output and plot should be accompanied by a brief interpretation.**
+_Perform exploratory data analysis (EDA) that addresses each of the three research questions you outlined above. Your EDA should contain numerical summaries and visualizations. Each R output and plot should be accompanied by a brief interpretation._
 
 NOTE: Insert code chunks as needed by clicking on the "Insert a new code chunk" 
 button (green button with orange arrow) above. Make sure that your code is visible
