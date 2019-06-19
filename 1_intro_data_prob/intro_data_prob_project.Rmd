@@ -34,15 +34,15 @@ load("brfss2013.RData")
 
 _Describe how the observations in the sample are collected, and the implications of this data collection method on the scope of inference (generalizability / causality)._
 
-### Overview
+**Overview**
 
 The Behavioral Risk Factor Surveillance System (BRFSS) is an ongoing system designed to measure behavioral risk factors for the adult population (> 18 years old) in the US. It collects state data about U.S. residents regarding their health-related risk behaviors, chronic health conditions, and use of preventive services through telephone surveys. Initiated in 1984, BRFSS collected surveillance data on risk behaviors through monthly telephone interviews with 15 states. BRFSS now collects data in all 50 states as well as the District of Columbia and three U.S. territories. BRFSS completes more than 400,000 adult interviews each year.
 
-### Survey Method
+**Survey Method**
 
 The data is collected through telephone surveys. The surveys are conducted using Random Digit Dialing (RDD) techniques on both landlines and cell phones. RDD is a method for selecting people for involvement in telephone statistical surveys by generating telephone numbers at random. 
 
-### Generalizability
+**Generalizability**
 
 Regarding the survey method, data is collected through random sampling and hence can be generalized to the entire population. However, certain issues suggested potential bias of the results.
 
@@ -50,7 +50,7 @@ Assuming the US has a high telephone-ownership rate, when phone numbers are gene
 
 Nevertheless, under a few circumstance, it is unclear whether the results are representative of the entire population. First, there would be bias introduced by non-responders. Non-response bias can be a problem if responders differ from non-responders for the measured variables. For example, non-responders may not have been contacted because they work multiple minimum-wage jobs. There would also be bias of voluntary responses, as people more interested in the subject tend to pay more attention and answer the questions. Further, it may occur that participants do not honestly answer some of the most sensitive questions about their health status, which carries the risk of a response bias.
 
-### Causality
+**Causality**
 
 Inference of a causal connection can only be done through experiment with random assignment. There is no evidence that random assignment is used with reference to the survey method. Hence, the data is not applicable to causal inference.
 
@@ -68,6 +68,10 @@ Is clear why this is of interest to the author / audience (1 pt)
 
 **Research quesion 1:**
 
+drvisits: Doctor Visits Past 12 Months
+
+poorhlth: Poor Physical Or Mental Health
+
 sleptim1: How Much Time Do You Sleep
 On average, how many hours of sleep do you get in a 24-hour period? 
 
@@ -78,6 +82,10 @@ menthlth: Number Of Days Mental Health Not Good
 Now thinking about your mental health, which includes stress, depression, and problems
 with emotions, for how many days during the past 30 days was your mental health not
 good?
+
+physhlth: Number Of Days Physical Health Not Good
+
+sex: Respondents Sex
 
 **Research quesion 2:**
 
@@ -90,15 +98,11 @@ good?
 
 _Perform exploratory data analysis (EDA) that addresses each of the three research questions you outlined above. Your EDA should contain numerical summaries and visualizations. Each R output and plot should be accompanied by a brief interpretation._
 
-NOTE: Insert code chunks as needed by clicking on the "Insert a new code chunk" 
-button (green button with orange arrow) above. Make sure that your code is visible
-in the project you submit. Delete this note when before you submit your work.
-
 **Research quesion 1:**
 
 ```{r}
 brfss2013 %>% 
-    filter(!is.na(income2)) %>% 
+  filter(!is.na(income2)) %>% 
   group_by(income2) %>% 
   summarise(mean_menthlth = mean(menthlth, na.rm=T))
 ```
