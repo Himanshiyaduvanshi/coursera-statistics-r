@@ -60,12 +60,24 @@ Inference of a causal connection can only be done through experiment with random
 
 _Come up with at least three research questions that you want to answer using these data. You should phrase your research questions in a way that matches up with the scope of inference your dataset allows for. Make sure that at least two of these questions involve at least three variables. You are welcomed to create new variables based on existing ones. With each question include a brief discussion (1-2 sentences) as to why this question is of interest to you and/or your audience._
 
-3 pts for each research question (x 3)non-causal way (1 pt)
+3 pts for each research question (x 3)
+non-causal way (1 pt)
 Should be well defined / not vague (1 pt)
 Is clear why this is of interest to the author / audience (1 pt)
 2 pts for at least two of the questions involving three variables
 
 **Research quesion 1:**
+
+sleptim1: How Much Time Do You Sleep
+On average, how many hours of sleep do you get in a 24-hour period? 
+
+income2: Income Level
+Is your annual household income from all sources
+
+menthlth: Number Of Days Mental Health Not Good
+Now thinking about your mental health, which includes stress, depression, and problems
+with emotions, for how many days during the past 30 days was your mental health not
+good?
 
 **Research quesion 2:**
 
@@ -85,7 +97,25 @@ in the project you submit. Delete this note when before you submit your work.
 **Research quesion 1:**
 
 ```{r}
+brfss2013 %>% 
+    filter(!is.na(income2)) %>% 
+  group_by(income2) %>% 
+  summarise(mean_menthlth = mean(menthlth, na.rm=T))
+```
 
+
+```{r}
+brfss2013 %>% 
+  group_by(menthlth) %>% 
+  summarise(mean_sleptim1 = mean(sleptim1, na.rm=T))
+```
+
+
+```{r}
+brfss2013 %>% 
+  filter(!is.na(income2)) %>% 
+  group_by(income2) %>% 
+  summarise(mean_sleptim1 = mean(sleptim1, na.rm=T))
 ```
 
 
