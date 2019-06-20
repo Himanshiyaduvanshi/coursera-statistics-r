@@ -68,20 +68,27 @@ Is clear why this is of interest to the author / audience (1 pt)
 
 **Research quesion 1:**
 
-Relationship and health? 
-different sex
-different age
+age, sex, health
+
+
+**Research quesion 2:**
+
+physical activity, age, health
+
+_pacat1: Physical Activity Categories
+_paindx1: Physical Activity Index
+menthlth: Number Of Days Mental Health Not Good
+physhlth: Number Of Days Physical Health Not Good
+
+**Research quesion 3:**
+
+relationship, age, health
 
 marital: Marital Status
 menthlth: Number Of Days Mental Health Not Good
 physhlth: Number Of Days Physical Health Not Good
 
-sex: Respondents Sex
 X_age_g: Imputed Age In Six Groups
-
-**Research quesion 2:**
-
-**Research quesion 3:**
 
 
 * * *
@@ -105,17 +112,6 @@ brfss2013 %>%
 ```{r}
 brfss2013 %>% 
   filter(!is.na(marital), !is.na(X_age_g)) %>% 
-  group_by(marital, sex) %>% 
-  summarize(mean_men = mean(menthlth, na.rm=T), mean_phy = mean(physhlth, na.rm=T)) %>%
-  tidyr::gather(key, value, -marital, -sex) %>% 
-  ggplot() + geom_col(aes(marital, value, fill=key), position = 'dodge') +
-  facet_wrap(~sex) +
-  scale_fill_brewer(palette = 'Set2')
-```
-
-```{r}
-brfss2013 %>% 
-  filter(!is.na(marital), !is.na(X_age_g)) %>% 
   group_by(marital, X_age_g) %>% 
   summarize(mean_men = mean(menthlth, na.rm=T), mean_phy = mean(physhlth, na.rm=T)) %>%
   tidyr::gather(key, value, -marital, -X_age_g) %>% 
@@ -128,9 +124,35 @@ brfss2013 %>%
 **Research quesion 2:**
 
 ```{r}
-
+brfss2013 %>% 
+  filter(!is.na(marital), !is.na(X_age_g)) %>% 
+    group_by(marital, X_pacat1) %>% 
+    count() %>% 
+    group_by(marital) %>% 
+    mutate(freq = n/sum(n)) %>% 
+  ggplot(aes(marital, freq, fill=X_pacat1)) + geom_col()
 ```
 
+```{r}
+brfss2013 %>% 
+  filter(!is.na(X_pacat1), !is.na(X_age_g)) %>% 
+  group_by(X_pacat1) %>% 
+  summarize(mean_men = mean(menthlth, na.rm=T), mean_phy = mean(physhlth, na.rm=T)) %>%
+  tidyr::gather(key, value, -X_pacat1) %>% 
+  ggplot() + geom_col(aes(X_pacat1, value, fill=key), position = 'dodge') +
+  scale_fill_brewer(palette = 'Set2')
+```
+
+```{r}
+brfss2013 %>% 
+  filter(!is.na(X_pacat1), !is.na(X_age_g)) %>% 
+  group_by(X_pacat1, X_age_g) %>% 
+  summarize(mean_men = mean(menthlth, na.rm=T), mean_phy = mean(physhlth, na.rm=T)) %>%
+  tidyr::gather(key, value, -X_pacat1, -X_age_g) %>% 
+  ggplot() + geom_col(aes(X_pacat1, value, fill=key), position = 'dodge') +
+  facet_wrap(~X_age_g) +
+  scale_fill_brewer(palette = 'Set2')
+```
 
 
 **Research quesion 3:**
