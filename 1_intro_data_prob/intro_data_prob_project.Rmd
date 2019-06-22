@@ -195,7 +195,11 @@ data_1 %>%
   scale_fill_brewer(palette = 'Set2')
 ```
 
-Combining both gender and age effects, we observe that female at all ages has a higher probability of having mental disorder. Young females have the highest probability of mental disorder (0.504).
+Combining both gender and age effects, we observe that female at all ages has a higher probability of having mental disorder. Young female has the highest probability of mental disorder (0.504).
+
+#### Conclusion
+
+It is observed that both gender and age are not independent from mental health. Female has a higher probability to have mental disorder than male, and age is negatively related to the probability of having mental disorder. Among all, young female has the highest probability of having mental disorder.
 
 **Research question 2:**
 
