@@ -14,6 +14,7 @@ output:
 ```{r load-packages, message = FALSE}
 library(ggplot2)
 library(dplyr)
+library(knitr)
 ```
 
 ### Load data
@@ -56,32 +57,150 @@ Inference of a causal connection can only be done through experiment with random
 
 ## Part 2: Research questions
 
-**Research quesion 1:** 
+**Research Question 1** 
 
 Surveys found that women are more likely to have mental health problems than men, with young women at particularly high risk. In the society, there are often strong bias towards certain gender and age groups on mental issues. Are gender and age associated with mental health?
 
-**Research quesion 2:**
+**Research Question 2**
 
-Taking up exercise seems to reduce the risk of developing mental illness. It also seems to help in treating some mental health conditions. Does physical activities improve a person's mental health? How does it, in particular, associate with different psychological feelings like nervousness, hopelessness, restlessness, depression, hardship, and worthlessness?
+Relationship is considered to be correlated with health. Great marriage can bring better psychological health. An unsatisfying marriage may raise stress and worsen our well-being. How relationship status is associated with mental health? Do men and women behave differently to relationship effects?
 
-**Research quesion 3:**
+**Research Question 3**
 
-Relationship is considered to be correlated with health. Great marriage can bring better physical and psychological health. An unsatisfying marriage may raise stress and worsen our well-being. How relationship status is associated with both physical and mental health? Are there any difference of the association among different gender and age groups?
+Taking up exercise seems to reduce the risk of developing mental illness. It also seems to help in treating some mental health conditions. Does physical activities improve a person's mental health? How does the quantity and type of physical activities influence the results?
 
 
 * * *
 
 ## Part 3: Exploratory data analysis
 
-_Perform exploratory data analysis (EDA) that addresses each of the three research questions you outlined above. Your EDA should contain numerical summaries and visualizations. Each R output and plot should be accompanied by a brief interpretation._
+### Research Question 1
 
-**Research quesion 1:**
+_Are gender and age associated with mental health?_
+
+#### Data Preparation
+
+The variables we'll use in this analysis include:
+
+* `menthlth` — Number of days (during the past 30 days) mental health not good
+* `sex` — Respondent's sex
+* `age_group` (renamed from `X_age_g`) — Imputed age in six groups
+
+```{r}
+data_1 <- brfss2013 %>% 
+  rename(age_group = X_age_g) %>% 
+  select(menthlth, sex, age_group)
+
+kable(head(data_1))
+```
+
+First we clean our data by removing observations with missing values. For `menthlth`, since the survey question asked about the number of days of mental health not good in the past 30 days, 30 is the maximum value. Observations with unreasonable values are also removed.
+
+```{r}
+data_1 <- data_1 %>% 
+  filter(
+    !is.na(menthlth), !is.na(sex), !is.na(age_group),
+    menthlth <= 30
+  )
+```
+
+We also create a new variable as a binary indicator of whether the respondant has at least one day of mental issue in the pass 30 days from `menthlth`:
+
+* `mental_disorder` — More than 0 days of mental health not good
+
+```{r}
+data_1 <- data_1 %>% 
+  mutate(mental_disorder = as.numeric(menthlth > 0))
+```
+
+#### Data Analysis
+
+To get started, we compute the probabiliy of having mental disorders.
+
+```{r}
+mean(data_1$mental_disorder)
+```
+
+The probability of having mental disorders is 0.3. 
+
+If gender and age are independent of mental disorders, there should be no significant difference in the probability of mental disorder between different gender and age groups.
+
+```{r}
+data_1 %>% 
+  group_by(sex) %>% 
+  summarise(mental_disorder = mean(mental_disorder)) %>% 
+  ggplot(aes(x = sex, y = mental_disorder)) +
+  geom_col(aes(fill = sex)) +
+  geom_text(aes(label = round(mental_disorder, 3)), vjust = 1.5, color = 'white') +
+  geom_hline(
+    yintercept = mean(data_1$mental_disorder), 
+    color = 'gray58', size = .8, alpha = .8
+  ) +
+  annotate(
+    'text', x = .8, y = .32, color = 'gray58',
+    label = 'P(Mental Disorder) = 0.308'
+  ) +
+  labs(
+    title = "Probability of Mental Disorder by Gender",
+    x = "Gender", y = "Probability of Mental Disorder"
+  ) +
+  theme(legend.position = 'none') +
+  scale_fill_brewer(palette = 'Set2')
+```
+
+It is found that the probability of having mental disorder of female (0.344) is higher than male (0.256). This result shows some evidence that gender is not independent from mental disorder, and female has a higher probability of having mental problems.
+
+```{r}
+data_1 %>% 
+  group_by(age_group) %>% 
+  summarise(mental_disorder = mean(mental_disorder)) %>% 
+  ggplot(aes(x = age_group, y = mental_disorder)) +
+  geom_col(aes(fill = age_group)) + 
+  geom_text(aes(label = round(mental_disorder, 3)), vjust = 1.5, color = 'white') +
+  geom_hline(
+    yintercept = mean(data_1$mental_disorder), 
+    color = 'gray58', size = .7, alpha = .8
+  ) +
+  annotate(
+    'text', x = 5.5, y = .33, color = 'gray58',
+    label = 'P(Mental Disorder) = 0.308'
+  ) +
+  labs(
+    title = "Probability of Mental Disorder by Age Group",
+    x = "Age Group", y = "Probability of Mental Disorder"
+  ) +
+  theme(legend.position = 'none') +
+  scale_fill_brewer(palette = 'Set2')
+```
+
+Evidence also shows that age might not be independent from mental problems. Younger respondants have a higher probability of having mental disorder. The observation shows that when age increases, the probability of having mental disorder decreases. Age 18 to 24 respondants have the highest probability of mental disorder (0.447). Elderly respondants with age 65 or older have the lowest probability of mental disorder (0.203).
+
+```{r}
+data_1 %>% 
+  group_by(sex, age_group) %>% 
+  summarise(mental_disorder = mean(mental_disorder)) %>% 
+  ggplot(aes(x = sex, y = mental_disorder)) +
+  geom_col(aes(fill = sex)) + 
+  facet_wrap(~age_group) +
+  geom_text(aes(label = round(mental_disorder, 3)), vjust = 1.5, color = 'white') +
+  geom_hline(
+    yintercept = mean(data_1$mental_disorder), 
+    color = 'gray58', size = .7, alpha = .8
+  ) +
+  labs(
+    title = "Probability of Mental Disorder by Gender and Age",
+    x = "Gender", y = "Probability of Mental Disorder"
+  ) +
+  theme(legend.position = 'none') +
+  scale_fill_brewer(palette = 'Set2')
+```
+
+Combining both gender and age effects, we observe that female at all ages has a higher probability of having mental disorder. Young females have the highest probability of mental disorder (0.504).
+
+**Research question 2:**
 
 
-**Research quesion 2:**
-
-
-**Research quesion 3:**
+**Research question 3:**
 
 ```{r}
 
