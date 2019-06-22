@@ -64,7 +64,6 @@ Surveys found that women are more likely to have mental health problems than men
 
 Taking up exercise seems to reduce the risk of developing mental illness. It also seems to help in treating some mental health conditions. Does physical activities improve a person's mental health? How does it, in particular, associate with different psychological feelings like nervousness, hopelessness, restlessness, depression, hardship, and worthlessness?
 
-
 **Research quesion 3:**
 
 Relationship is considered to be correlated with health. Great marriage can bring better physical and psychological health. An unsatisfying marriage may raise stress and worsen our well-being. How relationship status is associated with both physical and mental health? Are there any difference of the association among different gender and age groups?
@@ -79,14 +78,7 @@ _Perform exploratory data analysis (EDA) that addresses each of the three resear
 **Research quesion 1:**
 
 
-
-
 **Research quesion 2:**
-
-```{r}
-
-```
-
 
 
 **Research quesion 3:**
