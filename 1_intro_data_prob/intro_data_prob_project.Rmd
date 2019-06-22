@@ -32,8 +32,6 @@ load("brfss2013.RData")
 
 ## Part 1: Data
 
-_Describe how the observations in the sample are collected, and the implications of this data collection method on the scope of inference (generalizability / causality)._
-
 **Overview**
 
 The Behavioral Risk Factor Surveillance System (BRFSS) is an ongoing system designed to measure behavioral risk factors for the adult population (> 18 years old) in the US. It collects state data about U.S. residents regarding their health-related risk behaviors, chronic health conditions, and use of preventive services through telephone surveys. Initiated in 1984, BRFSS collected surveillance data on risk behaviors through monthly telephone interviews with 15 states. BRFSS now collects data in all 50 states as well as the District of Columbia and three U.S. territories. BRFSS completes more than 400,000 adult interviews each year.
@@ -58,30 +56,18 @@ Inference of a causal connection can only be done through experiment with random
 
 ## Part 2: Research questions
 
-_Come up with at least three research questions that you want to answer using these data. You should phrase your research questions in a way that matches up with the scope of inference your dataset allows for. Make sure that at least two of these questions involve at least three variables. You are welcomed to create new variables based on existing ones. With each question include a brief discussion (1-2 sentences) as to why this question is of interest to you and/or your audience._
+**Research quesion 1:** 
 
-3 pts for each research question (x 3)
-non-causal way (1 pt)
-Should be well defined / not vague (1 pt)
-Is clear why this is of interest to the author / audience (1 pt)
-2 pts for at least two of the questions involving three variables
-
-**Research quesion 1:**
-
-Relationship and health? 
-different sex
-different age
-
-marital: Marital Status
-menthlth: Number Of Days Mental Health Not Good
-physhlth: Number Of Days Physical Health Not Good
-
-sex: Respondents Sex
-X_age_g: Imputed Age In Six Groups
+Surveys found that women are more likely to have mental health problems than men, with young women at particularly high risk. In the society, there are often strong bias towards certain gender and age groups on mental issues. Are gender and age associated with mental health?
 
 **Research quesion 2:**
 
+Taking up exercise seems to reduce the risk of developing mental illness. It also seems to help in treating some mental health conditions. Does physical activities improve a person's mental health? How does it, in particular, associate with different psychological feelings like nervousness, hopelessness, restlessness, depression, hardship, and worthlessness?
+
+
 **Research quesion 3:**
+
+Relationship is considered to be correlated with health. Great marriage can bring better physical and psychological health. An unsatisfying marriage may raise stress and worsen our well-being. How relationship status is associated with both physical and mental health? Are there any difference of the association among different gender and age groups?
 
 
 * * *
@@ -92,37 +78,7 @@ _Perform exploratory data analysis (EDA) that addresses each of the three resear
 
 **Research quesion 1:**
 
-```{r}
-brfss2013 %>% 
-  filter(!is.na(marital), !is.na(X_age_g)) %>% 
-  group_by(marital) %>% 
-  summarize(mean_men = mean(menthlth, na.rm=T), mean_phy = mean(physhlth, na.rm=T)) %>%
-  tidyr::gather(key, value, -marital) %>% 
-  ggplot() + geom_col(aes(marital, value, fill=key), position = 'dodge') +
-  scale_fill_brewer(palette = 'Set2')
-```
 
-```{r}
-brfss2013 %>% 
-  filter(!is.na(marital), !is.na(X_age_g)) %>% 
-  group_by(marital, sex) %>% 
-  summarize(mean_men = mean(menthlth, na.rm=T), mean_phy = mean(physhlth, na.rm=T)) %>%
-  tidyr::gather(key, value, -marital, -sex) %>% 
-  ggplot() + geom_col(aes(marital, value, fill=key), position = 'dodge') +
-  facet_wrap(~sex) +
-  scale_fill_brewer(palette = 'Set2')
-```
-
-```{r}
-brfss2013 %>% 
-  filter(!is.na(marital), !is.na(X_age_g)) %>% 
-  group_by(marital, X_age_g) %>% 
-  summarize(mean_men = mean(menthlth, na.rm=T), mean_phy = mean(physhlth, na.rm=T)) %>%
-  tidyr::gather(key, value, -marital, -X_age_g) %>% 
-  ggplot() + geom_col(aes(marital, value, fill=key), position = 'dodge') +
-  facet_wrap(~X_age_g) +
-  scale_fill_brewer(palette = 'Set2')
-```
 
 
 **Research quesion 2:**
