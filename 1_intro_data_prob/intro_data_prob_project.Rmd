@@ -68,7 +68,7 @@ Relationship is considered to be correlated with health. Great marriage can brin
 
 **Research Question 3**
 
-Taking up exercise seems to reduce the risk of developing mental illness. It also seems to help in treating some mental health conditions. Does physical activities improve a person's mental health? How does the quantity and type of physical activities influence the results?
+Taking up exercise seems to reduce the risk of developing mental illness. It also seems to help in treating some mental health conditions. Do physical activities improve a person's mental health? How does the quantity and type of physical activities influence the results?
 
 
 * * *
@@ -91,8 +91,6 @@ The variables we'll use in this analysis include:
 data_1 <- brfss2013 %>% 
   rename(age_group = X_age_g) %>% 
   select(menthlth, sex, age_group)
-
-kable(head(data_1))
 ```
 
 First we clean our data by removing observations with missing values. For `menthlth`, since the survey question asked about the number of days of mental health not good in the past 30 days, 30 is the maximum value. Observations with unreasonable values are also removed.
@@ -113,6 +111,11 @@ We also create a new variable as a binary indicator of whether the respondant ha
 data_1 <- data_1 %>% 
   mutate(mental_disorder = as.numeric(menthlth > 0))
 ```
+
+```{r}
+kable(head(data_1))
+```
+
 
 #### Data Analysis
 
@@ -218,8 +221,6 @@ The variables we'll use in this analysis include:
 data_2 <- brfss2013 %>% 
   rename(age_group = X_age_g) %>% 
   select(menthlth, sex, marital, age_group)
-
-kable(head(data_2))
 ```
 
 We clean the data in the same way as in research question 1, and we create the same binary response variable from `menthlth` as in the previous analysis:
@@ -237,6 +238,11 @@ data_2 <- data_2 %>%
     marital = stringr::str_replace(marital, "A member of an unmarried couple", "Unmarried couple")
   )
 ```
+
+```{r}
+kable(head(data_2))
+```
+
 
 #### Data Analysis
 
@@ -336,5 +342,55 @@ data_2 %>%
 
 
 ### Research Question 3
+
+_Do physical activities improve a person's mental health? How does the quantity and type of physical activities influence the results?_
+
+#### Data Preparation
+
+The variables we'll use in this analysis include:
+
+* `menthlth` — Number of days (during the past 30 days) mental health not good
+* `exercise` (renamed from `exerany2`) — Exercise In Past 30 Days
+* `exercise_type` (renamed from `X_parec1`) — Whether the aerobic and strengthening guideline is met
+* `exercise_150` (renames from `X_pa150r2`) — 150 minute physical activity calculated variable
+* `exercise_300` (renames from `X_pa300r2`) — 300 minute physical activity calculated variable
+
+```{r}
+data_3 <- brfss2013 %>% 
+  rename(
+    exercise = exerany2,
+    exercise_type = X_parec1,
+    exercise_150 = X_pa150r2,
+    exercise_300 = X_pa300r2
+  ) %>% 
+  select(menthlth, exercise, exercise_type, exercise_150, exercise_300)
+```
+
+We clean the data in the same way as in research question 1 and 2. We create the same binary response variable from `menthlth` as in the previous analysis, and also merge `exercise_150` and `exercise_300` into one variable:
+
+* `mental_disorder` — More than 0 days of mental health not good
+* `exercise_time` — Minutes of physical activities
+
+```{r}
+data_3 <- data_3 %>% 
+  filter(
+    !is.na(menthlth), !is.na(exercise), !is.na(exercise_type), !is.na(exercise_150), !is.na(exercise_300),
+    menthlth <= 30
+  ) %>% 
+  mutate(
+    mental_disorder = as.numeric(menthlth > 0),
+    exercise_time = case_when(
+      exercise_300 == "301+ minutes" ~ "301+ minutes",
+      exercise_150 == "150+ minutes" & exercise_300 == "1-300 minutes" ~ "150-300 minutes",
+      exercise_150 == "1-149 minutes" ~ "1-149 minutes",
+      exercise_150 == "0 minutes" ~ "0 minutes"
+    )
+  ) %>% 
+  select(-exercise_150, -exercise_300)
+```
+
+```{r}
+kable(head(data_3))
+```
 
 
