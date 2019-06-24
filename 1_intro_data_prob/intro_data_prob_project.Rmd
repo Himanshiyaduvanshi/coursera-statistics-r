@@ -201,8 +201,89 @@ Combining both gender and age effects, we observe that female at all ages has a 
 
 It is observed that both gender and age are not independent from mental health. Female has a higher probability to have mental disorder than male, and age is negatively related to the probability of having mental disorder. Among all, young female has the highest probability of having mental disorder.
 
-**Research question 2:**
+### Research Question 2
 
+_How relationship status is associated with mental health? Do men and women behave differently to relationship effects?_
+
+#### Data Preparation
+
+The variables we'll use in this analysis include:
+
+* `menthlth` — Number of days (during the past 30 days) mental health not good
+* `sex` — Respondent's sex
+* `marital` — Marital Status
+
+```{r}
+data_2 <- brfss2013 %>% 
+  select(menthlth, sex, marital)
+
+kable(head(data_2))
+```
+
+We clean the data in the same way as in research question 1, and we create the same binary response variable from `menthlth` as in the previous analysis:
+
+* `mental_disorder` — More than 0 days of mental health not good
+
+```{r}
+data_2 <- data_2 %>% 
+  filter(
+    !is.na(menthlth), !is.na(sex), !is.na(marital),
+    menthlth <= 30
+  ) %>% 
+  mutate(
+    mental_disorder = as.numeric(menthlth > 0),
+    marital = stringr::str_replace(marital, "A member of an unmarried couple", "Unmarried couple")
+  )
+```
+
+#### Data Analysis
+
+```{r}
+mean(data_2$mental_disorder)
+```
+
+```{r}
+data_2 %>% 
+  group_by(marital) %>% 
+  summarise(mental_disorder = mean(mental_disorder)) %>% 
+  ggplot(aes(x = marital, y = mental_disorder)) +
+  geom_col(aes(fill = marital)) + 
+  geom_text(aes(label = round(mental_disorder, 3)), vjust = 1.5, color = 'white') +
+  geom_hline(
+    yintercept = mean(data_2$mental_disorder), 
+    color = 'gray58', size = .7, alpha = .8
+  ) +
+  annotate(
+    'text', x = 5.5, y = .33, color = 'gray58',
+    label = 'P(Mental Disorder) = 0.308'
+  ) +
+  labs(
+    title = "Probability of Mental Disorder by Marital Status",
+    x = "Marital Status", y = "Probability of Mental Disorder"
+  ) +
+  theme(legend.position = 'none') +
+  scale_fill_brewer(palette = 'Set2')
+```
+
+```{r}
+data_2 %>% 
+  group_by(sex, marital) %>% 
+  summarise(mental_disorder = mean(mental_disorder)) %>% 
+  ggplot(aes(x = sex, y = mental_disorder)) +
+  geom_col(aes(fill = sex)) + 
+  facet_wrap(~marital) +
+  geom_text(aes(label = round(mental_disorder, 3)), vjust = 1.5, color = 'white') +
+  geom_hline(
+    yintercept = mean(data_2$mental_disorder), 
+    color = 'gray58', size = .7, alpha = .8
+  ) +
+  labs(
+    title = "Probability of Mental Disorder by Gender and Marital Status",
+    x = "Gender", y = "Probability of Mental Disorder"
+  ) +
+  theme(legend.position = 'none') +
+  scale_fill_brewer(palette = 'Set2')
+```
 
 **Research question 3:**
 
