@@ -4,7 +4,8 @@ output:
   html_document: 
     fig_height: 4
     highlight: pygments
-    theme: spacelab
+    theme: paper
+    toc: true
 ---
 
 ## Setup
@@ -215,7 +216,8 @@ The variables we'll use in this analysis include:
 
 ```{r}
 data_2 <- brfss2013 %>% 
-  select(menthlth, sex, marital)
+  rename(age_group = X_age_g) %>% 
+  select(menthlth, sex, marital, age_group)
 
 kable(head(data_2))
 ```
@@ -227,7 +229,7 @@ We clean the data in the same way as in research question 1, and we create the s
 ```{r}
 data_2 <- data_2 %>% 
   filter(
-    !is.na(menthlth), !is.na(sex), !is.na(marital),
+    !is.na(menthlth), !is.na(sex), !is.na(marital), !is.na(age_group),
     menthlth <= 30
   ) %>% 
   mutate(
@@ -285,9 +287,54 @@ data_2 %>%
   scale_fill_brewer(palette = 'Set2')
 ```
 
-**Research question 3:**
+```{r}
+mean(data_2$menthlth)
+```
 
 ```{r}
-
+data_2 %>% 
+  group_by(marital) %>% 
+  summarise(menthlth = mean(menthlth)) %>% 
+  ggplot(aes(x = marital, y = menthlth)) +
+  geom_col(aes(fill = marital)) +
+  geom_text(aes(label = round(menthlth, 3)), vjust = 1.5, color = 'white') +
+  geom_hline(
+    yintercept = mean(data_2$menthlth), 
+    color = 'gray58', size = .7, alpha = .8
+  ) +
+  annotate(
+    'text', x = 6, y = 3.7, color = 'gray58',
+    label = 'Mean = 3.37'
+  ) +
+  labs(
+    title = "Mean Number of Days of Mental Disorder by Marital Status",
+    x = "Marital Status", y = "Mean Number of Days of Mental Disorder"
+  ) +
+  theme(legend.position = 'none') +
+  scale_fill_brewer(palette = 'Set2')
 ```
+
+```{r}
+data_2 %>% 
+  group_by(sex, marital) %>% 
+  summarise(menthlth = mean(menthlth)) %>% 
+  ggplot(aes(x = sex, y = menthlth)) +
+  geom_col(aes(fill = sex)) + 
+  facet_wrap(~marital) +
+  geom_text(aes(label = round(menthlth, 3)), vjust = 1.5, color = 'white') +
+  geom_hline(
+    yintercept = mean(data_2$menthlth), 
+    color = 'gray58', size = .7, alpha = .8
+  ) +
+  labs(
+    title = "Mean Number of Days of Mental Disorder by Gender and Marital Status",
+    x = "Gender", y = "Mean Number of Days of Mental Disorder"
+  ) +
+  theme(legend.position = 'none') +
+  scale_fill_brewer(palette = 'Set2')
+```
+
+
+### Research Question 3
+
 
