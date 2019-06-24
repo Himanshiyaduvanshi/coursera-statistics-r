@@ -125,7 +125,7 @@ To get started, we compute the probabiliy of having mental disorders.
 mean(data_1$mental_disorder)
 ```
 
-The probability of having mental disorders is 0.3. 
+The probability of having mental disorders is 0.308. 
 
 If gender and age are independent of mental disorders, there should be no significant difference in the probability of mental disorder between different gender and age groups.
 
@@ -246,9 +246,15 @@ kable(head(data_2))
 
 #### Data Analysis
 
+We compute the probabiliy of having mental disorders in this sample.
+
 ```{r}
 mean(data_2$mental_disorder)
 ```
+
+The probability of having mental disorders is 0.308.
+
+If marital status is independent of mental disorders, there should be no significant difference in the probability of mental disorder between different marital status groups.
 
 ```{r}
 data_2 %>% 
@@ -273,6 +279,8 @@ data_2 %>%
   scale_fill_brewer(palette = 'Set2')
 ```
 
+We found that the probabilities of having mental disorder for married (0.267) and widowed (0.249) are much lower than the mean. The probability for separated (0.481) is the highest. The result shows evidence that marital status is not independent from mental disorder. A good marital relationship has a lower probability of having mental problems.
+
 ```{r}
 data_2 %>% 
   group_by(sex, marital) %>% 
@@ -293,9 +301,13 @@ data_2 %>%
   scale_fill_brewer(palette = 'Set2')
 ```
 
+Gender has the same effect on different marital groups as in the previous analysis. In general, male has a lower probability of mental disorder than female. Married male (0.205) has the lowest probability of having mental disorder.
+
 ```{r}
 mean(data_2$menthlth)
 ```
+
+The mean number of days of having mental problems in the sample population is 3.38. We assume the number reflects the severity of the mental disorder.
 
 ```{r}
 data_2 %>% 
@@ -320,25 +332,11 @@ data_2 %>%
   scale_fill_brewer(palette = 'Set2')
 ```
 
-```{r}
-data_2 %>% 
-  group_by(sex, marital) %>% 
-  summarise(menthlth = mean(menthlth)) %>% 
-  ggplot(aes(x = sex, y = menthlth)) +
-  geom_col(aes(fill = sex)) + 
-  facet_wrap(~marital) +
-  geom_text(aes(label = round(menthlth, 3)), vjust = 1.5, color = 'white') +
-  geom_hline(
-    yintercept = mean(data_2$menthlth), 
-    color = 'gray58', size = .7, alpha = .8
-  ) +
-  labs(
-    title = "Mean Number of Days of Mental Disorder by Gender and Marital Status",
-    x = "Gender", y = "Mean Number of Days of Mental Disorder"
-  ) +
-  theme(legend.position = 'none') +
-  scale_fill_brewer(palette = 'Set2')
-```
+In the previous plots, it is found that even divorced (0.367), never married (0.398), separated (0.481) and unmarried couple (0.421) all show an above average (0.308) probability of having mental disorder. The above plot found that separated (7.19) has a significantly higher mean number of days of mental disorder comparing to the other groups. It also confirmed that the married (2.585) has the least number of days suffering from mental issues.
+
+#### Conclusion
+
+It is observed that marital status is not independent from mental health. The married has the lowest probability to have mental disorder. Men and women show similar association beween marital status and mental health while women overall has a higher probability of having mental disorder. In general, a good relationship is positively relating to a good mental health.
 
 
 ### Research Question 3
