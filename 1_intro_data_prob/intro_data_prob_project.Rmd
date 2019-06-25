@@ -5,7 +5,7 @@ output:
     fig_height: 4
     highlight: pygments
     theme: paper
-    toc: true
+    toc: true 
 ---
 
 ## Setup
@@ -203,7 +203,7 @@ Combining both gender and age effects, we observe that female at all ages has a 
 
 #### Conclusion
 
-It is observed that both gender and age are not independent from mental health. Female has a higher probability to have mental disorder than male, and age is negatively related to the probability of having mental disorder. Among all, young female has the highest probability of having mental disorder.
+It is observed that both gender and age are not independent from mental health. Female has a higher probability of having mental disorder than male, and age is negatively related to the probability of having mental disorder. Among all, young female has the highest probability of having mental disorder.
 
 ### Research Question 2
 
@@ -336,7 +336,7 @@ In the previous plots, it is found that even divorced (0.367), never married (0.
 
 #### Conclusion
 
-It is observed that marital status is not independent from mental health. The married has the lowest probability to have mental disorder. Men and women show similar association beween marital status and mental health while women overall has a higher probability of having mental disorder. In general, a good relationship is positively relating to a good mental health.
+It is observed that marital status is not independent from mental health. The married has the lowest probability of having mental disorder. Men and women show similar association beween marital status and mental health while women overall has a higher probability of having mental disorder. In general, a good relationship is positively relating to a good mental health.
 
 
 ### Research Question 3
@@ -391,4 +391,101 @@ data_3 <- data_3 %>%
 kable(head(data_3))
 ```
 
+#### Data Analysis
 
+```{r}
+mean(data_3$mental_disorder)
+```
+
+The probability of having mental disorder in this sample is 0.311.
+
+```{r}
+mean(data_3$exercise == "Yes")
+```
+
+The probability of exercise is 0.7.
+
+If exercise is independent of mental disorders, there should be no significant difference in the probability of mental disorder between exercise and no-exercise groups.
+
+```{r}
+data_3 %>% 
+  group_by(exercise) %>% 
+  summarise(mental_disorder = mean(mental_disorder)) %>% 
+  ggplot(aes(x = exercise, y = mental_disorder)) +
+  geom_col(aes(fill = exercise)) +
+  geom_text(aes(label = round(mental_disorder, 3)), vjust = 1.5, color = 'white') +
+  geom_hline(
+    yintercept = mean(data_3$mental_disorder), 
+    color = 'gray58', size = .8, alpha = .8
+  ) +
+  annotate(
+    'text', x = .8, y = .325, color = 'gray58',
+    label = 'P(Mental Disorder) = 0.311'
+  ) +
+  labs(
+    title = "Probability of Mental Disorder by Exercise",
+    x = "Exercise", y = "Probability of Mental Disorder"
+  ) +
+  theme(legend.position = 'none') +
+  scale_fill_brewer(palette = 'Set2')
+```
+
+There is a difference of probability of having mental disorder between the exercise (0.297) and no-exercise (0.345) groups. Despite the difference is not large, it suggested that exercise and mental health are not independent from each other.
+
+It is assumed that the amount of exericse matters. Even if a person do exercise for at least once in the past 30 days, if the amount of time spent in exercising is too little, it might not make a difference.
+
+```{r}
+data_3 %>% 
+  group_by(exercise_time) %>% 
+  summarise(mental_disorder = mean(mental_disorder)) %>% 
+  ggplot(aes(x = exercise_time, y = mental_disorder)) +
+  geom_col(aes(fill = exercise_time)) +
+  geom_text(aes(label = round(mental_disorder, 3)), vjust = 1.5, color = 'white') +
+  geom_hline(
+    yintercept = mean(data_3$mental_disorder), 
+    color = 'gray58', size = .8, alpha = .8
+  ) +
+  annotate(
+    'text', x = 3.8, y = .325, color = 'gray58',
+    label = 'P(Mental Disorder) = 0.311'
+  ) +
+  labs(
+    title = "Probability of Mental Disorder by Exercise Time",
+    x = "Exercise Time", y = "Probability of Mental Disorder"
+  ) +
+  theme(legend.position = 'none') +
+  scale_fill_brewer(palette = 'Set2')
+```
+
+The plot shows that exercising for 0 minutes (0.344) and between 1 - 149 minutes (0.348) do not show a significant difference in probability of having mental disorder. However when exercise time increases, the probabiliy of having mental disorder is lower. Exercising for above 150 minutes show a lower probability of having mental disorder. Exercising for more than 301 minutes (0.265) shows a significantly lower probabiliy of having mental disorder. 
+
+We are also interested in whether the types of exercise, aerobic or strength, makes a difference.
+
+```{r}
+data_3 %>% 
+  group_by(exercise_type) %>% 
+  summarise(mental_disorder = mean(mental_disorder)) %>% 
+  ggplot(aes(x = exercise_type, y = mental_disorder)) +
+  geom_col(aes(fill = exercise_type)) +
+  geom_text(aes(label = round(mental_disorder, 3)), vjust = 1.5, color = 'white') +
+  geom_hline(
+    yintercept = mean(data_3$mental_disorder), 
+    color = 'gray58', size = .8, alpha = .8
+  ) +
+  annotate(
+    'text', x = 1.2, y = .325, color = 'gray58',
+    label = 'P(Mental Disorder) = 0.311'
+  ) +
+  labs(
+    title = "Probability of Mental Disorder by Exercise Type",
+    x = "Exercise Type", y = "Probability of Mental Disorder"
+  ) +
+  theme(legend.position = 'none', axis.text.x = element_text(size = 8)) +
+  scale_fill_brewer(palette = 'Set2')
+```
+
+The plot shows that the probability of having mental disorder for groups that do enough strengh exercise (0.341) shows no difference to groups that do not do enough of either strength or aerobic exercise (0.346). For groups that do enough of aerobic exercise (0.28) has a similary probabiliy of having mental disorder to groups that do enough of both strength and aerobic exercise (0.273). It shows evidence that aerobic exercise is positively related to good mental health. But strength exercises might not have any association with a better mental health.
+
+#### Conclusion
+
+It is observed that exercise is not independent from mental health. People who exercise has a lower probability of having mental disorder than people who don't exercise. However, exercise time and exercise type makes a greater difference in probability of having mental disorder. Exercising for at least 150 minutes show a lower probability of having mental disorder. Aerobic exercise is associated with a lower probability of having mental disorder but strength exercise is not.
