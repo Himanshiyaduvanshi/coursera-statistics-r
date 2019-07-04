@@ -82,9 +82,16 @@ samp <- sample_n(ames, n)
 say is the "typical" size within your sample? Also state precisely what you 
 interpreted "typical" to mean.
 </div>
-```{r describe-sample}
-# type your code for the Exercise here, and Knit
 
+```{r}
+summary(samp$area)
+# The sample mean is 1476, which is the typical size of home
+# in this size 60 random sample.
+```
+
+
+```{r describe-sample}
+ggplot(samp) + geom_histogram(aes(area))
 ```
 
 1. True or False: My distribution should be similar to others' distributions who also collect random samples from this population, but it is likely not exactly the same since it's a random sample.
@@ -167,8 +174,7 @@ params <- ames %>%
 Ames?
 </div>
 ```{r check-ci-contain-true-mean}
-# type your code for the Exercise here, and Knit
-
+# Yes
 ```
 
 4. What proportion of 95% confidence intervals would you expect to capture the true population mean?
@@ -281,16 +287,31 @@ Is this proportion exactly equal to the confidence level? If not, explain why.
 <li> 2.58 </li>
 </ol>
 ```{r find-99-perc-crit-val}
-# type your code for the Question 5 here, and Knit
-
+ci %>% summarise(capture_mu_freq = sum(capture_mu == 'yes')/n())
 ```
 
 <div id="exercise">
 **Exercise**: Calculate 50 confidence intervals at the 99% confidence level. You do not need to obtain new samples, simply calculate new intervals based on the 95% confidence interval endpoints you had already collected. Plot all intervals and calculate the proportion of intervals that include the true population mean.
 </div>
 ```{r plot-99-perc-cis}
-# type your code for the Exercise here, and Knit
+z_star_99 <- abs(qnorm((1-0.99)/2))
+ci_99 <- ames %>%
+        rep_sample_n(size = n, reps = 50, replace = TRUE) %>%
+        summarise(lower = mean(area) - z_star_99 * (sd(area) / sqrt(n)),
+                  upper = mean(area) + z_star_99 * (sd(area) / sqrt(n)))
 
+ci_99 <- ci_99 %>%
+  mutate(capture_mu = ifelse(lower < params$mu & upper > params$mu, "yes", "no"))
+
+ci_99_data <- data.frame(ci_id = c(1:50, 1:50),
+                      ci_bounds = c(ci_99$lower, ci_99$upper),
+                      capture_mu = c(ci_99$capture_mu, ci_99$capture_mu))
+
+ggplot(data = ci_99_data, aes(x = ci_bounds, y = ci_id, 
+                           group = ci_id, color = capture_mu)) +
+  geom_point(size = 2) +  # add points at the ends, size = 2
+  geom_line() +           # connect with lines
+  geom_vline(xintercept = params$mu, color = "darkgray") # draw vertical line
 ```
 
 6. We would expect 99% of the intervals to contain the true population mean.
