@@ -2,14 +2,15 @@
 title: "Statistics with R"
 author: "Cecilia Lee"
 date: "2019-07-26"
-site: bookdown::bookdown_site
+bibliography: book.bib
+description: Notes and assignments for the Coursera specialization "Statistics with
+  R".
 documentclass: book
-bibliography: [book.bib]
-biblio-style: apalike
-link-citations: yes
 github-repo: seankross/bookdown-start
-url: 'https://github.com/cecilialee/coursera-statistics-r'
-description: 'Notes and assignments for the Coursera specialization "Statistics with R".'
+link-citations: yes
+site: bookdown::bookdown_site
+biblio-style: apalike
+url: https://github.com/cecilialee/coursera-statistics-r
 ---
 
 # Syllabus {-}
