@@ -1,5 +1,0 @@
-# (PART) Inferential Statistics {-} 
-
-# Technical Details
-
-Now I'll teach you some crazy math, but I need to work it out first...
