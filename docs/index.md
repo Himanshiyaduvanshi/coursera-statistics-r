@@ -1,0 +1,22 @@
+--- 
+title: "Statistics with R"
+author: "Cecilia Lee"
+date: "2019-07-26"
+bibliography: book.bib
+description: Notes and assignments for the Coursera specialization "Statistics with
+  R".
+documentclass: book
+github-repo: seankross/bookdown-start
+link-citations: yes
+site: bookdown::bookdown_site
+biblio-style: apalike
+url: https://github.com/cecilialee/coursera-statistics-r
+---
+
+# Syllabus {-}
+
+1. Introduction to Probability and Data
+2. Inferential Statistics
+3. Linear Regression and Modeling
+4. Bayesian Statistics
+5. Statistics with R Capstone
