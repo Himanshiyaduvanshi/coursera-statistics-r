@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Week 2 | Statistics with R</title>
+  <meta name="description" content="Notes and assignments for the Coursera specialization “Statistics with R”." />
+  <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Week 2 | Statistics with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://github.com/cecilialee/coursera-statistics-r" />
+  
+  <meta property="og:description" content="Notes and assignments for the Coursera specialization “Statistics with R”." />
+  <meta name="github-repo" content="seankross/bookdown-start" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Week 2 | Statistics with R" />
+  
+  <meta name="twitter:description" content="Notes and assignments for the Coursera specialization “Statistics with R”." />
+  
+
+<meta name="author" content="Cecilia Lee" />
+
+
+<meta name="date" content="2019-07-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="week-1.html">
+<link rel="next" href="week-3.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Statistics with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Syllabus</a></li>
+<li class="part"><span><b>I Inferential Statistics</b></span></li>
+<li class="chapter" data-level="" data-path="week-1.html"><a href="week-1.html"><i class="fa fa-check"></i>Week 1</a><ul>
+<li class="chapter" data-level="" data-path="week-1.html"><a href="week-1.html#central-limit-theorem"><i class="fa fa-check"></i>Central Limit Theorem</a><ul>
+<li class="chapter" data-level="" data-path="week-1.html"><a href="week-1.html#sampling-variability-and-clt"><i class="fa fa-check"></i>Sampling Variability and CLT</a></li>
+<li class="chapter" data-level="" data-path="week-1.html"><a href="week-1.html#exercises"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="week-1.html"><a href="week-1.html#confidence-interval"><i class="fa fa-check"></i>Confidence Interval</a><ul>
+<li class="chapter" data-level="" data-path="week-1.html"><a href="week-1.html#confidence-interval-for-a-mean"><i class="fa fa-check"></i>Confidence Interval (for a Mean)</a></li>
+<li class="chapter" data-level="" data-path="week-1.html"><a href="week-1.html#accuracy-vs-precision"><i class="fa fa-check"></i>Accuracy vs Precision</a></li>
+<li class="chapter" data-level="" data-path="week-1.html"><a href="week-1.html#required-sample-size-for-margin-of-error-me"><i class="fa fa-check"></i>Required Sample Size for Margin of Error (ME)</a></li>
+<li class="chapter" data-level="" data-path="week-1.html"><a href="week-1.html#exercises-1"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="week-2.html"><a href="week-2.html"><i class="fa fa-check"></i>Week 2</a><ul>
+<li class="chapter" data-level="" data-path="week-2.html"><a href="week-2.html#hypothesis-testing"><i class="fa fa-check"></i>Hypothesis Testing</a><ul>
+<li class="chapter" data-level="" data-path="week-2.html"><a href="week-2.html#hypothesis-testing-framework"><i class="fa fa-check"></i>Hypothesis Testing Framework</a></li>
+<li class="chapter" data-level="" data-path="week-2.html"><a href="week-2.html#hypothesis-testing-for-a-mean"><i class="fa fa-check"></i>Hypothesis Testing (for a Mean)</a></li>
+<li class="chapter" data-level="" data-path="week-2.html"><a href="week-2.html#exercises-2"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="week-2.html"><a href="week-2.html#significance"><i class="fa fa-check"></i>Significance</a><ul>
+<li class="chapter" data-level="" data-path="week-2.html"><a href="week-2.html#inference-for-other-estimators"><i class="fa fa-check"></i>Inference for Other Estimators</a></li>
+<li class="chapter" data-level="" data-path="week-2.html"><a href="week-2.html#decision-errors"><i class="fa fa-check"></i>Decision Errors</a></li>
+<li class="chapter" data-level="" data-path="week-2.html"><a href="week-2.html#significance-vs-confidence-level"><i class="fa fa-check"></i>Significance vs Confidence Level</a></li>
+<li class="chapter" data-level="" data-path="week-2.html"><a href="week-2.html#statistical-vs-practical-significance"><i class="fa fa-check"></i>Statistical vs Practical Significance</a></li>
+<li class="chapter" data-level="" data-path="week-2.html"><a href="week-2.html#exercises-3"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html"><i class="fa fa-check"></i>Week 3</a><ul>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#t-distribution"><i class="fa fa-check"></i>T-Distribution</a><ul>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#t-distribution-1"><i class="fa fa-check"></i>T-Distribution</a></li>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#inference-for-a-mean"><i class="fa fa-check"></i>Inference for a Mean</a></li>
+</ul></li>
+<li class="chapter" data-level="0.1" data-path="week-3.html"><a href="week-3.html#inference-for-comparing-two-independent-means"><i class="fa fa-check"></i><b>0.1</b> Inference for Comparing Two Independent Means</a><ul>
+<li class="chapter" data-level="0.1.1" data-path="week-3.html"><a href="week-3.html#confidence-interval-2"><i class="fa fa-check"></i><b>0.1.1</b> Confidence Interval</a></li>
+<li class="chapter" data-level="0.1.2" data-path="week-3.html"><a href="week-3.html#standard-error-of-difference-between-two-independent-means"><i class="fa fa-check"></i><b>0.1.2</b> Standard Error of Difference between Two Independent Means</a></li>
+<li class="chapter" data-level="0.1.3" data-path="week-3.html"><a href="week-3.html#degrees-of-freedom-for-t-statistic-for-inference-on-difference-of-two-means"><i class="fa fa-check"></i><b>0.1.3</b> Degrees of Freedom for T-Statistic for Inference on Difference of Two Means</a></li>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#inference-for-comparing-two-paired-means"><i class="fa fa-check"></i>Inference for Comparing Two Paired Means</a></li>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#power"><i class="fa fa-check"></i>Power</a></li>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#exercises-4"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#anova-and-bootstrapping"><i class="fa fa-check"></i>ANOVA and Bootstrapping</a><ul>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#comparing-more-than-two-means"><i class="fa fa-check"></i>Comparing More Than Two Means</a></li>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#anova"><i class="fa fa-check"></i>ANOVA</a></li>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#conditions-for-anova"><i class="fa fa-check"></i>Conditions for ANOVA</a></li>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#multiple-comparisons"><i class="fa fa-check"></i>Multiple Comparisons</a></li>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#bootstrapping"><i class="fa fa-check"></i>Bootstrapping</a></li>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#exercises-5"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Statistics with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="week-2" class="section level1 unnumbered">
+<h1>Week 2</h1>
+<div id="hypothesis-testing" class="section level2 unnumbered">
+<h2>Hypothesis Testing</h2>
+<div id="hypothesis-testing-framework" class="section level3 unnumbered">
+<h3>Hypothesis Testing Framework</h3>
+<ul>
+<li>We start with a <strong>null hypothesis (H0)</strong> that represents the status quo.</li>
+<li>We also have an <strong>alternative hypothesis (HA)</strong> that represents our research question, i.e. what we’re testing for.</li>
+<li>We conduct a hypothesis test under the assumption that the null hypothesis is true, either via
+simulation or theorectical methods - methods that rely on the CLT.</li>
+<li>If the test results suggest that the data do not provide convincing evidence for the alternative
+hypothesis, we stick with the null hypothesis. If they do, then we reject the null hypothesis in
+favor of the alternative.</li>
+</ul>
+</div>
+<div id="hypothesis-testing-for-a-mean" class="section level3 unnumbered">
+<h3>Hypothesis Testing (for a Mean)</h3>
+<div id="hypothesis" class="section level4 unnumbered">
+<h4>Hypothesis</h4>
+<ul>
+<li>null - H0 : Ofen either a skeptical perspective or a claim to be tested (=)</li>
+<li>alternative - HA : Represents an alternative claim under consideration and is often represented by a range of possible parameter values. (&lt;, &gt;, !=)</li>
+<li>The skeptic will not abandon the H0 unless the evidence in favor of the HA is so strong that she rejects H0 in favor of HA.</li>
+<li>Hypothesis is always about population parameters, but never about sample statistics.</li>
+</ul>
+</div>
+<div id="p-value" class="section level4 unnumbered">
+<h4>P-Value</h4>
+<ul>
+<li><strong>P(observed or more extreme outcome | H0 true)</strong></li>
+<li>We use the test statistic to calculate the p-value, the probability of observing data at least as favorable to the alternative hypothesis as our current data set, if the null hypothesis was true.</li>
+<li>If the p-value is low (lower than the <strong>significance level</strong> $ $, which is usually 5%) we say that it would be very unlikely to observe the data if the null hypothesis were true, and hence <strong>reject H0</strong>.</li>
+<li>If the p-value is high (higher than $ $) we say that it is likely to observe the data even if the null
+hypothesis were true, and hence <strong>do not reject H0</strong>.</li>
+</ul>
+<p><strong>Example</strong></p>
+<ul>
+<li>Earlier we calculated a 95% confidence interval for the average number of exclusive relationships college students have been in to be 2.7 to 3.7.</li>
+<li>Based on this confidence interval, do these data support the hypothesis that college students on average have been in more than three exclusive relationships?</li>
+</ul>
+<p><span class="math display">\[
+P(\bar{x} &gt; 3.2 | H_0 : \mu = 3)
+\]</span></p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="co"># H0: mu = 3</span></a>
+<a class="sourceLine" id="cb43-2" data-line-number="2"><span class="co"># Collage students have been in 3 exclusive relationships, on average.</span></a>
+<a class="sourceLine" id="cb43-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb43-4" data-line-number="4"><span class="co"># HA: mu &gt; 3</span></a>
+<a class="sourceLine" id="cb43-5" data-line-number="5"><span class="co"># Collage students have been in more than 3 exclusive relationships, on average.</span></a>
+<a class="sourceLine" id="cb43-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb43-7" data-line-number="7"><span class="co"># P(x_bar &gt; 3.2 | H0: mu = 3)</span></a>
+<a class="sourceLine" id="cb43-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb43-9" data-line-number="9"><span class="co"># Since we assumme H0 is true, we can construct the sampling distribution based on the CLT.</span></a>
+<a class="sourceLine" id="cb43-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb43-11" data-line-number="11"><span class="co"># x_bar ~ N(mu = 3, se = 0.246)</span></a>
+<a class="sourceLine" id="cb43-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb43-13" data-line-number="13"><span class="co"># test statistic (z-score for normal distribution)</span></a>
+<a class="sourceLine" id="cb43-14" data-line-number="14">z &lt;-<span class="st"> </span><span class="kw">round</span>((<span class="fl">3.2</span> <span class="op">-</span><span class="st"> </span><span class="dv">3</span>)<span class="op">/</span><span class="fl">0.246</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb43-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb43-16" data-line-number="16"><span class="co"># p-value</span></a>
+<a class="sourceLine" id="cb43-17" data-line-number="17">p_value &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pnorm</span>(z), <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb43-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb43-19" data-line-number="19"><span class="co"># Since p-value is high, we do not reject H0.</span></a>
+<a class="sourceLine" id="cb43-20" data-line-number="20"><span class="kw">list</span>(<span class="dt">z =</span> z, <span class="dt">p_value =</span> p_value)</a></code></pre></div>
+<pre><code>## $z
+## [1] 0.81
+## 
+## $p_value
+## [1] 0.21</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="co"># If in fact college students have been in 3 exclusive relationships on average (H0 true), there is a </span></a>
+<a class="sourceLine" id="cb45-2" data-line-number="2"><span class="co"># 21% (0.21) chance that a random sample of 50 college student would yield a sample mean of 3.2 or higher.</span></a>
+<a class="sourceLine" id="cb45-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb45-4" data-line-number="4"><span class="co"># This is a high probability, so we think that a sample mean of 3.2 or more exclusive relationships is </span></a>
+<a class="sourceLine" id="cb45-5" data-line-number="5"><span class="co"># likely to happen simply by chance or sampling variability.</span></a></code></pre></div>
+</div>
+<div id="two-sided-tests" class="section level4 unnumbered">
+<h4>Two-Sided Tests</h4>
+<ul>
+<li>Often instead of looking for a divergence from the null in a specific direction, we might be interested
+in divergence in any direction.</li>
+<li>We call such hypothesis tests <strong>two-sided</strong> (or <strong>two-tailed</strong>).</li>
+<li>The definition of a p-value is the same regardless of doing a one or a two-sided test. However, the calculation becomes slightly different and ever so slightly more complicated since we need to consider “at least as extreme as the observed outcome” in both directions away from the mean.</li>
+</ul>
+<p><strong>Example</strong></p>
+<p><span class="math display">\[
+P(\bar{x} &gt; 3.2  \text{ OR }  \bar{x} &lt; 2.8 | H_0 : \mu = 3)
+\]</span></p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="co"># test statistic</span></a>
+<a class="sourceLine" id="cb46-2" data-line-number="2">z_upper &lt;-<span class="st"> </span><span class="kw">round</span>((<span class="fl">3.2</span> <span class="op">-</span><span class="st"> </span><span class="dv">3</span>)<span class="op">/</span><span class="fl">0.246</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb46-3" data-line-number="3">z_lower &lt;-<span class="st"> </span><span class="kw">round</span>((<span class="fl">2.8</span> <span class="op">-</span><span class="st"> </span><span class="dv">3</span>)<span class="op">/</span><span class="fl">0.246</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb46-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb46-5" data-line-number="5"><span class="co"># p-value</span></a>
+<a class="sourceLine" id="cb46-6" data-line-number="6">p_upper &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pnorm</span>(z_upper), <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb46-7" data-line-number="7">p_lower &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">pnorm</span>(z_lower), <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb46-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb46-9" data-line-number="9">p_value &lt;-<span class="st"> </span>p_upper <span class="op">+</span><span class="st"> </span>p_lower</a>
+<a class="sourceLine" id="cb46-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb46-11" data-line-number="11"><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb46-12" data-line-number="12">  <span class="dt">z =</span> <span class="kw">c</span>(z_lower, z_upper),</a>
+<a class="sourceLine" id="cb46-13" data-line-number="13">  <span class="dt">p_value =</span> p_value</a>
+<a class="sourceLine" id="cb46-14" data-line-number="14">)</a></code></pre></div>
+<pre><code>## $z
+## [1] -0.81  0.81
+## 
+## $p_value
+## [1] 0.418</code></pre>
+</div>
+<div id="step-by-step" class="section level4 unnumbered">
+<h4>Step-by-Step</h4>
+<ol style="list-style-type: decimal">
+<li>Set the <strong>hypotheses</strong>
+<ul>
+<li><span class="math inline">\(H_0 : \mu = \text{null value}\)</span></li>
+<li><span class="math inline">\(H_A: \mu &lt; or &gt; or \neq \text{null value}\)</span></li>
+</ul></li>
+<li>Calculate the <strong>point estimate</strong>: <span class="math inline">\(\bar{x}\)</span></li>
+<li>Check <strong>conditions</strong>
+<ul>
+<li>Independence</li>
+<li>Sample size/skew</li>
+</ul></li>
+<li>Draw <strong>sampling distribution</strong>, shape <strong>p-value</strong>, calculate <strong>test statistic</strong>
+<ul>
+<li>$ z =  $</li>
+<li>$ SE =  $</li>
+</ul></li>
+<li>Make a decision, and interpret it in context of the research question
+<ul>
+<li>If p-value &lt; <span class="math inline">\(\alpha\)</span>, reject <span class="math inline">\(H_0\)</span>; the data provide convincing evidence for <span class="math inline">\(H_A\)</span>.</li>
+<li>If p-value &gt; <span class="math inline">\(\alpha\)</span>, fail to reject <span class="math inline">\(H_0\)</span> the data do not provide convincing evidence for <span class="math inline">\(H_A\)</span>.</li>
+</ul></li>
+</ol>
+<p><strong>Example</strong></p>
+<ul>
+<li>Researchers investigating characteristics of gifted children collected data from schools in a large city on a random sample of 36 children who were identified as gifted children soon after they reached the age of four.</li>
+<li>In this study, along with variables on the children, the researchers also collected data on their mothers’ IQ scores. The histogram shows the distribution of these data, and also provided our some sample statistics.
+<ul>
+<li>n = 36</li>
+<li>min = 101</li>
+<li>mean = 118.2</li>
+<li>sd = 6.5</li>
+<li>max = 131</li>
+</ul></li>
+<li>Perform a hypothesis test to evaluate if these data provide convincing evidence of a difference between the average IQ score of mothers of gifted children And the average IQ score for the population at large, which happens to be 100. We’re also asked to use a significance level of .01.</li>
+</ul>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="co"># (1) Set the hypotheses</span></a>
+<a class="sourceLine" id="cb48-2" data-line-number="2"><span class="co"># H0: mu = 100</span></a>
+<a class="sourceLine" id="cb48-3" data-line-number="3"><span class="co"># H1: mu != 100</span></a></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="co"># (2) Calculate the point estimate</span></a>
+<a class="sourceLine" id="cb49-2" data-line-number="2">x_bar &lt;-<span class="st"> </span><span class="fl">118.2</span></a></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="co"># (3) Check the conditions</span></a>
+<a class="sourceLine" id="cb50-2" data-line-number="2"><span class="co"># random &amp; 35 &lt; 10% of all gifted child -&gt; independence</span></a>
+<a class="sourceLine" id="cb50-3" data-line-number="3"><span class="co"># n &gt; 30 &amp; sample not skewed -&gt; nearly normal sampling distribution</span></a></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="co"># (4) Sampling distribution, p-value, test statistic</span></a>
+<a class="sourceLine" id="cb51-2" data-line-number="2">se &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="fl">6.5</span><span class="op">/</span><span class="kw">sqrt</span>(<span class="dv">36</span>), <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb51-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb51-4" data-line-number="4">z_upper &lt;-<span class="st"> </span>(<span class="fl">118.2</span><span class="dv">-100</span>)<span class="op">/</span>se</a>
+<a class="sourceLine" id="cb51-5" data-line-number="5">z_lower &lt;-<span class="st"> </span>(<span class="fl">81.8</span><span class="dv">-100</span>)<span class="op">/</span>se</a>
+<a class="sourceLine" id="cb51-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb51-7" data-line-number="7">p_value &lt;-<span class="st"> </span>(<span class="kw">pnorm</span>(z_upper, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">pnorm</span>(z_lower)</a>
+<a class="sourceLine" id="cb51-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb51-9" data-line-number="9"><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb51-10" data-line-number="10">  <span class="dt">se =</span> se,</a>
+<a class="sourceLine" id="cb51-11" data-line-number="11">  <span class="dt">z =</span> <span class="kw">c</span>(z_lower, z_upper),</a>
+<a class="sourceLine" id="cb51-12" data-line-number="12">  <span class="dt">p_value =</span> p_value</a>
+<a class="sourceLine" id="cb51-13" data-line-number="13">)</a></code></pre></div>
+<pre><code>## $se
+## [1] 1.083
+## 
+## $z
+## [1] -16.80517  16.80517
+## 
+## $p_value
+## [1] 2.236673e-63</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="co"># (5) Make a decision</span></a>
+<a class="sourceLine" id="cb53-2" data-line-number="2"><span class="co"># p-value is very low -&gt; strong evidence against the null</span></a>
+<a class="sourceLine" id="cb53-3" data-line-number="3"><span class="co"># We reject the null hypothesis and conclude that the data provide convincing evidence of a difference between </span></a>
+<a class="sourceLine" id="cb53-4" data-line-number="4"><span class="co"># the average IQ score of mothers of gifted child and the average IQ score for the populatin at large.</span></a></code></pre></div>
+<p><strong>Example</strong></p>
+<ul>
+<li>A statistics student interested in sleep habits of domestic cats took a random sample of 144 cats and monitored their sleep. The cats slept an average of 16 hours per day. According to our online resources, domestic dogs actually sleep on average 14 hours a day.</li>
+<li>We want to find out if these data provide convincing evidence of different sleeping habits for domestic cats and dogs with respect to how much they sleep. Note that the test statistic calculated was 1.73.</li>
+<li>What is the interpretation of this p-value in context of these data?</li>
+</ul>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1"><span class="co"># H0: mu = 14</span></a>
+<a class="sourceLine" id="cb54-2" data-line-number="2"><span class="co"># H1: mu != 14</span></a>
+<a class="sourceLine" id="cb54-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb54-4" data-line-number="4"><span class="kw">list</span>(<span class="dt">p_value =</span> <span class="kw">pnorm</span>(<span class="op">-</span><span class="fl">1.73</span>) <span class="op">*</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
+<pre><code>## $p_value
+## [1] 0.08363028</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="co"># p(obtaining a random sample of 144 cats that sleep 16 hours or more or 12 hours or less, </span></a>
+<a class="sourceLine" id="cb56-2" data-line-number="2"><span class="co"># on average, if in fact cats truly slept 14 hours per day on average) = 0.0836</span></a>
+<a class="sourceLine" id="cb56-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb56-4" data-line-number="4"><span class="co"># The p-value is larger than the significance level 0.05. Hence the evidence is not strong</span></a>
+<a class="sourceLine" id="cb56-5" data-line-number="5"><span class="co"># enough to reject the null hypotheses. Hence, we cannot decide that there is a</span></a>
+<a class="sourceLine" id="cb56-6" data-line-number="6"><span class="co"># difference between the sleeping habits for domestic cats and dogs.</span></a>
+<a class="sourceLine" id="cb56-7" data-line-number="7"><span class="co"># If the average hours of sleep for domestic cat is 14, there is a 8% chance </span></a>
+<a class="sourceLine" id="cb56-8" data-line-number="8"><span class="co"># that a random sample of size 144 would yield a sample mean of 16.</span></a></code></pre></div>
+</div>
+</div>
+<div id="exercises-2" class="section level3 unnumbered">
+<h3>Exercises</h3>
+<p>OpenIntro Statistics, 3rd edition<br>
+4.17, 4.19, 4.23, 4.25, 4.27</p>
+<p><strong>4.17 Identify hypotheses, Part I.</strong></p>
+<ul>
+<li>Write the null and alternative hypotheses in words and
+then symbols for each of the following situations.</li>
+<li><ol style="list-style-type: lower-alpha">
+<li>New York is known as “the city that never sleeps”. A random sample of 25 New Yorkers were
+asked how much sleep they get per night. Do these data provide convincing evidence that
+New Yorkers on average sleep less than 8 hours a night?</li>
+</ol></li>
+<li><ol start="2" style="list-style-type: lower-alpha">
+<li>Employers at a firm are worried about the effect of March Madness, a basketball championship
+held each spring in the US, on employee productivity. They estimate that on a regular business
+day employees spend on average 15 minutes of company time checking personal email, making
+personal phone calls, etc. They also collect data on how much company time employees spend
+on such non- business activities during March Madness. They want to determine if these data
+provide convincing evidence that employee productivity decreases during March Madness</li>
+</ol></li>
+</ul>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1"><span class="co"># (a)</span></a>
+<a class="sourceLine" id="cb57-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb57-3" data-line-number="3"><span class="co"># H0: mu = 8</span></a>
+<a class="sourceLine" id="cb57-4" data-line-number="4"><span class="co"># HA: mu &lt; 8</span></a>
+<a class="sourceLine" id="cb57-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb57-6" data-line-number="6"><span class="co"># The null hypotheses assumes that the average sleep hours of New Yorkers </span></a>
+<a class="sourceLine" id="cb57-7" data-line-number="7"><span class="co"># is no difference to the average sleep hours of other city </span></a>
+<a class="sourceLine" id="cb57-8" data-line-number="8"><span class="co"># which is 8 hours.</span></a>
+<a class="sourceLine" id="cb57-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb57-10" data-line-number="10"><span class="co"># The alternative hypotheses is that New Yorkers on average sleep less </span></a>
+<a class="sourceLine" id="cb57-11" data-line-number="11"><span class="co"># than 8 hours.</span></a></code></pre></div>
+<p><strong>4.19 Online communication.</strong></p>
+<ul>
+<li>A study suggests that the average college student spends 10
+hours per week communicating with others online. You believe that this is an underestimate and
+decide to collect your own sample for a hypothesis test. You randomly sample 60 students from
+your dorm and find that on average they spent 13.5 hours a week communicating with others
+online.</li>
+<li>A friend of yours, who offers to help you with the hypothesis test, comes up with the
+following set of hypotheses. Indicate any errors you see.
+<span class="math display">\[H_0 : \bar{x} &lt; 10 \text{ hours}\]</span>
+<span class="math display">\[H_A : \bar{x} &gt; 13.5 \text{ hours}\]</span></li>
+</ul>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1"><span class="co"># The null hypotheses should be mu = 10 hours.</span></a>
+<a class="sourceLine" id="cb58-2" data-line-number="2"><span class="co"># The alternative hypotheses should be mu &gt; 10 hours.</span></a></code></pre></div>
+<p><strong>4.23 Nutrition labels.</strong></p>
+<ul>
+<li>The nutrition label on a bag of potato chips says that a one ounce
+(28 gram) serving of potato chips has 130 calories and contains ten grams of fat, with three grams
+of saturated fat. A random sample of 35 bags yielded a sample mean of 134 calories with a standard
+deviation of 17 calories.</li>
+<li>Is there evidence that the nutrition label does not provide an accurate
+measure of calories in the bags of potato chips? We have verified the independence, sample size,
+and skew conditions are satisfied.</li>
+</ul>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1"><span class="co"># H0: mu = 130</span></a>
+<a class="sourceLine" id="cb59-2" data-line-number="2"><span class="co"># HA: mu != 130</span></a>
+<a class="sourceLine" id="cb59-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb59-4" data-line-number="4">x &lt;-<span class="st"> </span><span class="dv">130</span></a>
+<a class="sourceLine" id="cb59-5" data-line-number="5">p &lt;-<span class="st"> </span><span class="dv">134</span></a>
+<a class="sourceLine" id="cb59-6" data-line-number="6">sd &lt;-<span class="st"> </span><span class="dv">17</span></a>
+<a class="sourceLine" id="cb59-7" data-line-number="7">n &lt;-<span class="st"> </span><span class="dv">35</span></a>
+<a class="sourceLine" id="cb59-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb59-9" data-line-number="9">se &lt;-<span class="st"> </span>sd<span class="op">/</span><span class="kw">sqrt</span>(n)</a>
+<a class="sourceLine" id="cb59-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb59-11" data-line-number="11">z &lt;-<span class="st"> </span>(<span class="dv">134-130</span>)<span class="op">/</span>se</a>
+<a class="sourceLine" id="cb59-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb59-13" data-line-number="13">p_value &lt;-<span class="st"> </span><span class="kw">pnorm</span>(z, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>) <span class="op">*</span><span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb59-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb59-15" data-line-number="15"><span class="co"># If the null hypotheses is true (mean is 130), there is a 0.164</span></a>
+<a class="sourceLine" id="cb59-16" data-line-number="16"><span class="co"># chance during a random sample of 130 yielding a sample mean of 134.</span></a>
+<a class="sourceLine" id="cb59-17" data-line-number="17"><span class="co"># Let alpha be 0.05, the p-value is higher than the significance</span></a>
+<a class="sourceLine" id="cb59-18" data-line-number="18"><span class="co"># level and we failed to reject the null hypotheses. Hence,</span></a>
+<a class="sourceLine" id="cb59-19" data-line-number="19"><span class="co"># there is no strong evidence suggesting the measure of calories in the</span></a>
+<a class="sourceLine" id="cb59-20" data-line-number="20"><span class="co"># bags of potato chips is inaccurate.</span></a>
+<a class="sourceLine" id="cb59-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb59-22" data-line-number="22"><span class="kw">list</span>(<span class="dt">se =</span> se, <span class="dt">z =</span> z, <span class="dt">p_value =</span> p_value)</a></code></pre></div>
+<pre><code>## $se
+## [1] 2.873524
+## 
+## $z
+## [1] 1.392019
+## 
+## $p_value
+## [1] 0.1639167</code></pre>
+<p><strong>4.25 Waiting at an ER, Part III.</strong></p>
+<ul>
+<li>The hospital administrator mentioned in Exercise 4.13
+randomly selected 64 patients and measured the time (in minutes) between when they checked in
+to the ER and the time they were first seen by a doctor. The average time is 137.5 minutes and
+the standard deviation is 39 minutes. She is getting grief from her supervisor on the basis that
+the wait times in the ER has increased greatly from last year’s average of 127 minutes. However,
+she claims that the increase is probably just due to chance.</li>
+<li><ol style="list-style-type: lower-alpha">
+<li>Are conditions for inference met? Note any assumptions you must make to proceed.</li>
+</ol></li>
+<li><ol start="2" style="list-style-type: lower-alpha">
+<li>Using a significance level of α = 0.05, is the change in wait times statistically significant? Use
+a two-sided test since it seems the supervisor had to inspect the data before she suggested an
+increase occurred.</li>
+</ol></li>
+<li><ol start="3" style="list-style-type: lower-alpha">
+<li>Would the conclusion of the hypothesis test change if the significance level was changed to
+α = 0.01?</li>
+</ol></li>
+</ul>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1"><span class="co"># (a)</span></a>
+<a class="sourceLine" id="cb61-2" data-line-number="2"><span class="co"># Independence: Since the patients are randomly selected, the independence </span></a>
+<a class="sourceLine" id="cb61-3" data-line-number="3"><span class="co"># condition is met, and should make up of less than 10% of the ER residents.</span></a>
+<a class="sourceLine" id="cb61-4" data-line-number="4"><span class="co"># Sample size: The sample size is 64, greater than 30. It&#39;s large enough</span></a>
+<a class="sourceLine" id="cb61-5" data-line-number="5"><span class="co"># to perform inference with normal distribution.</span></a>
+<a class="sourceLine" id="cb61-6" data-line-number="6"><span class="co"># Skewness: There&#39;s no information regarding the skewness but </span></a>
+<a class="sourceLine" id="cb61-7" data-line-number="7"><span class="co"># we could assume that it&#39;s not skewed.</span></a></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1"><span class="co"># (b)</span></a>
+<a class="sourceLine" id="cb62-2" data-line-number="2"><span class="co"># H0: mu = 127</span></a>
+<a class="sourceLine" id="cb62-3" data-line-number="3"><span class="co"># HA: mu != 127</span></a>
+<a class="sourceLine" id="cb62-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb62-5" data-line-number="5">n &lt;-<span class="st"> </span><span class="dv">64</span></a>
+<a class="sourceLine" id="cb62-6" data-line-number="6">x &lt;-<span class="st"> </span><span class="fl">137.5</span></a>
+<a class="sourceLine" id="cb62-7" data-line-number="7">p &lt;-<span class="st"> </span><span class="dv">127</span></a>
+<a class="sourceLine" id="cb62-8" data-line-number="8">sd &lt;-<span class="st"> </span><span class="dv">39</span></a>
+<a class="sourceLine" id="cb62-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb62-10" data-line-number="10">se &lt;-<span class="st"> </span>sd <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(n)</a>
+<a class="sourceLine" id="cb62-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb62-12" data-line-number="12">z &lt;-<span class="st"> </span>(p <span class="op">-</span><span class="st"> </span>x)<span class="op">/</span>se</a>
+<a class="sourceLine" id="cb62-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb62-14" data-line-number="14">p_value &lt;-<span class="st"> </span><span class="kw">pnorm</span>(z)<span class="op">*</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb62-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb62-16" data-line-number="16"><span class="co"># The p-value 0.03 is smaller than the significance level of 0.05.</span></a>
+<a class="sourceLine" id="cb62-17" data-line-number="17"><span class="co"># Hence, the null hypotheses can be rejected in favor of the</span></a>
+<a class="sourceLine" id="cb62-18" data-line-number="18"><span class="co"># alternative hypotheses. The data provide convincing evidence that</span></a>
+<a class="sourceLine" id="cb62-19" data-line-number="19"><span class="co"># the average ER wait time has increased over the last year.</span></a>
+<a class="sourceLine" id="cb62-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb62-21" data-line-number="21"><span class="kw">list</span>(<span class="dt">se =</span> se, <span class="dt">z =</span> z, <span class="dt">p_value =</span> p_value)</a></code></pre></div>
+<pre><code>## $se
+## [1] 4.875
+## 
+## $z
+## [1] -2.153846
+## 
+## $p_value
+## [1] 0.03125224</code></pre>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1"><span class="co"># (c)</span></a>
+<a class="sourceLine" id="cb64-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb64-3" data-line-number="3"><span class="co"># If the alpha is changed to 0.01, the p-value is larger than the </span></a>
+<a class="sourceLine" id="cb64-4" data-line-number="4"><span class="co"># significance level and hence we cannot reject the null hypotheses.</span></a></code></pre></div>
+<p><strong>4.27 Working backwards, one-sided.</strong></p>
+<ul>
+<li>You are given the following hypotheses:
+<span class="math display">\[H_0 : µ = 30\]</span>
+<span class="math display">\[H_A : µ &gt; 30\]</span></li>
+<li>We know that the sample standard deviation is 10 and the sample size is 70. For what sample
+mean would the p-value be equal to 0.05? Assume that all conditions necessary for inference are
+satisfied.</li>
+</ul>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1">n &lt;-<span class="st"> </span><span class="dv">70</span></a>
+<a class="sourceLine" id="cb65-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="dv">30</span></a>
+<a class="sourceLine" id="cb65-3" data-line-number="3">sd &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb65-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb65-5" data-line-number="5">se &lt;-<span class="st"> </span><span class="dv">10</span><span class="op">/</span><span class="kw">sqrt</span>(<span class="dv">70</span>)</a>
+<a class="sourceLine" id="cb65-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb65-7" data-line-number="7"><span class="co"># Find the required z value if p-value = 0.05</span></a>
+<a class="sourceLine" id="cb65-8" data-line-number="8">z &lt;-<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.05</span>)</a>
+<a class="sourceLine" id="cb65-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb65-10" data-line-number="10"><span class="co"># Find the required mean</span></a>
+<a class="sourceLine" id="cb65-11" data-line-number="11"><span class="co"># z = (p - x)/se</span></a>
+<a class="sourceLine" id="cb65-12" data-line-number="12">required_mean &lt;-<span class="st"> </span>z <span class="op">*</span><span class="st"> </span>se <span class="op">+</span><span class="st"> </span>x</a>
+<a class="sourceLine" id="cb65-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb65-14" data-line-number="14"><span class="kw">list</span>(<span class="dt">se =</span> se, <span class="dt">z =</span> z, <span class="dt">required_mean =</span> required_mean)</a></code></pre></div>
+<pre><code>## $se
+## [1] 1.195229
+## 
+## $z
+## [1] -1.644854
+## 
+## $required_mean
+## [1] 28.03402</code></pre>
+</div>
+</div>
+<div id="significance" class="section level2 unnumbered">
+<h2>Significance</h2>
+<div id="inference-for-other-estimators" class="section level3 unnumbered">
+<h3>Inference for Other Estimators</h3>
+<ul>
+<li>Any <strong>nearly normal sampling distributions</strong>
+<ul>
+<li>Sample mean <span class="math inline">\(\bar{x}\)</span></li>
+<li>Difference between sample means <span class="math inline">\(\bar{x}_1 - \bar{x}_2\)</span></li>
+<li>Sample proportion <span class="math inline">\(\hat{p}\)</span></li>
+<li>Diffefference between sample proportions <span class="math inline">\(\hat{p}_1 - \hat{p}_2\)</span></li>
+</ul></li>
+<li><strong>Unbiased estimator</strong>
+<ul>
+<li>An important assumption about the point estimates is that they’re unbiased, i.e. the sampling distribution of the estimate is centered at the true population parameter it estimates.</li>
+<li>An unbiased estimate does not naturally over or underestimate the parameter but instead it provides a good estimate.</li>
+<li>We know that the sample mean is an example of an unbiased point estimate.</li>
+</ul></li>
+</ul>
+<div id="confidence-intervals" class="section level4 unnumbered">
+<h4>Confidence Intervals</h4>
+<ul>
+<li><strong>Confidence intervals</strong> for nearly normal point estimates
+<span class="math display">\[ \text{point estimate} \pm z^{\star} \times SE \]</span></li>
+</ul>
+</div>
+<div id="hypothesis-testing-1" class="section level4 unnumbered">
+<h4>Hypothesis Testing</h4>
+<ul>
+<li><strong>Hypothesis testing</strong> for nearly normal point estimates
+<span class="math display">\[ Z = \frac{\text{ point estimate } - \text{ null value }}{SE} \]</span></li>
+</ul>
+<p><strong>Example</strong></p>
+<ul>
+<li>A 2010 Pew Research foundation poll indicates that among 1,099 college graduates, 33% watch the Daily Show. An American late-night TV Show. The standard error of this estimate is 0.014.</li>
+<li>We are asked to estimate the 95% confidence interval for the proportion of college graduates who watch The Daily Show.</li>
+</ul>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1">p &lt;-<span class="st"> </span><span class="fl">0.33</span></a>
+<a class="sourceLine" id="cb67-2" data-line-number="2">se &lt;-<span class="st"> </span><span class="fl">0.014</span></a>
+<a class="sourceLine" id="cb67-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb67-4" data-line-number="4"><span class="kw">list</span>(<span class="dt">ci =</span> <span class="kw">c</span>(p <span class="op">+</span><span class="st"> </span><span class="fl">1.96</span> <span class="op">*</span><span class="st"> </span>se, p <span class="op">-</span><span class="st"> </span><span class="fl">1.96</span> <span class="op">*</span><span class="st"> </span>se))</a></code></pre></div>
+<pre><code>## $ci
+## [1] 0.35744 0.30256</code></pre>
+<p><strong>Example</strong></p>
+<ul>
+<li>The 3rd national health and nutrition examination survey NHANES, collected body fat percentage and gender data from over 13,000 subjects in ages between 20 to 80. The average body fat percentage for the 6,580 men in the sample was 23.9%. And this value was 35% for the, for the 7,021 women. The standard error for the difference between the average male and female body fat percentages was 0.114.</li>
+<li>Do these data provide convincing evidence that men and women have different average body fat percentages? You may assume that the distribution of the point estimate is nearly normal.</li>
+</ul>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1"><span class="co"># H0: mu_men = mu_women -&gt; mu_men - mu_women = 0</span></a>
+<a class="sourceLine" id="cb69-2" data-line-number="2"><span class="co"># H1: mu_men = mu_women -&gt; mu_men - mu_women != 0</span></a>
+<a class="sourceLine" id="cb69-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb69-4" data-line-number="4"><span class="co"># Point estimate</span></a>
+<a class="sourceLine" id="cb69-5" data-line-number="5"><span class="co"># mu_men - mu_women</span></a>
+<a class="sourceLine" id="cb69-6" data-line-number="6">p &lt;-<span class="st"> </span><span class="fl">23.9</span> <span class="op">-</span><span class="st"> </span><span class="dv">35</span></a>
+<a class="sourceLine" id="cb69-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb69-8" data-line-number="8">mu &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb69-9" data-line-number="9">se &lt;-<span class="st"> </span><span class="fl">0.114</span></a>
+<a class="sourceLine" id="cb69-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb69-11" data-line-number="11">z &lt;-<span class="st"> </span>(<span class="op">-</span><span class="fl">11.1</span> <span class="op">-</span><span class="st"> </span><span class="dv">0</span>)<span class="op">/</span><span class="fl">0.114</span></a>
+<a class="sourceLine" id="cb69-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb69-13" data-line-number="13">p_value &lt;-<span class="st"> </span><span class="kw">pnorm</span>(z) <span class="op">*</span><span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb69-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb69-15" data-line-number="15"><span class="co"># Reject the null hypothesis.</span></a>
+<a class="sourceLine" id="cb69-16" data-line-number="16"><span class="kw">list</span>(<span class="dt">p =</span> p, <span class="dt">z =</span> z, <span class="dt">p_value =</span> p_value)</a></code></pre></div>
+<pre><code>## $p
+## [1] -11.1
+## 
+## $z
+## [1] -97.36842
+## 
+## $p_value
+## [1] 0</code></pre>
+</div>
+</div>
+<div id="decision-errors" class="section level3 unnumbered">
+<h3>Decision Errors</h3>
+<ul>
+<li><strong>Type I error</strong> (<span class="math inline">\(\alpha\)</span>) is rejecting the H0 when H0 is true. (Declaring the defendant guilty when they are actually innocent.)</li>
+<li><strong>Type II error</strong> (<span class="math inline">\(\beta\)</span>) is failing to reject H0 when HA is true. (Declaring the defendant innocent when they are actually guilty.)</li>
+<li><p><strong>Power</strong> (<span class="math inline">\(1 - \beta\)</span>) of a test is the probability of correctly rejecting H0.</p></li>
+<li><p>We (almost) never know if H0 or HA is true, but we need to consider all possibilities.</p></li>
+</ul>
+<div id="type-i-error-rate" class="section level4 unnumbered">
+<h4>Type I Error Rate</h4>
+<ul>
+<li>We reject the null hypothesis when the p-value is less than 0.05 (<span class="math inline">\(\alpha = 0.05\)</span>).</li>
+<li>This means that, for those cases where the null hypothesis is actually true, we do not want to incorrectly reject it more than 5% of those times.</li>
+<li>In other words, when using a 5% significance level, there is about a 5% chance of making a type one error if the null hypothesis is true.</li>
+</ul>
+<p><span class="math display">\[ P(\text{Type I error } | H_0 \text{ true}) = \alpha \]</span></p>
+<ul>
+<li>This is why we prefer small values of <span class="math inline">\(\alpha\)</span> - increasing <span class="math inline">\(\alpha\)</span> increases the Type I error rate.</li>
+<li>If Type I Error is dangerous or especially costly, choose a small significance level (e.g. 0.01). Goal: We want to be very cautious about rejecting H0, so we demand very strong evidence favoring HA before we should do so.</li>
+<li>If Type II Error is relatively more dangerous or much more costly, choose a higher significance level (e.g. 0.10). Goal: We want to be cautious about failing to reject H0 when the null is actually false.</li>
+</ul>
+</div>
+<div id="type-ii-error-rate" class="section level4 unnumbered">
+<h4>Type II Error Rate</h4>
+<ul>
+<li>If the alternative hypothesis is actually true, what is the chance that we make a type two error? In other words, what is the chance that we fail to reject the null hypothesis, even when we should reject it?</li>
+<li>The answer to this is not obvious.</li>
+<li>If the true population average is very close to the null value, it will be very difficult to detect a difference and to reject the null hypothesis.</li>
+<li>In other words, if the true population average is very different from the null value, it will be much easier to detect a difference.</li>
+<li>Clearly then, <span class="math inline">\(\beta\)</span>, the probability of making a type two area depends on our effect size. An <strong>effect size</strong> is defined as the difference between the point estimate and the null value.</li>
+</ul>
+</div>
+</div>
+<div id="significance-vs-confidence-level" class="section level3 unnumbered">
+<h3>Significance vs Confidence Level</h3>
+<ul>
+<li>Broadly we can say that a significance level and a confidence level are complements of each other.</li>
+<li>A two sided hypothesis with threshold of <span class="math inline">\(\alpha\)</span> is equivalent to a confidence interval with <span class="math inline">\(CL = 1 - \alpha\)</span>.</li>
+<li>A one sided hypothesis with threshold of <span class="math inline">\(\alpha\)</span> is equivalent to a confidence interval with <span class="math inline">\(CL = 1 - (2 \times \alpha)\)</span>.</li>
+<li>If H0 is rejected, a confidence interval that agrees with the result of the hypothesis test should not include the null value.</li>
+<li>If H0 is failed to be rejected, a confidence interval that agrees with the result of the hypothesis test should include the null value.</li>
+</ul>
+</div>
+<div id="statistical-vs-practical-significance" class="section level3 unnumbered">
+<h3>Statistical vs Practical Significance</h3>
+<ul>
+<li>Real differences between the point estimate and the null value are easier to detect with large samples.</li>
+<li>However very large samples will result in statistical significance even for tiny differences between the sample mean and the null value or our effect size, even when the difference is not practically significant.</li>
+</ul>
+</div>
+<div id="exercises-3" class="section level3 unnumbered">
+<h3>Exercises</h3>
+<p>OpenIntro Statistics, 3rd edition<br>
+4.43, 4.45<br>
+4.29, 4.31, 4.47</p>
+<p><strong>4.43 Spam mail counts.</strong></p>
+<ul>
+<li>The 2004 National Technology Readiness Survey sponsored by the
+Smith School of Business at the University of Maryland surveyed 418 randomly sampled Americans,
+asking them how many spam emails they receive per day. The survey was repeated on a new
+random sample of 499 Americans in 2009.</li>
+<li><ol style="list-style-type: lower-alpha">
+<li>What are the hypotheses for evaluating if the average spam emails per day has changed from
+2004 to 2009.</li>
+</ol></li>
+<li><ol start="2" style="list-style-type: lower-alpha">
+<li>In 2004 the mean was 18.5 spam emails per day, and in 2009 this value was 14.9 emails per
+day. What is the point estimate for the difference between the two population means?</li>
+</ol></li>
+<li><ol start="3" style="list-style-type: lower-alpha">
+<li>A report on the survey states that the observed difference between the sample means is not
+statistically significant. Explain what this means in context of the hypothesis test and data.</li>
+</ol></li>
+<li><ol start="4" style="list-style-type: lower-alpha">
+<li>Would you expect a confidence interval for the difference between the two population means
+to contain 0? Explain your reasoning.</li>
+</ol></li>
+</ul>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1"><span class="co"># (a)</span></a>
+<a class="sourceLine" id="cb71-2" data-line-number="2"><span class="co"># H0: mu_2009 - mu_2004 = 0</span></a>
+<a class="sourceLine" id="cb71-3" data-line-number="3"><span class="co"># HA: mu_2009 - mu_2004 != 0</span></a></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1"><span class="co"># (b)</span></a>
+<a class="sourceLine" id="cb72-2" data-line-number="2"><span class="kw">list</span>(<span class="dt">p =</span> <span class="fl">18.5</span> <span class="op">-</span><span class="st"> </span><span class="fl">14.9</span>)</a></code></pre></div>
+<pre><code>## $p
+## [1] 3.6</code></pre>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1"><span class="co"># (c)</span></a>
+<a class="sourceLine" id="cb74-2" data-line-number="2"><span class="co"># It means that assuming the null hypotheses is true, where the difference</span></a>
+<a class="sourceLine" id="cb74-3" data-line-number="3"><span class="co"># between the average spam emails per day in 2004 and 2009 is 0,</span></a>
+<a class="sourceLine" id="cb74-4" data-line-number="4"><span class="co"># the probability of observing a sample difference of 3.6</span></a>
+<a class="sourceLine" id="cb74-5" data-line-number="5"><span class="co"># is higher than the significance level alpha, in other words, </span></a>
+<a class="sourceLine" id="cb74-6" data-line-number="6"><span class="co"># not rare. Hence, we cannot reject the null hypotheses and say</span></a>
+<a class="sourceLine" id="cb74-7" data-line-number="7"><span class="co"># that the data provides statistically strong evidence in favor of</span></a>
+<a class="sourceLine" id="cb74-8" data-line-number="8"><span class="co"># the alternative hypotheses.</span></a></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1"><span class="co"># (d)</span></a>
+<a class="sourceLine" id="cb75-2" data-line-number="2"><span class="co"># Yes. Since the result is not statistically significant, we cannot</span></a>
+<a class="sourceLine" id="cb75-3" data-line-number="3"><span class="co"># reject the null hypotheses. Hence, we would expect 0 to be </span></a>
+<a class="sourceLine" id="cb75-4" data-line-number="4"><span class="co"># include in our confidence interval, i.e. it&#39;s highly plausible</span></a>
+<a class="sourceLine" id="cb75-5" data-line-number="5"><span class="co"># to see the value 0.</span></a></code></pre></div>
+<p><strong>4.45 Spam mail percentages.</strong></p>
+<ul>
+<li>The National Technology Readiness Survey sponsored by the
+Smith School of Business at the University of Maryland surveyed 418 randomly sampled Americans,
+asking them how often they delete spam emails. In 2004, 23% of the respondents said they delete
+their spam mail once a month or less, and in 2009 this value was 16%.</li>
+<li><ol style="list-style-type: lower-alpha">
+<li>What are the hypotheses for evaluating if the proportion of those who delete their email once
+a month or less has changed from 2004 to 2009?</li>
+</ol></li>
+<li><ol start="2" style="list-style-type: lower-alpha">
+<li>What is the point estimate for the difference between the two population proportions?</li>
+</ol></li>
+<li><ol start="3" style="list-style-type: lower-alpha">
+<li>A report on the survey states that the observed decrease from 2004 to 2009 is statistically
+significant. Explain what this means in context of the hypothesis test and the data.</li>
+</ol></li>
+<li><ol start="4" style="list-style-type: lower-alpha">
+<li>Would you expect a confidence interval for the difference between the two population proportions to contain 0? Explain your reasoning.</li>
+</ol></li>
+</ul>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1"><span class="co"># (a)</span></a>
+<a class="sourceLine" id="cb76-2" data-line-number="2"><span class="co"># H0: p_2004 = p_2009</span></a>
+<a class="sourceLine" id="cb76-3" data-line-number="3"><span class="co"># HA: p_2004 != p_2009</span></a></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1"><span class="co"># (b)</span></a>
+<a class="sourceLine" id="cb77-2" data-line-number="2"><span class="kw">list</span>(<span class="dt">p =</span> <span class="fl">0.16</span> <span class="op">-</span><span class="st"> </span><span class="fl">0.23</span>)</a></code></pre></div>
+<pre><code>## $p
+## [1] -0.07</code></pre>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1"><span class="co"># (c) </span></a>
+<a class="sourceLine" id="cb79-2" data-line-number="2"><span class="co"># It means that assuming the null hypotheses is true, the probability</span></a>
+<a class="sourceLine" id="cb79-3" data-line-number="3"><span class="co"># of observing a difference of 0.07 is very small, and smaller than</span></a>
+<a class="sourceLine" id="cb79-4" data-line-number="4"><span class="co"># the significance level, hence we reject the null hypotheses </span></a>
+<a class="sourceLine" id="cb79-5" data-line-number="5"><span class="co"># and say that the data provides evidence that there are difference </span></a>
+<a class="sourceLine" id="cb79-6" data-line-number="6"><span class="co"># between the two population proportions, and the difference is not due</span></a>
+<a class="sourceLine" id="cb79-7" data-line-number="7"><span class="co"># to sampling variability.</span></a></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" data-line-number="1"><span class="co"># (d)</span></a>
+<a class="sourceLine" id="cb80-2" data-line-number="2"><span class="co"># No. As we rejected the null hypotheses.</span></a></code></pre></div>
+<p><strong>4.29 Testing for Fibromyalgia.</strong></p>
+<ul>
+<li>A patient named Diana was diagnosed with Fibromyalgia, a
+long-term syndrome of body pain, and was prescribed anti-depressants. Being the skeptic that she
+is, Diana didn’t initially believe that anti-depressants would help her symptoms. However after
+a couple months of being on the medication she decides that the anti-depressants are working,
+because she feels like her symptoms are in fact getting better.</li>
+<li><ol style="list-style-type: lower-alpha">
+<li>Write the hypotheses in words for Diana’s skeptical position when she started taking the
+anti-depressants.</li>
+</ol></li>
+<li><ol start="2" style="list-style-type: lower-alpha">
+<li>What is a Type 1 Error in this context?</li>
+</ol></li>
+<li><ol start="3" style="list-style-type: lower-alpha">
+<li>What is a Type 2 Error in this context?</li>
+</ol></li>
+</ul>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" data-line-number="1"><span class="co"># (a)</span></a>
+<a class="sourceLine" id="cb81-2" data-line-number="2"><span class="co"># H0: The anti-depressants are not working.</span></a>
+<a class="sourceLine" id="cb81-3" data-line-number="3"><span class="co"># HA: The anti-depressants are working.</span></a></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" data-line-number="1"><span class="co"># (b)</span></a>
+<a class="sourceLine" id="cb82-2" data-line-number="2"><span class="co"># Type 1 error is to declare the anti-depressants to be working </span></a>
+<a class="sourceLine" id="cb82-3" data-line-number="3"><span class="co"># when the truth is they are useless.</span></a></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" data-line-number="1"><span class="co"># (c)</span></a>
+<a class="sourceLine" id="cb83-2" data-line-number="2"><span class="co"># Type 2 error is to declare the anti-depressants to be useless</span></a>
+<a class="sourceLine" id="cb83-3" data-line-number="3"><span class="co"># when the truth is they are helping the symptoms.</span></a></code></pre></div>
+<p><strong>4.31 Which is higher?</strong></p>
+<ul>
+<li>In each part below, there is a value of interest and two scenarios (I and
+II). For each part, report if the value of interest is larger under scenario I, scenario II, or whether
+the value is equal under the scenarios.</li>
+<li><ol style="list-style-type: lower-alpha">
+<li>The standard error of <span class="math inline">\(\bar{x}\)</span> when s = 120 and (I) n = 25 or (II) n = 125.</li>
+</ol></li>
+<li><ol start="2" style="list-style-type: lower-alpha">
+<li>The margin of error of a confidence interval when the confidence level is (I) 90% or (II) 80%.</li>
+</ol></li>
+<li><ol start="3" style="list-style-type: lower-alpha">
+<li>The p-value for a Z-statistic of 2.5 when (I) n = 500 or (II) n = 1000.</li>
+</ol></li>
+<li><ol start="4" style="list-style-type: lower-alpha">
+<li>The probability of making a Type 2 Error when the alternative hypothesis is true and the
+significance level is (I) 0.05 or (II) 0.10.</li>
+</ol></li>
+</ul>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1"><span class="co"># (a)</span></a>
+<a class="sourceLine" id="cb84-2" data-line-number="2"><span class="co"># SE of mean is inversely relating to sample size. SE is larger in (I).</span></a></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1"><span class="co"># (b)</span></a>
+<a class="sourceLine" id="cb85-2" data-line-number="2"><span class="co"># The margin of error depends on the z-score calculated by the confidence </span></a>
+<a class="sourceLine" id="cb85-3" data-line-number="3"><span class="co"># interval and the standard error.</span></a>
+<a class="sourceLine" id="cb85-4" data-line-number="4"><span class="co"># A higher confidence interval yield a higher z-score and hence a higher</span></a>
+<a class="sourceLine" id="cb85-5" data-line-number="5"><span class="co"># margin of error. (I) has a higher margin of error.</span></a>
+<a class="sourceLine" id="cb85-6" data-line-number="6"><span class="kw">list</span>(<span class="dt">z_90 =</span> <span class="kw">qnorm</span>((<span class="dv">1</span><span class="fl">-.9</span>)<span class="op">/</span><span class="dv">2</span>), <span class="dt">z_80 =</span> <span class="kw">qnorm</span>((<span class="dv">1</span><span class="fl">-.8</span>)<span class="op">/</span><span class="dv">2</span>))</a></code></pre></div>
+<pre><code>## $z_90
+## [1] -1.644854
+## 
+## $z_80
+## [1] -1.281552</code></pre>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1"><span class="co"># (d)</span></a>
+<a class="sourceLine" id="cb87-2" data-line-number="2"><span class="co"># Type 2 error is failing to reject the null hypotheses when the </span></a>
+<a class="sourceLine" id="cb87-3" data-line-number="3"><span class="co"># alternative hypotheses is true. In other words,</span></a>
+<a class="sourceLine" id="cb87-4" data-line-number="4"><span class="co"># declare a person innocent when he&#39;s actually guilty.</span></a>
+<a class="sourceLine" id="cb87-5" data-line-number="5"><span class="co"># When significance level is small, it&#39;s harder to declare a person guilty, </span></a>
+<a class="sourceLine" id="cb87-6" data-line-number="6"><span class="co"># or to reject the null hypotheses. Hence, we&#39;re easier to </span></a>
+<a class="sourceLine" id="cb87-7" data-line-number="7"><span class="co"># declare a person innocent when he&#39;s guilty. </span></a>
+<a class="sourceLine" id="cb87-8" data-line-number="8"><span class="co"># (I) has a higher probability of making type 2 error.</span></a></code></pre></div>
+<p><strong>4.47 Practical vs. statistical.</strong></p>
+<ul>
+<li>Determine whether the following statement is true or false, and
+explain your reasoning: “With large sample sizes, even small differences between the null value
+and the point estimate can be statistically significant.”</li>
+</ul>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" data-line-number="1"><span class="co"># True. </span></a>
+<a class="sourceLine" id="cb88-2" data-line-number="2">n1 &lt;-<span class="st"> </span><span class="dv">1000</span></a>
+<a class="sourceLine" id="cb88-3" data-line-number="3">n2 &lt;-<span class="st"> </span><span class="dv">50</span></a>
+<a class="sourceLine" id="cb88-4" data-line-number="4">x &lt;-<span class="st"> </span><span class="dv">50</span></a>
+<a class="sourceLine" id="cb88-5" data-line-number="5">p &lt;-<span class="st"> </span><span class="dv">52</span></a>
+<a class="sourceLine" id="cb88-6" data-line-number="6">sd &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb88-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb88-8" data-line-number="8">se1 &lt;-<span class="st"> </span>sd<span class="op">/</span><span class="kw">sqrt</span>(n1)</a>
+<a class="sourceLine" id="cb88-9" data-line-number="9">z1 &lt;-<span class="st"> </span>(<span class="dv">1-0</span>)<span class="op">/</span>se1</a>
+<a class="sourceLine" id="cb88-10" data-line-number="10">p_value_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">pnorm</span>(z1, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb88-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb88-12" data-line-number="12">se2 &lt;-<span class="st"> </span>sd<span class="op">/</span><span class="kw">sqrt</span>(n2)</a>
+<a class="sourceLine" id="cb88-13" data-line-number="13">z2 &lt;-<span class="st"> </span>(<span class="dv">1-0</span>)<span class="op">/</span>se2</a>
+<a class="sourceLine" id="cb88-14" data-line-number="14">p_value_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">pnorm</span>(z2, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb88-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb88-16" data-line-number="16"><span class="co"># For large sample size, the standard error will be lower,</span></a>
+<a class="sourceLine" id="cb88-17" data-line-number="17"><span class="co"># and hence a larger test statistics and smaller p value.</span></a>
+<a class="sourceLine" id="cb88-18" data-line-number="18"><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb88-19" data-line-number="19">  <span class="dt">p_value_n1000 =</span> p_value_<span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb88-20" data-line-number="20">  <span class="dt">p_value_n50 =</span> p_value_<span class="dv">2</span></a>
+<a class="sourceLine" id="cb88-21" data-line-number="21">)</a></code></pre></div>
+<pre><code>## $p_value_n1000
+## [1] 0.0007827011
+## 
+## $p_value_n50
+## [1] 0.2397501</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="week-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="week-3.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

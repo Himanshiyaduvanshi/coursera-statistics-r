@@ -1,0 +1,793 @@
+# Week 2 {-}
+
+## Hypothesis Testing {-}
+
+### Hypothesis Testing Framework {-}
+
+* We start with a **null hypothesis (H0)** that represents the status quo.
+* We also have an **alternative hypothesis (HA)** that represents our research question, i.e. what we're testing for.
+* We conduct a hypothesis test under the assumption that the null hypothesis is true, either via
+simulation or theorectical methods - methods that rely on the CLT.
+* If the test results suggest that the data do not provide convincing evidence for the alternative
+hypothesis, we stick with the null hypothesis. If they do, then we reject the null hypothesis in
+favor of the alternative.
+
+### Hypothesis Testing (for a Mean) {-}
+
+#### Hypothesis {-}
+
+* null - H0 : Ofen either a skeptical perspective or a claim to be tested (=)
+* alternative - HA : Represents an alternative claim under consideration and is often represented by a range of possible parameter values. (<, >, !=)
+* The skeptic will not abandon the H0 unless the evidence in favor of the HA is so strong that she rejects H0 in favor of HA.
+* Hypothesis is always about population parameters, but never about sample statistics.
+
+#### P-Value {-}
+
+* **P(observed or more extreme outcome | H0 true)**
+* We use the test statistic to calculate the p-value, the probability of observing data at least as favorable to the alternative hypothesis as our current data set, if the null hypothesis was true.
+* If the p-value is low (lower than the **significance level** $ \alpha $, which is usually 5%) we say that it would be very unlikely to observe the data if the null hypothesis were true, and hence **reject H0**.
+* If the p-value is high (higher than $ \alpha $) we say that it is likely to observe the data even if the null
+hypothesis were true, and hence **do not reject H0**.
+
+**Example**
+
+* Earlier we calculated a 95% confidence interval for the average number of exclusive relationships college students have been in to be 2.7 to 3.7. 
+* Based on this confidence interval, do these data support the hypothesis that college students on average have been in more than three exclusive relationships?
+
+$$
+P(\bar{x} > 3.2 | H_0 : \mu = 3)
+$$
+
+
+```r
+# H0: mu = 3
+# Collage students have been in 3 exclusive relationships, on average.
+
+# HA: mu > 3
+# Collage students have been in more than 3 exclusive relationships, on average.
+
+# P(x_bar > 3.2 | H0: mu = 3)
+
+# Since we assumme H0 is true, we can construct the sampling distribution based on the CLT.
+
+# x_bar ~ N(mu = 3, se = 0.246)
+
+# test statistic (z-score for normal distribution)
+z <- round((3.2 - 3)/0.246, 2)
+
+# p-value
+p_value <- round(1 - pnorm(z), 2)
+
+# Since p-value is high, we do not reject H0.
+list(z = z, p_value = p_value)
+```
+
+```
+## $z
+## [1] 0.81
+## 
+## $p_value
+## [1] 0.21
+```
+
+
+```r
+# If in fact college students have been in 3 exclusive relationships on average (H0 true), there is a 
+# 21% (0.21) chance that a random sample of 50 college student would yield a sample mean of 3.2 or higher.
+
+# This is a high probability, so we think that a sample mean of 3.2 or more exclusive relationships is 
+# likely to happen simply by chance or sampling variability.
+```
+
+#### Two-Sided Tests {-}
+
+* Often instead of looking for a divergence from the null in a specific direction, we might be interested
+in divergence in any direction.
+* We call such hypothesis tests **two-sided** (or **two-tailed**).
+* The definition of a p-value is the same regardless of doing a one or a two-sided test. However, the calculation becomes slightly different and ever so slightly more complicated since we need to consider "at least as extreme as the observed outcome" in both directions away from the mean.
+
+**Example**
+
+$$
+P(\bar{x} > 3.2  \text{ OR }  \bar{x} < 2.8 | H_0 : \mu = 3)
+$$
+
+
+```r
+# test statistic
+z_upper <- round((3.2 - 3)/0.246, 2)
+z_lower <- round((2.8 - 3)/0.246, 2)
+
+# p-value
+p_upper <- round(1 - pnorm(z_upper), 3)
+p_lower <- round(pnorm(z_lower), 3)
+
+p_value <- p_upper + p_lower
+
+list(
+  z = c(z_lower, z_upper),
+  p_value = p_value
+)
+```
+
+```
+## $z
+## [1] -0.81  0.81
+## 
+## $p_value
+## [1] 0.418
+```
+
+#### Step-by-Step {-}
+
+1. Set the **hypotheses**
+    * $H_0 : \mu = \text{null value}$
+    * $H_A: \mu < or > or \neq \text{null value}$
+2. Calculate the **point estimate**: $\bar{x}$
+3. Check **conditions**
+    * Independence
+    * Sample size/skew
+4. Draw **sampling distribution**, shape **p-value**, calculate **test statistic**
+    * $ z = \frac{\bar{x} - \mu}{SE} $
+    * $ SE = \frac{s}{\sqrt{n}} $
+5. Make a decision, and interpret it in context of the research question
+    * If p-value < $\alpha$, reject $H_0$; the data provide convincing evidence for $H_A$.
+    * If p-value > $\alpha$, fail to reject $H_0$ the data do not provide convincing evidence for $H_A$.
+
+**Example**
+
+* Researchers investigating characteristics of gifted children collected data from schools in a large city on a random sample of 36 children who were identified as gifted children soon after they reached the age of four. 
+* In this study, along with variables on the children, the researchers also collected data on their mothers' IQ scores. The histogram shows the distribution of these data, and also provided our some sample statistics.
+    * n = 36
+    * min = 101
+    * mean = 118.2
+    * sd = 6.5
+    * max = 131
+* Perform a hypothesis test to evaluate if these data provide convincing evidence of a difference between the average IQ score of mothers of gifted children And the average IQ score for the population at large, which happens to be 100. We're also asked to use a significance level of .01.
+
+
+```r
+# (1) Set the hypotheses
+# H0: mu = 100
+# H1: mu != 100
+```
+
+
+```r
+# (2) Calculate the point estimate
+x_bar <- 118.2
+```
+
+
+```r
+# (3) Check the conditions
+# random & 35 < 10% of all gifted child -> independence
+# n > 30 & sample not skewed -> nearly normal sampling distribution
+```
+
+
+```r
+# (4) Sampling distribution, p-value, test statistic
+se <- round(6.5/sqrt(36), 3)
+
+z_upper <- (118.2-100)/se
+z_lower <- (81.8-100)/se
+
+p_value <- (pnorm(z_upper, lower.tail = FALSE)) + pnorm(z_lower)
+
+list(
+  se = se,
+  z = c(z_lower, z_upper),
+  p_value = p_value
+)
+```
+
+```
+## $se
+## [1] 1.083
+## 
+## $z
+## [1] -16.80517  16.80517
+## 
+## $p_value
+## [1] 2.236673e-63
+```
+
+
+```r
+# (5) Make a decision
+# p-value is very low -> strong evidence against the null
+# We reject the null hypothesis and conclude that the data provide convincing evidence of a difference between 
+# the average IQ score of mothers of gifted child and the average IQ score for the populatin at large.
+```
+
+**Example**
+
+* A statistics student interested in sleep habits of domestic cats took a random sample of 144 cats and monitored their sleep. The cats slept an average of 16 hours per day. According to our online resources, domestic dogs actually sleep on average 14 hours a day. 
+* We want to find out if these data provide convincing evidence of different sleeping habits for domestic cats and dogs with respect to how much they sleep. Note that the test statistic calculated was 1.73.
+* What is the interpretation of this p-value in context of these data?
+
+
+
+```r
+# H0: mu = 14
+# H1: mu != 14
+
+list(p_value = pnorm(-1.73) * 2)
+```
+
+```
+## $p_value
+## [1] 0.08363028
+```
+
+
+```r
+# p(obtaining a random sample of 144 cats that sleep 16 hours or more or 12 hours or less, 
+# on average, if in fact cats truly slept 14 hours per day on average) = 0.0836
+
+# The p-value is larger than the significance level 0.05. Hence the evidence is not strong
+# enough to reject the null hypotheses. Hence, we cannot decide that there is a
+# difference between the sleeping habits for domestic cats and dogs.
+# If the average hours of sleep for domestic cat is 14, there is a 8% chance 
+# that a random sample of size 144 would yield a sample mean of 16.
+```
+
+### Exercises {-}
+
+OpenIntro Statistics, 3rd edition<br>
+4.17, 4.19, 4.23, 4.25, 4.27
+
+**4.17 Identify hypotheses, Part I.** 
+
+* Write the null and alternative hypotheses in words and
+then symbols for each of the following situations.
+* (a) New York is known as “the city that never sleeps”. A random sample of 25 New Yorkers were
+asked how much sleep they get per night. Do these data provide convincing evidence that
+New Yorkers on average sleep less than 8 hours a night?
+* (b) Employers at a firm are worried about the effect of March Madness, a basketball championship
+held each spring in the US, on employee productivity. They estimate that on a regular business
+day employees spend on average 15 minutes of company time checking personal email, making
+personal phone calls, etc. They also collect data on how much company time employees spend
+on such non- business activities during March Madness. They want to determine if these data
+provide convincing evidence that employee productivity decreases during March Madness
+
+
+```r
+# (a)
+
+# H0: mu = 8
+# HA: mu < 8
+
+# The null hypotheses assumes that the average sleep hours of New Yorkers 
+# is no difference to the average sleep hours of other city 
+# which is 8 hours.
+
+# The alternative hypotheses is that New Yorkers on average sleep less 
+# than 8 hours.
+```
+
+**4.19 Online communication.**
+
+* A study suggests that the average college student spends 10
+hours per week communicating with others online. You believe that this is an underestimate and
+decide to collect your own sample for a hypothesis test. You randomly sample 60 students from
+your dorm and find that on average they spent 13.5 hours a week communicating with others
+online. 
+* A friend of yours, who offers to help you with the hypothesis test, comes up with the
+following set of hypotheses. Indicate any errors you see.
+$$H_0 : \bar{x} < 10 \text{ hours}$$
+$$H_A : \bar{x} > 13.5 \text{ hours}$$
+
+
+
+```r
+# The null hypotheses should be mu = 10 hours.
+# The alternative hypotheses should be mu > 10 hours.
+```
+
+**4.23 Nutrition labels.** 
+
+* The nutrition label on a bag of potato chips says that a one ounce
+(28 gram) serving of potato chips has 130 calories and contains ten grams of fat, with three grams
+of saturated fat. A random sample of 35 bags yielded a sample mean of 134 calories with a standard
+deviation of 17 calories. 
+* Is there evidence that the nutrition label does not provide an accurate
+measure of calories in the bags of potato chips? We have verified the independence, sample size,
+and skew conditions are satisfied.
+
+
+
+```r
+# H0: mu = 130
+# HA: mu != 130
+
+x <- 130
+p <- 134
+sd <- 17
+n <- 35
+
+se <- sd/sqrt(n)
+
+z <- (134-130)/se
+
+p_value <- pnorm(z, lower.tail = FALSE) * 2
+
+# If the null hypotheses is true (mean is 130), there is a 0.164
+# chance during a random sample of 130 yielding a sample mean of 134.
+# Let alpha be 0.05, the p-value is higher than the significance
+# level and we failed to reject the null hypotheses. Hence,
+# there is no strong evidence suggesting the measure of calories in the
+# bags of potato chips is inaccurate.
+
+list(se = se, z = z, p_value = p_value)
+```
+
+```
+## $se
+## [1] 2.873524
+## 
+## $z
+## [1] 1.392019
+## 
+## $p_value
+## [1] 0.1639167
+```
+
+**4.25 Waiting at an ER, Part III.** 
+
+* The hospital administrator mentioned in Exercise 4.13
+randomly selected 64 patients and measured the time (in minutes) between when they checked in
+to the ER and the time they were first seen by a doctor. The average time is 137.5 minutes and
+the standard deviation is 39 minutes. She is getting grief from her supervisor on the basis that
+the wait times in the ER has increased greatly from last year’s average of 127 minutes. However,
+she claims that the increase is probably just due to chance.
+* (a) Are conditions for inference met? Note any assumptions you must make to proceed.
+* (b) Using a significance level of α = 0.05, is the change in wait times statistically significant? Use
+a two-sided test since it seems the supervisor had to inspect the data before she suggested an
+increase occurred.
+* (c) Would the conclusion of the hypothesis test change if the significance level was changed to
+α = 0.01?
+
+
+```r
+# (a)
+# Independence: Since the patients are randomly selected, the independence 
+# condition is met, and should make up of less than 10% of the ER residents.
+# Sample size: The sample size is 64, greater than 30. It's large enough
+# to perform inference with normal distribution.
+# Skewness: There's no information regarding the skewness but 
+# we could assume that it's not skewed.
+```
+
+
+```r
+# (b)
+# H0: mu = 127
+# HA: mu != 127
+
+n <- 64
+x <- 137.5
+p <- 127
+sd <- 39
+
+se <- sd / sqrt(n)
+
+z <- (p - x)/se
+
+p_value <- pnorm(z)*2
+
+# The p-value 0.03 is smaller than the significance level of 0.05.
+# Hence, the null hypotheses can be rejected in favor of the
+# alternative hypotheses. The data provide convincing evidence that
+# the average ER wait time has increased over the last year.
+
+list(se = se, z = z, p_value = p_value)
+```
+
+```
+## $se
+## [1] 4.875
+## 
+## $z
+## [1] -2.153846
+## 
+## $p_value
+## [1] 0.03125224
+```
+
+
+```r
+# (c)
+
+# If the alpha is changed to 0.01, the p-value is larger than the 
+# significance level and hence we cannot reject the null hypotheses.
+```
+
+**4.27 Working backwards, one-sided.** 
+
+* You are given the following hypotheses:
+$$H_0 : µ = 30$$
+$$H_A : µ > 30$$
+* We know that the sample standard deviation is 10 and the sample size is 70. For what sample
+mean would the p-value be equal to 0.05? Assume that all conditions necessary for inference are
+satisfied.
+
+
+
+```r
+n <- 70
+x <- 30
+sd <- 10
+
+se <- 10/sqrt(70)
+
+# Find the required z value if p-value = 0.05
+z <- qnorm(0.05)
+
+# Find the required mean
+# z = (p - x)/se
+required_mean <- z * se + x
+
+list(se = se, z = z, required_mean = required_mean)
+```
+
+```
+## $se
+## [1] 1.195229
+## 
+## $z
+## [1] -1.644854
+## 
+## $required_mean
+## [1] 28.03402
+```
+
+## Significance {-}
+
+### Inference for Other Estimators {-}
+
+* Any **nearly normal sampling distributions**
+    * Sample mean $\bar{x}$
+    * Difference between sample means $\bar{x}_1 - \bar{x}_2$
+    * Sample proportion $\hat{p}$
+    * Diffefference between sample proportions $\hat{p}_1 - \hat{p}_2$
+* **Unbiased estimator**
+    * An important assumption about the point estimates is that they're unbiased, i.e. the sampling distribution of the estimate is centered at the true population parameter it estimates.
+    * An unbiased estimate does not naturally over or underestimate the parameter but instead it provides a good estimate. 
+    * We know that the sample mean is an example of an unbiased point estimate.
+    
+#### Confidence Intervals {-}
+
+* **Confidence intervals** for nearly normal point estimates
+    $$ \text{point estimate} \pm z^{\star} \times SE $$
+    
+#### Hypothesis Testing {-}
+
+* **Hypothesis testing** for nearly normal point estimates
+    $$ Z = \frac{\text{ point estimate } - \text{ null value }}{SE} $$
+
+**Example**
+
+* A 2010 Pew Research foundation poll indicates that among 1,099 college graduates, 33% watch the Daily Show. An American late-night TV Show. The standard error of this estimate is 0.014. 
+* We are asked to estimate the 95% confidence interval for the proportion of college graduates who watch The Daily Show.
+
+
+
+```r
+p <- 0.33
+se <- 0.014
+
+list(ci = c(p + 1.96 * se, p - 1.96 * se))
+```
+
+```
+## $ci
+## [1] 0.35744 0.30256
+```
+
+**Example**
+
+* The 3rd national health and nutrition examination survey NHANES, collected body fat percentage and gender data from over 13,000 subjects in ages between 20 to 80. The average body fat percentage for the 6,580 men in the sample was 23.9%. And this value was 35% for the, for the 7,021 women. The standard error for the difference between the average male and female body fat percentages was 0.114. 
+* Do these data provide convincing evidence that men and women have different average body fat percentages? You may assume that the distribution of the point estimate is nearly normal. 
+
+
+
+```r
+# H0: mu_men = mu_women -> mu_men - mu_women = 0
+# H1: mu_men = mu_women -> mu_men - mu_women != 0
+
+# Point estimate
+# mu_men - mu_women
+p <- 23.9 - 35
+
+mu <- 0
+se <- 0.114
+
+z <- (-11.1 - 0)/0.114
+
+p_value <- pnorm(z) * 2
+
+# Reject the null hypothesis.
+list(p = p, z = z, p_value = p_value)
+```
+
+```
+## $p
+## [1] -11.1
+## 
+## $z
+## [1] -97.36842
+## 
+## $p_value
+## [1] 0
+```
+
+### Decision Errors {-}
+
+* **Type I error** ($\alpha$) is rejecting the H0 when H0 is true. (Declaring the defendant guilty when they are actually innocent.)
+* **Type II error** ($\beta$) is failing to reject H0 when HA is true. (Declaring the defendant innocent when they are actually guilty.)
+* **Power** ($1 - \beta$) of a test is the probability of correctly rejecting H0.
+
+
+* We (almost) never know if H0 or HA is true, but we need to consider all possibilities.
+
+#### Type I Error Rate {-}
+
+* We reject the null hypothesis when the p-value is less than 0.05 ($\alpha = 0.05$). 
+* This means that, for those cases where the null hypothesis is actually true, we do not want to incorrectly reject it more than 5% of those times.
+* In other words, when using a 5% significance level, there is about a 5% chance of making a type one error if the null hypothesis is true. 
+
+$$ P(\text{Type I error } | H_0 \text{ true}) = \alpha $$
+
+* This is why we prefer small values of $\alpha$ - increasing $\alpha$ increases the Type I error rate.
+* If Type I Error is dangerous or especially costly, choose a small significance level (e.g. 0.01). Goal: We want to be very cautious about rejecting H0, so we demand very strong evidence favoring HA before we should do so.
+* If Type II Error is relatively more dangerous or much more costly, choose a higher significance level (e.g. 0.10). Goal: We want to be cautious about failing to reject H0 when the null is actually false.
+
+#### Type II Error Rate {-}
+
+* If the alternative hypothesis is actually true, what is the chance that we make a type two error? In other words, what is the chance that we fail to reject the null hypothesis, even when we should reject it?
+* The answer to this is not obvious. 
+* If the true population average is very close to the null value, it will be very difficult to detect a difference and to reject the null hypothesis. 
+* In other words, if the true population average is very different from the null value, it will be much easier to detect a difference.
+* Clearly then, $\beta$, the probability of making a type two area depends on our effect size. An **effect size** is defined as the difference between the point estimate and the null value.
+
+### Significance vs Confidence Level {-}
+
+* Broadly we can say that a significance level and a confidence level are complements of each other.
+* A two sided hypothesis with threshold of $\alpha$ is equivalent to a confidence interval with $CL = 1 - \alpha$.
+* A one sided hypothesis with threshold of $\alpha$ is equivalent to a confidence interval with $CL = 1 - (2 \times \alpha)$.
+* If H0 is rejected, a confidence interval that agrees with the result of the hypothesis test should not include the null value.
+* If H0 is failed to be rejected, a confidence interval that agrees with the result of the hypothesis test should include the null value.
+
+### Statistical vs Practical Significance {-}
+
+* Real differences between the point estimate and the null value are easier to detect with large samples. 
+* However very large samples will result in statistical significance even for tiny differences between the sample mean and the null value or our effect size, even when the difference is not practically significant.
+
+### Exercises  {-}
+
+OpenIntro Statistics, 3rd edition<br>
+4.43, 4.45<br>
+4.29, 4.31, 4.47
+
+**4.43 Spam mail counts.** 
+
+* The 2004 National Technology Readiness Survey sponsored by the
+Smith School of Business at the University of Maryland surveyed 418 randomly sampled Americans,
+asking them how many spam emails they receive per day. The survey was repeated on a new
+random sample of 499 Americans in 2009.
+* (a) What are the hypotheses for evaluating if the average spam emails per day has changed from
+2004 to 2009.
+* (b) In 2004 the mean was 18.5 spam emails per day, and in 2009 this value was 14.9 emails per
+day. What is the point estimate for the difference between the two population means?
+* (c) A report on the survey states that the observed difference between the sample means is not
+statistically significant. Explain what this means in context of the hypothesis test and data.
+* (d) Would you expect a confidence interval for the difference between the two population means
+to contain 0? Explain your reasoning.
+
+
+```r
+# (a)
+# H0: mu_2009 - mu_2004 = 0
+# HA: mu_2009 - mu_2004 != 0
+```
+
+
+```r
+# (b)
+list(p = 18.5 - 14.9)
+```
+
+```
+## $p
+## [1] 3.6
+```
+
+
+```r
+# (c)
+# It means that assuming the null hypotheses is true, where the difference
+# between the average spam emails per day in 2004 and 2009 is 0,
+# the probability of observing a sample difference of 3.6
+# is higher than the significance level alpha, in other words, 
+# not rare. Hence, we cannot reject the null hypotheses and say
+# that the data provides statistically strong evidence in favor of
+# the alternative hypotheses.
+```
+
+
+```r
+# (d)
+# Yes. Since the result is not statistically significant, we cannot
+# reject the null hypotheses. Hence, we would expect 0 to be 
+# include in our confidence interval, i.e. it's highly plausible
+# to see the value 0.
+```
+
+**4.45 Spam mail percentages.** 
+
+* The National Technology Readiness Survey sponsored by the
+Smith School of Business at the University of Maryland surveyed 418 randomly sampled Americans,
+asking them how often they delete spam emails. In 2004, 23% of the respondents said they delete
+their spam mail once a month or less, and in 2009 this value was 16%.
+* (a) What are the hypotheses for evaluating if the proportion of those who delete their email once
+a month or less has changed from 2004 to 2009?
+* (b) What is the point estimate for the difference between the two population proportions?
+* (c) A report on the survey states that the observed decrease from 2004 to 2009 is statistically
+significant. Explain what this means in context of the hypothesis test and the data.
+* (d) Would you expect a confidence interval for the difference between the two population proportions to contain 0? Explain your reasoning.
+
+
+```r
+# (a)
+# H0: p_2004 = p_2009
+# HA: p_2004 != p_2009
+```
+
+
+```r
+# (b)
+list(p = 0.16 - 0.23)
+```
+
+```
+## $p
+## [1] -0.07
+```
+
+
+```r
+# (c) 
+# It means that assuming the null hypotheses is true, the probability
+# of observing a difference of 0.07 is very small, and smaller than
+# the significance level, hence we reject the null hypotheses 
+# and say that the data provides evidence that there are difference 
+# between the two population proportions, and the difference is not due
+# to sampling variability.
+```
+
+
+```r
+# (d)
+# No. As we rejected the null hypotheses.
+```
+
+**4.29 Testing for Fibromyalgia.** 
+
+* A patient named Diana was diagnosed with Fibromyalgia, a
+long-term syndrome of body pain, and was prescribed anti-depressants. Being the skeptic that she
+is, Diana didn’t initially believe that anti-depressants would help her symptoms. However after
+a couple months of being on the medication she decides that the anti-depressants are working,
+because she feels like her symptoms are in fact getting better.
+* (a) Write the hypotheses in words for Diana’s skeptical position when she started taking the
+anti-depressants.
+* (b) What is a Type 1 Error in this context?
+* (c) What is a Type 2 Error in this context?
+
+
+```r
+# (a)
+# H0: The anti-depressants are not working.
+# HA: The anti-depressants are working.
+```
+
+
+```r
+# (b)
+# Type 1 error is to declare the anti-depressants to be working 
+# when the truth is they are useless.
+```
+
+
+```r
+# (c)
+# Type 2 error is to declare the anti-depressants to be useless
+# when the truth is they are helping the symptoms.
+```
+
+**4.31 Which is higher?** 
+
+* In each part below, there is a value of interest and two scenarios (I and
+II). For each part, report if the value of interest is larger under scenario I, scenario II, or whether
+the value is equal under the scenarios.
+* (a) The standard error of $\bar{x}$ when s = 120 and (I) n = 25 or (II) n = 125.
+* (b) The margin of error of a confidence interval when the confidence level is (I) 90% or (II) 80%.
+* (c) The p-value for a Z-statistic of 2.5 when (I) n = 500 or (II) n = 1000.
+* (d) The probability of making a Type 2 Error when the alternative hypothesis is true and the
+significance level is (I) 0.05 or (II) 0.10.
+
+
+```r
+# (a)
+# SE of mean is inversely relating to sample size. SE is larger in (I).
+```
+
+
+```r
+# (b)
+# The margin of error depends on the z-score calculated by the confidence 
+# interval and the standard error.
+# A higher confidence interval yield a higher z-score and hence a higher
+# margin of error. (I) has a higher margin of error.
+list(z_90 = qnorm((1-.9)/2), z_80 = qnorm((1-.8)/2))
+```
+
+```
+## $z_90
+## [1] -1.644854
+## 
+## $z_80
+## [1] -1.281552
+```
+
+
+```r
+# (d)
+# Type 2 error is failing to reject the null hypotheses when the 
+# alternative hypotheses is true. In other words,
+# declare a person innocent when he's actually guilty.
+# When significance level is small, it's harder to declare a person guilty, 
+# or to reject the null hypotheses. Hence, we're easier to 
+# declare a person innocent when he's guilty. 
+# (I) has a higher probability of making type 2 error.
+```
+
+**4.47 Practical vs. statistical.** 
+
+* Determine whether the following statement is true or false, and
+explain your reasoning: “With large sample sizes, even small differences between the null value
+and the point estimate can be statistically significant.”
+
+
+```r
+# True. 
+n1 <- 1000
+n2 <- 50
+x <- 50
+p <- 52
+sd <- 10
+
+se1 <- sd/sqrt(n1)
+z1 <- (1-0)/se1
+p_value_1 <- pnorm(z1, lower.tail = FALSE)
+
+se2 <- sd/sqrt(n2)
+z2 <- (1-0)/se2
+p_value_2 <- pnorm(z2, lower.tail = FALSE)
+
+# For large sample size, the standard error will be lower,
+# and hence a larger test statistics and smaller p value.
+list(
+  p_value_n1000 = p_value_1,
+  p_value_n50 = p_value_2
+)
+```
+
+```
+## $p_value_n1000
+## [1] 0.0007827011
+## 
+## $p_value_n50
+## [1] 0.2397501
+```
