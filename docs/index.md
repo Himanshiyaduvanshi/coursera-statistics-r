@@ -22,3 +22,4 @@ https://www.coursera.org/specializations/statistics
 3. Linear Regression and Modeling 
 4. Bayesian Statistics
 5. Statistics with R Capstone
+

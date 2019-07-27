@@ -1,0 +1,181 @@
+# Week 4 {-}
+
+```{r include=FALSE}
+source('utils.R')
+```
+
+## Inference for Proportions {-}
+
+- Inference for proportions works with **categorical variables**.
+- One categorical variable
+  - Two levels: success-failure
+  - More than two levels
+- Two categorical variables
+  - Two levels: success-failture
+  - More than two levels
+    
+### Sampling Variability and CLT for Proportions {-}
+
+#### Central Limit Theorem for a Proportion {-}
+
+##### Central Limit Theorem for a Proportion {-}
+
+- When observations are independent and the sample size is sufficiently large, the sample proportion $\hat{p}$ will tend to follow a normal distribution with the following mean and standard error.
+
+$$
+\mu_{\hat{p}} = p
+$$
+
+$$
+SE_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}}
+$$
+
+##### Conditions for Central Limit Theorem for a Proportion {-}
+
+1. Independence
+2. **Success-Failure Condition**: The sample size should be sufficiently large with $np \ge 10$ and $n(1-p) \ge 10$.
+
+
+- If the success-failure condition is not met:
+  - The center of the sampling distribution will still be around the true population proportion.
+  - The spread of the sampling distribution can still be approximated using the same formula for the standard error.
+  - The shape of the distribution will depend on whether the true population proportion $p$ is closer to 0 or closer to 1.
+
+
+**Example**
+
+- 90% of all plant species are classified as angiosperms. These are flowering plants. 
+- If you were to randomly sample 200 plants from the list of all known plant species, what is the probability that at least 95% of the plants in your sample will be flowering plants?
+
+```{r}
+p = 0.9
+n = 200
+# P(p_hat > 0.95)?
+p_hat = 0.95
+```
+
+```{r}
+# Check the conditions:
+# 1. Random sampled + 10% of all plants -> Independent 
+# 2. Success-failure condition
+ans(n_success = n * 0.9, n_failture = n * (1-0.9))
+```
+
+```{r}
+se = sqrt(p * (1-p) / n)
+z = (p_hat - p) / se
+prob = pnorm(z, lower.tail = FALSE)
+ans(se, z, prob)
+```
+
+- If you were to randomly sample 200 plants from the list of all known plant species, would it be considered unusual if 87.5% of the plants in a random sample of 200 were angiosperms?
+
+```{r}
+# 0.875 is within 2 se from the sample mean,
+# hence it is not unusual.
+p_hat = 0.875
+z = (p_hat - p) / se
+ans(z)
+```
+
+* What would you expect the shape of the sampling distribution of percentages of angiosperms in random samples of 50 plants to look like? (Remember, 90% of all plants species are classified as angiosperms.)
+
+```{r}
+# The success-failture condition does not met
+# as the number of failure is 5, which is smaller
+# than 10. The shape of the sampling distribution
+# will be strongly left skewed as p = 0.9.
+ans(n_success = 50 * 0.9, n_failture = 50 * 0.1)
+```
+
+#### Confidence Interval for a Proportion {-}
+
+##### Confidence Interval for a Proportion {-}
+
+$$
+\text{CI}_{p} = \hat{p} \pm z^\star SE_{\hat{p}}
+$$
+
+##### ME for a Proportion {-}
+
+$$
+\text{ME}_{p} = z^\star \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}
+$$
+
+- If we have the value of $\hat{p}$, we can use that in the calculation of the required sample size.
+- If not, use $\hat{p} = 0.5$. 50-50 is a good guess. It
+gives the most conservative estimate - highest possible sample size.
+
+**Example**
+
+- The general social survey found that 571 out of 670, that's roughly 85% of Americans, answered the question on experiment design correctly. 
+- We are asked to estimate using a 95% confidence interval, the proportion of all Americans who have good intuition about experiment design.
+
+```{r}
+n = 670
+p = 571/670
+se = sqrt(p * (1-p) / n)
+me = 1.96 * se
+ci = c(p - me, p + me)
+# We are 95% confident that 82.5% to 88.9% of all Americans
+# have good intuition about experimental design.
+ans(p, se, me, ci)
+```
+
+- The margin of error for this previous confidence interval was 2.7%. If, for a new confidence interval based on a new sample, we wanted to reduce the margin of error to 1% while keeping the confidence level the same. At least how many respondents should we sample? 
+
+```{r}
+# me = z * se
+# me = z * sqrt(p * (1 - p) / n)
+# n = (p * (1 - p)) / (me / z)^2
+ans(ceiling(p * (1 - p) / (0.01 / 1.96)^2))
+```
+
+- If we wanted to estimate the percentage of Data Analysis and Statistical Inference students who have good intuition about experimental design using a 95% confidence interval and a margin of error no larger than 3%, at least how many students would we need to sample?
+
+```{r}
+# me = z * sqrt(p * (1 - p) / n)
+# n = (p * (1 - p)) / (me / z)^2
+n = (0.5 * 0.5) / (0.03 / 1.96)^2
+ans(ceiling(n))
+```
+
+#### Hypothesis Test for a Proportion {-}
+
+##### Hypothesis Testing for a Single Proportion {-}
+
+$$
+H_0: p = \text{null value}\\
+H_A: p < or > or\ne \text{null value}
+$$
+**Example**
+
+- A 2013 Pew Research poll found that 60% of 1,983 randomly sampled American adults believe in evolution. Does this provide convincing evidence that majority of Americans believe in evolution?
+
+```{r}
+n = 1983
+p = 0.5
+p_hat = 0.6
+
+# Randomly sampled + n < 10% of population -> independent
+# Success-failure condition calculate with expected p (the null p) -> true
+success_failure = (n * p) > 10 & (n * (1 - p)) > 10
+
+# H0: p = 0.5
+# HA: p > 0.5
+
+se = sqrt(p_hat * (1 - p_hat) / n)
+z = (p_hat - p) / se
+pvalue = pnorm(z, lower.tail = FALSE)
+
+# The p-value is significantly smaller than the significance level 0.05,
+# hence reject null hypothesis and conclude that there is strong evidence
+# convincing that the majority (> 0.5) of American adults believe in evolution.
+
+# There is almost 0% chance of obtaining a random sample of 1,983 Americans where 60% or more believe in evolution, if in fact 50% of Americans believe 
+# in evolution.
+ans(success_failure, se, z, pvalue)
+```
+
+
+## Simulation Based Inference for Proportions and Chi-Square Testing {-}

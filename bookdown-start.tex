@@ -1,0 +1,4904 @@
+\documentclass[]{book}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Statistics with R},
+            pdfauthor={Cecilia Lee},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{natbib}
+\bibliographystyle{apalike}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Statistics with R}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Cecilia Lee}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{2019-07-27}
+
+\usepackage{booktabs}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\hypertarget{syllabus}{%
+\chapter*{Syllabus}\label{syllabus}}
+\addcontentsline{toc}{chapter}{Syllabus}
+
+\url{https://www.coursera.org/specializations/statistics}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Introduction to Probability and Data
+\item
+  Inferential Statistics
+\item
+  Linear Regression and Modeling
+\item
+  Bayesian Statistics
+\item
+  Statistics with R Capstone
+\end{enumerate}
+
+\hypertarget{part-inferential-statistics}{%
+\part{Inferential Statistics}\label{part-inferential-statistics}}
+
+\hypertarget{week-1}{%
+\chapter*{Week 1}\label{week-1}}
+\addcontentsline{toc}{chapter}{Week 1}
+
+\hypertarget{central-limit-theorem}{%
+\section*{Central Limit Theorem}\label{central-limit-theorem}}
+\addcontentsline{toc}{section}{Central Limit Theorem}
+
+\hypertarget{sampling-variability-and-clt}{%
+\subsection*{Sampling Variability and CLT}\label{sampling-variability-and-clt}}
+\addcontentsline{toc}{subsection}{Sampling Variability and CLT}
+
+\textbf{Example}
+
+\begin{itemize}
+\tightlist
+\item
+  P(Length of song lasts more than 5 minutes)?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# iPod song = 3000 }
+\NormalTok{n <-}\StringTok{ }\DecValTok{3000}
+\CommentTok{# mean song length = 3.45 mins}
+\NormalTok{mu <-}\StringTok{ }\FloatTok{3.45}
+\CommentTok{# sd of song length = 1.63 mins}
+\NormalTok{s <-}\StringTok{ }\FloatTok{1.63}
+
+\CommentTok{# x = length of song lasts more than 5 mins}
+\CommentTok{# P(x > 5)}
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{p_x_greater_5 =}\NormalTok{ (}\DecValTok{350}\OperatorTok{+}\DecValTok{100}\OperatorTok{+}\DecValTok{25}\OperatorTok{+}\DecValTok{20}\OperatorTok{+}\DecValTok{5}\NormalTok{) }\OperatorTok{/}\StringTok{ }\NormalTok{n)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $p_x_greater_5
+## [1] 0.1666667
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  P(Average length of song lasts more than 6 minutes)?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# sample size is 100 songs}
+\NormalTok{m <-}\StringTok{ }\DecValTok{100}
+\CommentTok{# standard error = sd / sqrt(m)}
+\NormalTok{se <-}\StringTok{ }\NormalTok{s}\OperatorTok{/}\KeywordTok{sqrt}\NormalTok{(m)}
+
+\CommentTok{# 6 hours = 360 mins}
+\CommentTok{# P(x1 + x2 + ... x100 > 360 mins)}
+\CommentTok{# = P(mean x >= 3.6 mins)}
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{p_xbar_greater_3.6 =} \DecValTok{1} \OperatorTok{-}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(}\FloatTok{3.6}\NormalTok{, mu, se))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $p_xbar_greater_3.6
+## [1] 0.1787223
+\end{verbatim}
+
+\hypertarget{exercises}{%
+\subsection*{Exercises}\label{exercises}}
+\addcontentsline{toc}{subsection}{Exercises}
+
+OpenIntro Statistics, 4th edition
+5.1, 5.3, 5.5
+
+\textbf{5.1 Identify the parameter, Part I.}
+
+\begin{itemize}
+\item
+  For each of the following situations, state whether the parameter of interest is a mean or a proportion. It may be helpful to examine whether individual responses are numerical or categorical.
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \tightlist
+  \item
+    In a survey, one hundred college students are asked how many hours per week they spend on the Internet.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    In a survey, one hundred college students are asked: ``What percentage of the time you spend on the Internet is part of your course work?''
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    In a survey, one hundred college students are asked whether or not they cited information from Wikipedia in their papers.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{3}
+  \tightlist
+  \item
+    In a survey, one hundred college students are asked what percentage of their total weekly spending is on alcoholic beverages.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{4}
+  \tightlist
+  \item
+    In a sample of one hundred recent college graduates, it is found that 85 percent expect to get a job within one year of their graduation date.
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (a) Mean. The response is numerical - number of hours.}
+\CommentTok{# (b) Mean. The response is numerical - a percentage.}
+\CommentTok{# (c) Proportion. The response is a binary categorical - yes or no. }
+\CommentTok{# (d) Mean. The response is numerical - a percentage.}
+\CommentTok{# (e) Proportion. The response is a binary categorical - get a job or not get a job. }
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{5.3 Quality control.}
+
+\begin{itemize}
+\item
+  As part of a quality control process for computer chips, an engineer at a factory randomly samples 212 chips during a week of production to test the current rate of chips with severe defects. She finds that 27 of the chips are defective.
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \tightlist
+  \item
+    What population is under consideration in the data set?
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    What parameter is being estimated?
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    What is the point estimate for the parameter?
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{3}
+  \tightlist
+  \item
+    What is the name of the statistic can we use to measure the uncertainty of the point estimate?
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{4}
+  \tightlist
+  \item
+    Compute the value from part (d) for this context.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{5}
+  \tightlist
+  \item
+    The historical rate of defects is 10\%. Should the engineer be surprised by the observed rate of defects during the current week?
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{6}
+  \tightlist
+  \item
+    Suppose the true population value was found to be 10\%. If we use this proportion to recompute the value in part (e) using p = 0.1 instead of ˆ p, does the resulting value change much?
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (a) The population is all the computer chips during a week of production.}
+\CommentTok{# (b) The parameter is the rate of defects.}
+\CommentTok{# (c) Point estimate.}
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{p =} \KeywordTok{round}\NormalTok{(}\DecValTok{27}\OperatorTok{/}\DecValTok{212}\NormalTok{, }\DecValTok{3}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $p
+## [1] 0.127
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (d) Standard error / margin of error.}
+\CommentTok{# (e) SE = sqrt(p * (1-p) / n)}
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{se =} \KeywordTok{round}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{((}\FloatTok{0.127} \OperatorTok{*}\StringTok{ }\NormalTok{(}\DecValTok{1}\FloatTok{-0.127}\NormalTok{)) }\OperatorTok{/}\StringTok{ }\DecValTok{212}\NormalTok{), }\DecValTok{3}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $se
+## [1] 0.023
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (f) We compute the 95% confidence interval which is between 0.08 and 0.17. }
+\CommentTok{# The historical rate of defects lie within our confidence interval hence we're not supprised.}
+\NormalTok{me <-}\StringTok{ }\FloatTok{1.96} \OperatorTok{*}\StringTok{ }\FloatTok{0.023}
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{ci =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.127} \OperatorTok{-}\StringTok{ }\NormalTok{me, }\FloatTok{0.127} \OperatorTok{+}\StringTok{ }\NormalTok{me))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $ci
+## [1] 0.08192 0.17208
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (g) The value does not change much.}
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{se =} \KeywordTok{round}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(}\FloatTok{0.1} \OperatorTok{*}\StringTok{ }\NormalTok{(}\DecValTok{1}\FloatTok{-0.1}\NormalTok{) }\OperatorTok{/}\StringTok{ }\DecValTok{212}\NormalTok{), }\DecValTok{3}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $se
+## [1] 0.021
+\end{verbatim}
+
+\textbf{5.5 Repeated water samples.}
+
+\begin{itemize}
+\item
+  A nonprofit wants to understand the fraction of households that have elevated levels of lead in their drinking water. They expect at least 5\% of homes will have elevated levels of lead, but not more than about 30\%. They randomly sample 800 homes and work with the owners to retrieve water samples, and they compute the fraction of these homes with elevated lead levels. They repeat this 1,000 times and build a distribution of sample proportions.
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \tightlist
+  \item
+    What is this distribution called?
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    Would you expect the shape of this distribution to be symmetric, right skewed, or left skewed? Explain your reasoning.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    If the proportions are distributed around 8\%, what is the variability of the distribution?
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{3}
+  \tightlist
+  \item
+    What is the formal name of the value you computed in (c)?
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{4}
+  \tightlist
+  \item
+    Suppose the researchers' budget is reduced, and they are only able to collect 250 observations per sample, but they can still collect 1,000 samples. They build a new distribution of sample proportions. How will the variability of this new distribution compare to the variability of the distribution when each sample contained 800 observations?
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (a) Sampling distribution.}
+\CommentTok{# (b) If the population proportion is in the 5-30% range, the success-failure condition would be satisfied}
+\CommentTok{# and the sampling distribution would be symmetric.}
+\CommentTok{# (c) The variability can be represented by the standard error.}
+\NormalTok{mu <-}\StringTok{ }\FloatTok{0.08}
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{se =} \KeywordTok{round}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(}\FloatTok{0.08} \OperatorTok{*}\StringTok{ }\NormalTok{(}\DecValTok{1}\FloatTok{-0.08}\NormalTok{) }\OperatorTok{/}\StringTok{ }\DecValTok{800}\NormalTok{), }\DecValTok{4}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $se
+## [1] 0.0096
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (d) Standard error.}
+\CommentTok{# (e) The variability will increase as the sample size decreases.}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{confidence-interval}{%
+\section*{Confidence Interval}\label{confidence-interval}}
+\addcontentsline{toc}{section}{Confidence Interval}
+
+\hypertarget{confidence-interval-for-a-mean}{%
+\subsection*{Confidence Interval (for a Mean)}\label{confidence-interval-for-a-mean}}
+\addcontentsline{toc}{subsection}{Confidence Interval (for a Mean)}
+
+\[ ME = z^\star \frac{s}{\sqrt{n}} \]
+
+\begin{itemize}
+\tightlist
+\item
+  95\% CI = mu +/- 1.96 se
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{qnorm}\NormalTok{((}\DecValTok{1}\FloatTok{-0.95}\NormalTok{)}\OperatorTok{/}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -1.959964
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  98\% CI = mu +/- 2.32 se
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{qnorm}\NormalTok{((}\DecValTok{1}\FloatTok{-0.98}\NormalTok{)}\OperatorTok{/}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -2.326348
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  99\% CI = mu +/- 2.58 se
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{qnorm}\NormalTok{((}\DecValTok{1}\FloatTok{-0.99}\NormalTok{)}\OperatorTok{/}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -2.575829
+\end{verbatim}
+
+\hypertarget{accuracy-vs-precision}{%
+\subsection*{Accuracy vs Precision}\label{accuracy-vs-precision}}
+\addcontentsline{toc}{subsection}{Accuracy vs Precision}
+
+\begin{itemize}
+\tightlist
+\item
+  Commonly used CI are 90\%, 95\%, 98\%, and 99\%.
+\item
+  A wider interval (higher CI) indicates a higher probability of capturing the true polulation, which increases the accuracy, but decreases the precision.
+\item
+  The way to get both a higher precision and higher accuracy is to increase the sample size, as it shrinks the standard error and margin of error.
+\end{itemize}
+
+\textbf{Example}
+
+\begin{itemize}
+\tightlist
+\item
+  The General Social Survey (GSS) is a sociological survey used to collect data on demographic characteristics and attitudes of residents of the United States.
+\item
+  In 2010, the survey collected responses from 1,154 US residents. Based on the survey results, a 95\% confidence interval for the average number of hours Americans have to relax or pursue activities that you enjoy after an average work day is 3.53 to 3.83 hours.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{list}\NormalTok{(}
+  \DataTypeTok{sample_mean =} \FloatTok{3.53} \OperatorTok{+}\StringTok{ }\NormalTok{(}\FloatTok{3.83-3.53}\NormalTok{)}\OperatorTok{/}\DecValTok{2}\NormalTok{,}
+  \DataTypeTok{standard_error =}\NormalTok{ (}\FloatTok{3.83-3.53}\NormalTok{)}\OperatorTok{/}\DecValTok{2}\OperatorTok{/}\FloatTok{1.96}\NormalTok{,}
+  \DataTypeTok{margin_of_error =}\NormalTok{ (}\FloatTok{3.83-3.53}\NormalTok{)}\OperatorTok{/}\DecValTok{2}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $sample_mean
+## [1] 3.68
+## 
+## $standard_error
+## [1] 0.07653061
+## 
+## $margin_of_error
+## [1] 0.15
+\end{verbatim}
+
+\hypertarget{required-sample-size-for-margin-of-error-me}{%
+\subsection*{Required Sample Size for Margin of Error (ME)}\label{required-sample-size-for-margin-of-error-me}}
+\addcontentsline{toc}{subsection}{Required Sample Size for Margin of Error (ME)}
+
+\begin{itemize}
+\tightlist
+\item
+  All else held constant, as sample size increases, the margin of error decreases.
+\end{itemize}
+
+\[ 
+n = ( \frac{z^\star s}{ME} )^2
+\]
+\textbf{Example}
+
+\begin{itemize}
+\item
+  Suppose a group of researchers want to test the possible effect of an epilepsy medication taken by pregnant mothers on the cognitive development of their children. As evidence, they want to estimate the IQs of three-year-old children born to mothers who were on this medication during their pregnancy.
+\item
+  Previous studies suggest that the standard deviation of IQ scores of three-year-old children is 18 points.
+\item
+  How many such children should the researches sample in order to obtain a 90\% confidence interval with a margin of error less than or equal to four points?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{me <-}\StringTok{ }\DecValTok{4}  
+\NormalTok{ci <-}\StringTok{ }\FloatTok{0.9}  
+\NormalTok{sd <-}\StringTok{ }\DecValTok{18} 
+\NormalTok{z <-}\StringTok{ }\KeywordTok{qnorm}\NormalTok{((}\DecValTok{1}\OperatorTok{-}\NormalTok{ci)}\OperatorTok{/}\DecValTok{2}\NormalTok{)}
+
+\NormalTok{n <-}\StringTok{ }\NormalTok{((}\FloatTok{1.64} \OperatorTok{*}\StringTok{ }\NormalTok{sd)}\OperatorTok{/}\NormalTok{me)}\OperatorTok{^}\DecValTok{2}
+
+\KeywordTok{list}\NormalTok{(}
+  \DataTypeTok{z =}\NormalTok{ z,}
+  \DataTypeTok{n =} \KeywordTok{ceiling}\NormalTok{(n)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $z
+## [1] -1.644854
+## 
+## $n
+## [1] 55
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  How would the required sample size change if we want to further decrease the margin of error, to two points?
+\end{itemize}
+
+\[ 
+\frac{1}{x} ME = z^\star \frac{s}{\sqrt{n}} \frac{1}{x}
+\\
+\frac{1}{x} ME = z^\star \frac{s}{\sqrt{n x^2}} 
+\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{me <-}\StringTok{ }\DecValTok{2}
+\NormalTok{n <-}\StringTok{ }\NormalTok{((}\FloatTok{1.64} \OperatorTok{*}\StringTok{ }\NormalTok{sd)}\OperatorTok{/}\NormalTok{me)}\OperatorTok{^}\DecValTok{2}
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{n =} \KeywordTok{ceiling}\NormalTok{(n))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $n
+## [1] 218
+\end{verbatim}
+
+\textbf{Example}
+
+\begin{itemize}
+\item
+  A sample of 50 college students were asked, how many exclusive relationships they've been in so far?
+\item
+  The students in the sample had an average of 3.2 exclusive relationships, with a standard deviation of 1.74.
+\item
+  In addition, the same distribution was only slightly skewed to the right.
+\item
+  Estimate the true number of exclusive relationships based on this sample using a 95\% confidence interval.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n <-}\StringTok{ }\DecValTok{50}  
+\NormalTok{mu <-}\StringTok{ }\FloatTok{3.2}  
+\NormalTok{sd <-}\StringTok{ }\FloatTok{1.74}  
+
+\NormalTok{ci <-}\StringTok{ }\FloatTok{0.95}
+\NormalTok{z <-}\StringTok{ }\KeywordTok{abs}\NormalTok{(}\KeywordTok{round}\NormalTok{(}\KeywordTok{qnorm}\NormalTok{((}\DecValTok{1}\OperatorTok{-}\NormalTok{ci)}\OperatorTok{/}\DecValTok{2}\NormalTok{), }\DecValTok{2}\NormalTok{))}
+
+\NormalTok{se <-}\StringTok{ }\NormalTok{sd}\OperatorTok{/}\KeywordTok{sqrt}\NormalTok{(n)}
+
+\NormalTok{me <-}\StringTok{ }\NormalTok{z }\OperatorTok{*}\StringTok{ }\NormalTok{se}
+
+\CommentTok{# 1.96 * 1.74/sqrt(50)}
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{ci =} \KeywordTok{c}\NormalTok{(mu }\OperatorTok{-}\StringTok{ }\NormalTok{me, mu }\OperatorTok{+}\StringTok{ }\NormalTok{me))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $ci
+## [1] 2.717697 3.682303
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  What is the correct calculation of the 98\% confidence interval for the average number of exclusive relationships college students on average have been in?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ci <-}\StringTok{ }\FloatTok{0.98}
+\NormalTok{z <-}\StringTok{ }\KeywordTok{abs}\NormalTok{(}\KeywordTok{round}\NormalTok{(}\KeywordTok{qnorm}\NormalTok{((}\DecValTok{1}\OperatorTok{-}\NormalTok{ci)}\OperatorTok{/}\DecValTok{2}\NormalTok{), }\DecValTok{2}\NormalTok{))}
+\NormalTok{me <-}\StringTok{ }\NormalTok{z }\OperatorTok{*}\StringTok{ }\NormalTok{se}
+
+\CommentTok{# 2.33 * 1.74/sqrt(50)}
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{ci =} \KeywordTok{c}\NormalTok{(mu }\OperatorTok{-}\StringTok{ }\NormalTok{me, mu }\OperatorTok{+}\StringTok{ }\NormalTok{me))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $ci
+## [1] 2.62665 3.77335
+\end{verbatim}
+
+\hypertarget{exercises-1}{%
+\subsection*{Exercises}\label{exercises-1}}
+\addcontentsline{toc}{subsection}{Exercises}
+
+OpenIntro Statistics, 4th edition
+5.7, 5.9, 5.11, 5.13
+
+\textbf{5.7 Chronic illness, Part I.}
+
+\begin{itemize}
+\tightlist
+\item
+  In 2013, the Pew Research Foundation reported that ``45\% of U.S. adults report
+  that they live with one or more chronic conditions''. However, this value was based on a sample, so it may not be a perfect estimate for the population parameter of interest on its own. The study reported a standard error of about 1.2\%, and a normal model may reasonably be used in this setting.
+\item
+  Create a 95\% confidence interval for the proportion of U.S. adults who live with one or more chronic conditions.
+\item
+  Also interpret the confidence interval in the context of the study.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mu <-}\StringTok{ }\FloatTok{0.45}
+\NormalTok{se <-}\StringTok{ }\FloatTok{0.012}
+
+\CommentTok{# We are 95% confident that the proportion of U.S. adults who live with }
+\CommentTok{# one or more chronic conditions is between 42.6% to 47.4%.}
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{ci =} \KeywordTok{c}\NormalTok{(mu }\OperatorTok{-}\StringTok{ }\NormalTok{se }\OperatorTok{*}\StringTok{ }\FloatTok{1.96}\NormalTok{, mu }\OperatorTok{+}\StringTok{ }\NormalTok{se }\OperatorTok{*}\StringTok{ }\FloatTok{1.96}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $ci
+## [1] 0.42648 0.47352
+\end{verbatim}
+
+\textbf{5.9 Chronic illness, Part II.}
+
+\begin{itemize}
+\item
+  In 2013, the Pew Research Foundation reported that ``45\% of U.S. adults report that they live with one or more chronic conditions'', and the standard error for this estimate is 1.2\%.
+  Identify each of the following statements as true or false. Provide an explanation to justify each of your answers.
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \tightlist
+  \item
+    We can say with certainty that the confidence interval from Exercise 5.7 contains the true percentage of U.S. adults who suffer from a chronic illness.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    If we repeated this study 1,000 times and constructed a 95\% confidence interval for each study, then approximately 950 of those confidence intervals would contain the true fraction of U.S. adults who suffer from chronic illnesses.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    The poll provides statistically significant evidence (at the α = 0.05 level) that the percentage of U.S. adults who suffer from chronic illnesses is below 50\%.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{3}
+  \tightlist
+  \item
+    Since the standard error is 1.2\%, only 1.2\% of people in the study communicated uncertainty about their answer.
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (a) False. We are only 95% confident that the confidence interval from Exercise 5.7}
+\CommentTok{# contains the true parameter. Within a range of plausible values, }
+\CommentTok{# sometimes the truth is missed. 5% of our samples misses the truth }
+\CommentTok{# under the 95% confidence interval. }
+\CommentTok{# (b) True. 950 out of 1000 samples represents 95% of of the samples.}
+\CommentTok{# (d) False. The standard error represents the variability between samples,}
+\CommentTok{# it describes the uncertainty in the overall point estimate due to randomness,}
+\CommentTok{# but not the uncertainty corresponding to individual's responses.}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{5.11 Waiting at an ER, Part I.}
+
+\begin{itemize}
+\item
+  A hospital administrator hoping to improve wait times decides to estimate the average emergency room waiting time at her hospital. She collects a simple random sample of 64 patients and determines the time (in minutes) between when they checked in to the ER until they were first seen by a doctor. A 95\% confidence interval based on this sample is (128 minutes, 147 minutes), which is based on the normal model for the mean. Determine whether the following statements are true or false, and explain your reasoning.
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \tightlist
+  \item
+    We are 95\% confident that the average waiting time of these 64 emergency room patients is between 128 and 147 minutes.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    We are 95\% confident that the average waiting time of all patients at this hospital's emergency room is
+    between 128 and 147 minutes.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    95\% of random samples have a sample mean between 128 and 147 minutes.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{3}
+  \tightlist
+  \item
+    A 99\% confidence interval would be narrower than the 95\% confidence interval since we need to be more sure of our estimate.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{4}
+  \tightlist
+  \item
+    The margin of error is 9.5 and the sample mean is 137.5.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{5}
+  \tightlist
+  \item
+    In order to decrease the margin of error of a 95\% confidence interval to half of what it is now, we would need to double the sample size.
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (a) False. We are 100% confident that the average waiting time of the sampled 64 patients}
+\CommentTok{# is 137.5. We are 95% confident about the polulation waiting time, but not the sample.}
+\CommentTok{# (b) True. If the samples are independent, and the success-failture condition is satisfied.}
+\CommentTok{# (c) False. The confidence interval is not about a sample mean.}
+\CommentTok{# (d) False. A 99% confidence interval would be wider since we have to capture more plausible }
+\CommentTok{# values of the true parameter.}
+\CommentTok{# (e) False. The mean is 137.5 which is the mid-point of the interval.}
+\CommentTok{# The margin of error is half the width of the interval.}
+\CommentTok{# (f) False. We have to have 4 times the sample size.}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{5.13 Website registration.}
+
+\begin{itemize}
+\item
+  A website is trying to increase registration for first-time visitors, exposing 1\% of these visitors to a new site design. Of 752 randomly sampled visitors over a month who saw the new design, 64 registered.
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \tightlist
+  \item
+    Check any conditions required for constructing a confidence interval.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    Compute the standard error.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    Construct and interpret a 90\% confidence interval for the fraction of first-time visitors of the site who would register under the new design (assuming stable behaviors by new visitors over time).
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (a) }
+\CommentTok{# As the visitors are randomly sampled, independence is assumed. }
+\CommentTok{# The success-failure condition is also satisfied. Hence, central limite theorem should}
+\CommentTok{# hold and the sampling distribution should follow a nearly normal distribution.}
+\NormalTok{p <-}\StringTok{ }\DecValTok{64}\OperatorTok{/}\DecValTok{752}
+\KeywordTok{list}\NormalTok{(}
+  \DataTypeTok{p =}\NormalTok{ p, }
+  \DataTypeTok{n_success =} \DecValTok{752} \OperatorTok{*}\StringTok{ }\NormalTok{p, }
+  \DataTypeTok{n_failure =} \DecValTok{752} \OperatorTok{*}\StringTok{ }\NormalTok{(}\DecValTok{1}\OperatorTok{-}\NormalTok{p)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $p
+## [1] 0.08510638
+## 
+## $n_success
+## [1] 64
+## 
+## $n_failure
+## [1] 688
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (b)}
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{se =} \KeywordTok{round}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(p }\OperatorTok{*}\StringTok{ }\NormalTok{(}\DecValTok{1}\OperatorTok{-}\NormalTok{p) }\OperatorTok{/}\StringTok{ }\DecValTok{752}\NormalTok{), }\DecValTok{3}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $se
+## [1] 0.01
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (c)}
+\NormalTok{z <-}\StringTok{ }\KeywordTok{abs}\NormalTok{(}\KeywordTok{round}\NormalTok{(}\KeywordTok{qnorm}\NormalTok{((}\DecValTok{1}\FloatTok{-0.9}\NormalTok{)}\OperatorTok{/}\DecValTok{2}\NormalTok{), }\DecValTok{3}\NormalTok{))}
+\NormalTok{me <-}\StringTok{ }\NormalTok{z }\OperatorTok{*}\StringTok{ }\FloatTok{0.01}
+
+\KeywordTok{list}\NormalTok{(}
+  \DataTypeTok{z =}\NormalTok{ z,}
+  \DataTypeTok{ci =} \KeywordTok{c}\NormalTok{(}\KeywordTok{round}\NormalTok{(p }\OperatorTok{-}\StringTok{ }\NormalTok{me, }\DecValTok{3}\NormalTok{), }\KeywordTok{round}\NormalTok{(p }\OperatorTok{+}\StringTok{ }\NormalTok{me, }\DecValTok{3}\NormalTok{))}
+\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $z
+## [1] 1.645
+## 
+## $ci
+## [1] 0.069 0.102
+\end{verbatim}
+
+\hypertarget{week-2}{%
+\chapter*{Week 2}\label{week-2}}
+\addcontentsline{toc}{chapter}{Week 2}
+
+\hypertarget{hypothesis-testing}{%
+\section*{Hypothesis Testing}\label{hypothesis-testing}}
+\addcontentsline{toc}{section}{Hypothesis Testing}
+
+\hypertarget{hypothesis-testing-framework}{%
+\subsection*{Hypothesis Testing Framework}\label{hypothesis-testing-framework}}
+\addcontentsline{toc}{subsection}{Hypothesis Testing Framework}
+
+\begin{itemize}
+\tightlist
+\item
+  We start with a \textbf{null hypothesis (H0)} that represents the status quo.
+\item
+  We also have an \textbf{alternative hypothesis (HA)} that represents our research question, i.e.~what we're testing for.
+\item
+  We conduct a hypothesis test under the assumption that the null hypothesis is true, either via
+  simulation or theorectical methods - methods that rely on the CLT.
+\item
+  If the test results suggest that the data do not provide convincing evidence for the alternative
+  hypothesis, we stick with the null hypothesis. If they do, then we reject the null hypothesis in
+  favor of the alternative.
+\end{itemize}
+
+\hypertarget{hypothesis-testing-for-a-mean}{%
+\subsection*{Hypothesis Testing (for a Mean)}\label{hypothesis-testing-for-a-mean}}
+\addcontentsline{toc}{subsection}{Hypothesis Testing (for a Mean)}
+
+\hypertarget{hypothesis}{%
+\subsubsection*{Hypothesis}\label{hypothesis}}
+\addcontentsline{toc}{subsubsection}{Hypothesis}
+
+\begin{itemize}
+\tightlist
+\item
+  null - H0 : Ofen either a skeptical perspective or a claim to be tested (=)
+\item
+  alternative - HA : Represents an alternative claim under consideration and is often represented by a range of possible parameter values. (\textless{}, \textgreater{}, !=)
+\item
+  The skeptic will not abandon the H0 unless the evidence in favor of the HA is so strong that she rejects H0 in favor of HA.
+\item
+  Hypothesis is always about population parameters, but never about sample statistics.
+\end{itemize}
+
+\hypertarget{p-value}{%
+\subsubsection*{P-Value}\label{p-value}}
+\addcontentsline{toc}{subsubsection}{P-Value}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{P(observed or more extreme outcome \textbar{} H0 true)}
+\item
+  We use the test statistic to calculate the p-value, the probability of observing data at least as favorable to the alternative hypothesis as our current data set, if the null hypothesis was true.
+\item
+  If the p-value is low (lower than the \textbf{significance level} \$ \alpha \$, which is usually 5\%) we say that it would be very unlikely to observe the data if the null hypothesis were true, and hence \textbf{reject H0}.
+\item
+  If the p-value is high (higher than \$ \alpha \$) we say that it is likely to observe the data even if the null
+  hypothesis were true, and hence \textbf{do not reject H0}.
+\end{itemize}
+
+\textbf{Example}
+
+\begin{itemize}
+\tightlist
+\item
+  Earlier we calculated a 95\% confidence interval for the average number of exclusive relationships college students have been in to be 2.7 to 3.7.
+\item
+  Based on this confidence interval, do these data support the hypothesis that college students on average have been in more than three exclusive relationships?
+\end{itemize}
+
+\[
+P(\bar{x} > 3.2 | H_0 : \mu = 3)
+\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# H0: mu = 3}
+\CommentTok{# Collage students have been in 3 exclusive relationships, on average.}
+
+\CommentTok{# HA: mu > 3}
+\CommentTok{# Collage students have been in more than 3 exclusive relationships, on average.}
+
+\CommentTok{# P(x_bar > 3.2 | H0: mu = 3)}
+
+\CommentTok{# Since we assumme H0 is true, we can construct the sampling distribution based on the CLT.}
+
+\CommentTok{# x_bar ~ N(mu = 3, se = 0.246)}
+
+\CommentTok{# test statistic (z-score for normal distribution)}
+\NormalTok{z <-}\StringTok{ }\KeywordTok{round}\NormalTok{((}\FloatTok{3.2} \OperatorTok{-}\StringTok{ }\DecValTok{3}\NormalTok{)}\OperatorTok{/}\FloatTok{0.246}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+
+\CommentTok{# p-value}
+\NormalTok{p_value <-}\StringTok{ }\KeywordTok{round}\NormalTok{(}\DecValTok{1} \OperatorTok{-}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(z), }\DecValTok{2}\NormalTok{)}
+
+\CommentTok{# Since p-value is high, we do not reject H0.}
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{z =}\NormalTok{ z, }\DataTypeTok{p_value =}\NormalTok{ p_value)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $z
+## [1] 0.81
+## 
+## $p_value
+## [1] 0.21
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# If in fact college students have been in 3 exclusive relationships on average (H0 true), there is a }
+\CommentTok{# 21% (0.21) chance that a random sample of 50 college student would yield a sample mean of 3.2 or higher.}
+
+\CommentTok{# This is a high probability, so we think that a sample mean of 3.2 or more exclusive relationships is }
+\CommentTok{# likely to happen simply by chance or sampling variability.}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{two-sided-tests}{%
+\subsubsection*{Two-Sided Tests}\label{two-sided-tests}}
+\addcontentsline{toc}{subsubsection}{Two-Sided Tests}
+
+\begin{itemize}
+\tightlist
+\item
+  Often instead of looking for a divergence from the null in a specific direction, we might be interested
+  in divergence in any direction.
+\item
+  We call such hypothesis tests \textbf{two-sided} (or \textbf{two-tailed}).
+\item
+  The definition of a p-value is the same regardless of doing a one or a two-sided test. However, the calculation becomes slightly different and ever so slightly more complicated since we need to consider ``at least as extreme as the observed outcome'' in both directions away from the mean.
+\end{itemize}
+
+\textbf{Example}
+
+\[
+P(\bar{x} > 3.2  \text{ OR }  \bar{x} < 2.8 | H_0 : \mu = 3)
+\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# test statistic}
+\NormalTok{z_upper <-}\StringTok{ }\KeywordTok{round}\NormalTok{((}\FloatTok{3.2} \OperatorTok{-}\StringTok{ }\DecValTok{3}\NormalTok{)}\OperatorTok{/}\FloatTok{0.246}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+\NormalTok{z_lower <-}\StringTok{ }\KeywordTok{round}\NormalTok{((}\FloatTok{2.8} \OperatorTok{-}\StringTok{ }\DecValTok{3}\NormalTok{)}\OperatorTok{/}\FloatTok{0.246}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+
+\CommentTok{# p-value}
+\NormalTok{p_upper <-}\StringTok{ }\KeywordTok{round}\NormalTok{(}\DecValTok{1} \OperatorTok{-}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(z_upper), }\DecValTok{3}\NormalTok{)}
+\NormalTok{p_lower <-}\StringTok{ }\KeywordTok{round}\NormalTok{(}\KeywordTok{pnorm}\NormalTok{(z_lower), }\DecValTok{3}\NormalTok{)}
+
+\NormalTok{p_value <-}\StringTok{ }\NormalTok{p_upper }\OperatorTok{+}\StringTok{ }\NormalTok{p_lower}
+
+\KeywordTok{list}\NormalTok{(}
+  \DataTypeTok{z =} \KeywordTok{c}\NormalTok{(z_lower, z_upper),}
+  \DataTypeTok{p_value =}\NormalTok{ p_value}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $z
+## [1] -0.81  0.81
+## 
+## $p_value
+## [1] 0.418
+\end{verbatim}
+
+\hypertarget{step-by-step}{%
+\subsubsection*{Step-by-Step}\label{step-by-step}}
+\addcontentsline{toc}{subsubsection}{Step-by-Step}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Set the \textbf{hypotheses}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(H_0 : \mu = \text{null value}\)
+  \item
+    \(H_A: \mu < or > or \neq \text{null value}\)
+  \end{itemize}
+\item
+  Calculate the \textbf{point estimate}: \(\bar{x}\)
+\item
+  Check \textbf{conditions}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Independence
+  \item
+    Sample size/skew
+  \end{itemize}
+\item
+  Draw \textbf{sampling distribution}, shape \textbf{p-value}, calculate \textbf{test statistic}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \$ z = \frac{\bar{x} - \mu}{SE} \$
+  \item
+    \$ SE = \frac{s}{\sqrt{n}} \$
+  \end{itemize}
+\item
+  Make a decision, and interpret it in context of the research question
+
+  \begin{itemize}
+  \tightlist
+  \item
+    If p-value \textless{} \(\alpha\), reject \(H_0\); the data provide convincing evidence for \(H_A\).
+  \item
+    If p-value \textgreater{} \(\alpha\), fail to reject \(H_0\) the data do not provide convincing evidence for \(H_A\).
+  \end{itemize}
+\end{enumerate}
+
+\textbf{Example}
+
+\begin{itemize}
+\tightlist
+\item
+  Researchers investigating characteristics of gifted children collected data from schools in a large city on a random sample of 36 children who were identified as gifted children soon after they reached the age of four.
+\item
+  In this study, along with variables on the children, the researchers also collected data on their mothers' IQ scores. The histogram shows the distribution of these data, and also provided our some sample statistics.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    n = 36
+  \item
+    min = 101
+  \item
+    mean = 118.2
+  \item
+    sd = 6.5
+  \item
+    max = 131
+  \end{itemize}
+\item
+  Perform a hypothesis test to evaluate if these data provide convincing evidence of a difference between the average IQ score of mothers of gifted children And the average IQ score for the population at large, which happens to be 100. We're also asked to use a significance level of .01.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (1) Set the hypotheses}
+\CommentTok{# H0: mu = 100}
+\CommentTok{# H1: mu != 100}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (2) Calculate the point estimate}
+\NormalTok{x_bar <-}\StringTok{ }\FloatTok{118.2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (3) Check the conditions}
+\CommentTok{# random & 35 < 10% of all gifted child -> independence}
+\CommentTok{# n > 30 & sample not skewed -> nearly normal sampling distribution}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (4) Sampling distribution, p-value, test statistic}
+\NormalTok{se <-}\StringTok{ }\KeywordTok{round}\NormalTok{(}\FloatTok{6.5}\OperatorTok{/}\KeywordTok{sqrt}\NormalTok{(}\DecValTok{36}\NormalTok{), }\DecValTok{3}\NormalTok{)}
+
+\NormalTok{z_upper <-}\StringTok{ }\NormalTok{(}\FloatTok{118.2}\DecValTok{-100}\NormalTok{)}\OperatorTok{/}\NormalTok{se}
+\NormalTok{z_lower <-}\StringTok{ }\NormalTok{(}\FloatTok{81.8}\DecValTok{-100}\NormalTok{)}\OperatorTok{/}\NormalTok{se}
+
+\NormalTok{p_value <-}\StringTok{ }\NormalTok{(}\KeywordTok{pnorm}\NormalTok{(z_upper, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{)) }\OperatorTok{+}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(z_lower)}
+
+\KeywordTok{list}\NormalTok{(}
+  \DataTypeTok{se =}\NormalTok{ se,}
+  \DataTypeTok{z =} \KeywordTok{c}\NormalTok{(z_lower, z_upper),}
+  \DataTypeTok{p_value =}\NormalTok{ p_value}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $se
+## [1] 1.083
+## 
+## $z
+## [1] -16.80517  16.80517
+## 
+## $p_value
+## [1] 2.236673e-63
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (5) Make a decision}
+\CommentTok{# p-value is very low -> strong evidence against the null}
+\CommentTok{# We reject the null hypothesis and conclude that the data provide convincing evidence of a difference between }
+\CommentTok{# the average IQ score of mothers of gifted child and the average IQ score for the populatin at large.}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Example}
+
+\begin{itemize}
+\tightlist
+\item
+  A statistics student interested in sleep habits of domestic cats took a random sample of 144 cats and monitored their sleep. The cats slept an average of 16 hours per day. According to our online resources, domestic dogs actually sleep on average 14 hours a day.
+\item
+  We want to find out if these data provide convincing evidence of different sleeping habits for domestic cats and dogs with respect to how much they sleep. Note that the test statistic calculated was 1.73.
+\item
+  What is the interpretation of this p-value in context of these data?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# H0: mu = 14}
+\CommentTok{# H1: mu != 14}
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{p_value =} \KeywordTok{pnorm}\NormalTok{(}\OperatorTok{-}\FloatTok{1.73}\NormalTok{) }\OperatorTok{*}\StringTok{ }\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $p_value
+## [1] 0.08363028
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# p(obtaining a random sample of 144 cats that sleep 16 hours or more or 12 hours or less, }
+\CommentTok{# on average, if in fact cats truly slept 14 hours per day on average) = 0.0836}
+
+\CommentTok{# The p-value is larger than the significance level 0.05. Hence the evidence is not strong}
+\CommentTok{# enough to reject the null hypotheses. Hence, we cannot decide that there is a}
+\CommentTok{# difference between the sleeping habits for domestic cats and dogs.}
+\CommentTok{# If the average hours of sleep for domestic cat is 14, there is a 8% chance }
+\CommentTok{# that a random sample of size 144 would yield a sample mean of 16.}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{exercises-2}{%
+\subsection*{Exercises}\label{exercises-2}}
+\addcontentsline{toc}{subsection}{Exercises}
+
+OpenIntro Statistics, 3rd edition
+4.17, 4.19, 4.23, 4.25, 4.27
+
+\textbf{4.17 Identify hypotheses, Part I.}
+
+\begin{itemize}
+\item
+  Write the null and alternative hypotheses in words and
+  then symbols for each of the following situations.
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \tightlist
+  \item
+    New York is known as ``the city that never sleeps''. A random sample of 25 New Yorkers were
+    asked how much sleep they get per night. Do these data provide convincing evidence that
+    New Yorkers on average sleep less than 8 hours a night?
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    Employers at a firm are worried about the effect of March Madness, a basketball championship
+    held each spring in the US, on employee productivity. They estimate that on a regular business
+    day employees spend on average 15 minutes of company time checking personal email, making
+    personal phone calls, etc. They also collect data on how much company time employees spend
+    on such non- business activities during March Madness. They want to determine if these data
+    provide convincing evidence that employee productivity decreases during March Madness
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (a)}
+
+\CommentTok{# H0: mu = 8}
+\CommentTok{# HA: mu < 8}
+
+\CommentTok{# The null hypotheses assumes that the average sleep hours of New Yorkers }
+\CommentTok{# is no difference to the average sleep hours of other city }
+\CommentTok{# which is 8 hours.}
+
+\CommentTok{# The alternative hypotheses is that New Yorkers on average sleep less }
+\CommentTok{# than 8 hours.}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{4.19 Online communication.}
+
+\begin{itemize}
+\tightlist
+\item
+  A study suggests that the average college student spends 10
+  hours per week communicating with others online. You believe that this is an underestimate and
+  decide to collect your own sample for a hypothesis test. You randomly sample 60 students from
+  your dorm and find that on average they spent 13.5 hours a week communicating with others
+  online.
+\item
+  A friend of yours, who offers to help you with the hypothesis test, comes up with the
+  following set of hypotheses. Indicate any errors you see.
+  \[H_0 : \bar{x} < 10 \text{ hours}\]
+  \[H_A : \bar{x} > 13.5 \text{ hours}\]
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# The null hypotheses should be mu = 10 hours.}
+\CommentTok{# The alternative hypotheses should be mu > 10 hours.}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{4.23 Nutrition labels.}
+
+\begin{itemize}
+\tightlist
+\item
+  The nutrition label on a bag of potato chips says that a one ounce
+  (28 gram) serving of potato chips has 130 calories and contains ten grams of fat, with three grams
+  of saturated fat. A random sample of 35 bags yielded a sample mean of 134 calories with a standard
+  deviation of 17 calories.
+\item
+  Is there evidence that the nutrition label does not provide an accurate
+  measure of calories in the bags of potato chips? We have verified the independence, sample size,
+  and skew conditions are satisfied.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# H0: mu = 130}
+\CommentTok{# HA: mu != 130}
+
+\NormalTok{x <-}\StringTok{ }\DecValTok{130}
+\NormalTok{p <-}\StringTok{ }\DecValTok{134}
+\NormalTok{sd <-}\StringTok{ }\DecValTok{17}
+\NormalTok{n <-}\StringTok{ }\DecValTok{35}
+
+\NormalTok{se <-}\StringTok{ }\NormalTok{sd}\OperatorTok{/}\KeywordTok{sqrt}\NormalTok{(n)}
+
+\NormalTok{z <-}\StringTok{ }\NormalTok{(}\DecValTok{134-130}\NormalTok{)}\OperatorTok{/}\NormalTok{se}
+
+\NormalTok{p_value <-}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(z, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{*}\StringTok{ }\DecValTok{2}
+
+\CommentTok{# If the null hypotheses is true (mean is 130), there is a 0.164}
+\CommentTok{# chance during a random sample of 130 yielding a sample mean of 134.}
+\CommentTok{# Let alpha be 0.05, the p-value is higher than the significance}
+\CommentTok{# level and we failed to reject the null hypotheses. Hence,}
+\CommentTok{# there is no strong evidence suggesting the measure of calories in the}
+\CommentTok{# bags of potato chips is inaccurate.}
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{se =}\NormalTok{ se, }\DataTypeTok{z =}\NormalTok{ z, }\DataTypeTok{p_value =}\NormalTok{ p_value)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $se
+## [1] 2.873524
+## 
+## $z
+## [1] 1.392019
+## 
+## $p_value
+## [1] 0.1639167
+\end{verbatim}
+
+\textbf{4.25 Waiting at an ER, Part III.}
+
+\begin{itemize}
+\item
+  The hospital administrator mentioned in Exercise 4.13
+  randomly selected 64 patients and measured the time (in minutes) between when they checked in
+  to the ER and the time they were first seen by a doctor. The average time is 137.5 minutes and
+  the standard deviation is 39 minutes. She is getting grief from her supervisor on the basis that
+  the wait times in the ER has increased greatly from last year's average of 127 minutes. However,
+  she claims that the increase is probably just due to chance.
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \tightlist
+  \item
+    Are conditions for inference met? Note any assumptions you must make to proceed.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    Using a significance level of α = 0.05, is the change in wait times statistically significant? Use
+    a two-sided test since it seems the supervisor had to inspect the data before she suggested an
+    increase occurred.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    Would the conclusion of the hypothesis test change if the significance level was changed to
+    α = 0.01?
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (a)}
+\CommentTok{# Independence: Since the patients are randomly selected, the independence }
+\CommentTok{# condition is met, and should make up of less than 10% of the ER residents.}
+\CommentTok{# Sample size: The sample size is 64, greater than 30. It's large enough}
+\CommentTok{# to perform inference with normal distribution.}
+\CommentTok{# Skewness: There's no information regarding the skewness but }
+\CommentTok{# we could assume that it's not skewed.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (b)}
+\CommentTok{# H0: mu = 127}
+\CommentTok{# HA: mu != 127}
+
+\NormalTok{n <-}\StringTok{ }\DecValTok{64}
+\NormalTok{x <-}\StringTok{ }\FloatTok{137.5}
+\NormalTok{p <-}\StringTok{ }\DecValTok{127}
+\NormalTok{sd <-}\StringTok{ }\DecValTok{39}
+
+\NormalTok{se <-}\StringTok{ }\NormalTok{sd }\OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(n)}
+
+\NormalTok{z <-}\StringTok{ }\NormalTok{(p }\OperatorTok{-}\StringTok{ }\NormalTok{x)}\OperatorTok{/}\NormalTok{se}
+
+\NormalTok{p_value <-}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(z)}\OperatorTok{*}\DecValTok{2}
+
+\CommentTok{# The p-value 0.03 is smaller than the significance level of 0.05.}
+\CommentTok{# Hence, the null hypotheses can be rejected in favor of the}
+\CommentTok{# alternative hypotheses. The data provide convincing evidence that}
+\CommentTok{# the average ER wait time has increased over the last year.}
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{se =}\NormalTok{ se, }\DataTypeTok{z =}\NormalTok{ z, }\DataTypeTok{p_value =}\NormalTok{ p_value)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $se
+## [1] 4.875
+## 
+## $z
+## [1] -2.153846
+## 
+## $p_value
+## [1] 0.03125224
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (c)}
+
+\CommentTok{# If the alpha is changed to 0.01, the p-value is larger than the }
+\CommentTok{# significance level and hence we cannot reject the null hypotheses.}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{4.27 Working backwards, one-sided.}
+
+\begin{itemize}
+\tightlist
+\item
+  You are given the following hypotheses:
+  \[H_0 : µ = 30\]
+  \[H_A : µ > 30\]
+\item
+  We know that the sample standard deviation is 10 and the sample size is 70. For what sample
+  mean would the p-value be equal to 0.05? Assume that all conditions necessary for inference are
+  satisfied.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n <-}\StringTok{ }\DecValTok{70}
+\NormalTok{x <-}\StringTok{ }\DecValTok{30}
+\NormalTok{sd <-}\StringTok{ }\DecValTok{10}
+
+\NormalTok{se <-}\StringTok{ }\DecValTok{10}\OperatorTok{/}\KeywordTok{sqrt}\NormalTok{(}\DecValTok{70}\NormalTok{)}
+
+\CommentTok{# Find the required z value if p-value = 0.05}
+\NormalTok{z <-}\StringTok{ }\KeywordTok{qnorm}\NormalTok{(}\FloatTok{0.05}\NormalTok{)}
+
+\CommentTok{# Find the required mean}
+\CommentTok{# z = (p - x)/se}
+\NormalTok{required_mean <-}\StringTok{ }\NormalTok{z }\OperatorTok{*}\StringTok{ }\NormalTok{se }\OperatorTok{+}\StringTok{ }\NormalTok{x}
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{se =}\NormalTok{ se, }\DataTypeTok{z =}\NormalTok{ z, }\DataTypeTok{required_mean =}\NormalTok{ required_mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $se
+## [1] 1.195229
+## 
+## $z
+## [1] -1.644854
+## 
+## $required_mean
+## [1] 28.03402
+\end{verbatim}
+
+\hypertarget{significance}{%
+\section*{Significance}\label{significance}}
+\addcontentsline{toc}{section}{Significance}
+
+\hypertarget{inference-for-other-estimators}{%
+\subsection*{Inference for Other Estimators}\label{inference-for-other-estimators}}
+\addcontentsline{toc}{subsection}{Inference for Other Estimators}
+
+\begin{itemize}
+\tightlist
+\item
+  Any \textbf{nearly normal sampling distributions}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Sample mean \(\bar{x}\)
+  \item
+    Difference between sample means \(\bar{x}_1 - \bar{x}_2\)
+  \item
+    Sample proportion \(\hat{p}\)
+  \item
+    Diffefference between sample proportions \(\hat{p}_1 - \hat{p}_2\)
+  \end{itemize}
+\item
+  \textbf{Unbiased estimator}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    An important assumption about the point estimates is that they're unbiased, i.e.~the sampling distribution of the estimate is centered at the true population parameter it estimates.
+  \item
+    An unbiased estimate does not naturally over or underestimate the parameter but instead it provides a good estimate.
+  \item
+    We know that the sample mean is an example of an unbiased point estimate.
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{confidence-intervals}{%
+\subsubsection*{Confidence Intervals}\label{confidence-intervals}}
+\addcontentsline{toc}{subsubsection}{Confidence Intervals}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Confidence intervals} for nearly normal point estimates
+  \[ \text{point estimate} \pm z^{\star} \times SE \]
+\end{itemize}
+
+\hypertarget{hypothesis-testing-1}{%
+\subsubsection*{Hypothesis Testing}\label{hypothesis-testing-1}}
+\addcontentsline{toc}{subsubsection}{Hypothesis Testing}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Hypothesis testing} for nearly normal point estimates
+  \[ Z = \frac{\text{ point estimate } - \text{ null value }}{SE} \]
+\end{itemize}
+
+\textbf{Example}
+
+\begin{itemize}
+\tightlist
+\item
+  A 2010 Pew Research foundation poll indicates that among 1,099 college graduates, 33\% watch the Daily Show. An American late-night TV Show. The standard error of this estimate is 0.014.
+\item
+  We are asked to estimate the 95\% confidence interval for the proportion of college graduates who watch The Daily Show.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p <-}\StringTok{ }\FloatTok{0.33}
+\NormalTok{se <-}\StringTok{ }\FloatTok{0.014}
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{ci =} \KeywordTok{c}\NormalTok{(p }\OperatorTok{+}\StringTok{ }\FloatTok{1.96} \OperatorTok{*}\StringTok{ }\NormalTok{se, p }\OperatorTok{-}\StringTok{ }\FloatTok{1.96} \OperatorTok{*}\StringTok{ }\NormalTok{se))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $ci
+## [1] 0.35744 0.30256
+\end{verbatim}
+
+\textbf{Example}
+
+\begin{itemize}
+\tightlist
+\item
+  The 3rd national health and nutrition examination survey NHANES, collected body fat percentage and gender data from over 13,000 subjects in ages between 20 to 80. The average body fat percentage for the 6,580 men in the sample was 23.9\%. And this value was 35\% for the, for the 7,021 women. The standard error for the difference between the average male and female body fat percentages was 0.114.
+\item
+  Do these data provide convincing evidence that men and women have different average body fat percentages? You may assume that the distribution of the point estimate is nearly normal.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# H0: mu_men = mu_women -> mu_men - mu_women = 0}
+\CommentTok{# H1: mu_men = mu_women -> mu_men - mu_women != 0}
+
+\CommentTok{# Point estimate}
+\CommentTok{# mu_men - mu_women}
+\NormalTok{p <-}\StringTok{ }\FloatTok{23.9} \OperatorTok{-}\StringTok{ }\DecValTok{35}
+
+\NormalTok{mu <-}\StringTok{ }\DecValTok{0}
+\NormalTok{se <-}\StringTok{ }\FloatTok{0.114}
+
+\NormalTok{z <-}\StringTok{ }\NormalTok{(}\OperatorTok{-}\FloatTok{11.1} \OperatorTok{-}\StringTok{ }\DecValTok{0}\NormalTok{)}\OperatorTok{/}\FloatTok{0.114}
+
+\NormalTok{p_value <-}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(z) }\OperatorTok{*}\StringTok{ }\DecValTok{2}
+
+\CommentTok{# Reject the null hypothesis.}
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{p =}\NormalTok{ p, }\DataTypeTok{z =}\NormalTok{ z, }\DataTypeTok{p_value =}\NormalTok{ p_value)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $p
+## [1] -11.1
+## 
+## $z
+## [1] -97.36842
+## 
+## $p_value
+## [1] 0
+\end{verbatim}
+
+\hypertarget{decision-errors}{%
+\subsection*{Decision Errors}\label{decision-errors}}
+\addcontentsline{toc}{subsection}{Decision Errors}
+
+\begin{itemize}
+\item
+  \textbf{Type I error} (\(\alpha\)) is rejecting the H0 when H0 is true. (Declaring the defendant guilty when they are actually innocent.)
+\item
+  \textbf{Type II error} (\(\beta\)) is failing to reject H0 when HA is true. (Declaring the defendant innocent when they are actually guilty.)
+\item
+  \textbf{Power} (\(1 - \beta\)) of a test is the probability of correctly rejecting H0.
+\item
+  We (almost) never know if H0 or HA is true, but we need to consider all possibilities.
+\end{itemize}
+
+\hypertarget{type-i-error-rate}{%
+\subsubsection*{Type I Error Rate}\label{type-i-error-rate}}
+\addcontentsline{toc}{subsubsection}{Type I Error Rate}
+
+\begin{itemize}
+\tightlist
+\item
+  We reject the null hypothesis when the p-value is less than 0.05 (\(\alpha = 0.05\)).
+\item
+  This means that, for those cases where the null hypothesis is actually true, we do not want to incorrectly reject it more than 5\% of those times.
+\item
+  In other words, when using a 5\% significance level, there is about a 5\% chance of making a type one error if the null hypothesis is true.
+\end{itemize}
+
+\[ P(\text{Type I error } | H_0 \text{ true}) = \alpha \]
+
+\begin{itemize}
+\tightlist
+\item
+  This is why we prefer small values of \(\alpha\) - increasing \(\alpha\) increases the Type I error rate.
+\item
+  If Type I Error is dangerous or especially costly, choose a small significance level (e.g.~0.01). Goal: We want to be very cautious about rejecting H0, so we demand very strong evidence favoring HA before we should do so.
+\item
+  If Type II Error is relatively more dangerous or much more costly, choose a higher significance level (e.g.~0.10). Goal: We want to be cautious about failing to reject H0 when the null is actually false.
+\end{itemize}
+
+\hypertarget{type-ii-error-rate}{%
+\subsubsection*{Type II Error Rate}\label{type-ii-error-rate}}
+\addcontentsline{toc}{subsubsection}{Type II Error Rate}
+
+\begin{itemize}
+\tightlist
+\item
+  If the alternative hypothesis is actually true, what is the chance that we make a type two error? In other words, what is the chance that we fail to reject the null hypothesis, even when we should reject it?
+\item
+  The answer to this is not obvious.
+\item
+  If the true population average is very close to the null value, it will be very difficult to detect a difference and to reject the null hypothesis.
+\item
+  In other words, if the true population average is very different from the null value, it will be much easier to detect a difference.
+\item
+  Clearly then, \(\beta\), the probability of making a type two area depends on our effect size. An \textbf{effect size} is defined as the difference between the point estimate and the null value.
+\end{itemize}
+
+\hypertarget{significance-vs-confidence-level}{%
+\subsection*{Significance vs Confidence Level}\label{significance-vs-confidence-level}}
+\addcontentsline{toc}{subsection}{Significance vs Confidence Level}
+
+\begin{itemize}
+\tightlist
+\item
+  Broadly we can say that a significance level and a confidence level are complements of each other.
+\item
+  A two sided hypothesis with threshold of \(\alpha\) is equivalent to a confidence interval with \(CL = 1 - \alpha\).
+\item
+  A one sided hypothesis with threshold of \(\alpha\) is equivalent to a confidence interval with \(CL = 1 - (2 \times \alpha)\).
+\item
+  If H0 is rejected, a confidence interval that agrees with the result of the hypothesis test should not include the null value.
+\item
+  If H0 is failed to be rejected, a confidence interval that agrees with the result of the hypothesis test should include the null value.
+\end{itemize}
+
+\hypertarget{statistical-vs-practical-significance}{%
+\subsection*{Statistical vs Practical Significance}\label{statistical-vs-practical-significance}}
+\addcontentsline{toc}{subsection}{Statistical vs Practical Significance}
+
+\begin{itemize}
+\tightlist
+\item
+  Real differences between the point estimate and the null value are easier to detect with large samples.
+\item
+  However very large samples will result in statistical significance even for tiny differences between the sample mean and the null value or our effect size, even when the difference is not practically significant.
+\end{itemize}
+
+\hypertarget{exercises-3}{%
+\subsection*{Exercises}\label{exercises-3}}
+\addcontentsline{toc}{subsection}{Exercises}
+
+OpenIntro Statistics, 3rd edition
+4.43, 4.45
+4.29, 4.31, 4.47
+
+\textbf{4.43 Spam mail counts.}
+
+\begin{itemize}
+\item
+  The 2004 National Technology Readiness Survey sponsored by the
+  Smith School of Business at the University of Maryland surveyed 418 randomly sampled Americans,
+  asking them how many spam emails they receive per day. The survey was repeated on a new
+  random sample of 499 Americans in 2009.
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \tightlist
+  \item
+    What are the hypotheses for evaluating if the average spam emails per day has changed from
+    2004 to 2009.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    In 2004 the mean was 18.5 spam emails per day, and in 2009 this value was 14.9 emails per
+    day. What is the point estimate for the difference between the two population means?
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    A report on the survey states that the observed difference between the sample means is not
+    statistically significant. Explain what this means in context of the hypothesis test and data.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{3}
+  \tightlist
+  \item
+    Would you expect a confidence interval for the difference between the two population means
+    to contain 0? Explain your reasoning.
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (a)}
+\CommentTok{# H0: mu_2009 - mu_2004 = 0}
+\CommentTok{# HA: mu_2009 - mu_2004 != 0}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (b)}
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{p =} \FloatTok{18.5} \OperatorTok{-}\StringTok{ }\FloatTok{14.9}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $p
+## [1] 3.6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (c)}
+\CommentTok{# It means that assuming the null hypotheses is true, where the difference}
+\CommentTok{# between the average spam emails per day in 2004 and 2009 is 0,}
+\CommentTok{# the probability of observing a sample difference of 3.6}
+\CommentTok{# is higher than the significance level alpha, in other words, }
+\CommentTok{# not rare. Hence, we cannot reject the null hypotheses and say}
+\CommentTok{# that the data provides statistically strong evidence in favor of}
+\CommentTok{# the alternative hypotheses.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (d)}
+\CommentTok{# Yes. Since the result is not statistically significant, we cannot}
+\CommentTok{# reject the null hypotheses. Hence, we would expect 0 to be }
+\CommentTok{# include in our confidence interval, i.e. it's highly plausible}
+\CommentTok{# to see the value 0.}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{4.45 Spam mail percentages.}
+
+\begin{itemize}
+\item
+  The National Technology Readiness Survey sponsored by the
+  Smith School of Business at the University of Maryland surveyed 418 randomly sampled Americans,
+  asking them how often they delete spam emails. In 2004, 23\% of the respondents said they delete
+  their spam mail once a month or less, and in 2009 this value was 16\%.
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \tightlist
+  \item
+    What are the hypotheses for evaluating if the proportion of those who delete their email once
+    a month or less has changed from 2004 to 2009?
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    What is the point estimate for the difference between the two population proportions?
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    A report on the survey states that the observed decrease from 2004 to 2009 is statistically
+    significant. Explain what this means in context of the hypothesis test and the data.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{3}
+  \tightlist
+  \item
+    Would you expect a confidence interval for the difference between the two population proportions to contain 0? Explain your reasoning.
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (a)}
+\CommentTok{# H0: p_2004 = p_2009}
+\CommentTok{# HA: p_2004 != p_2009}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (b)}
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{p =} \FloatTok{0.16} \OperatorTok{-}\StringTok{ }\FloatTok{0.23}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $p
+## [1] -0.07
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (c) }
+\CommentTok{# It means that assuming the null hypotheses is true, the probability}
+\CommentTok{# of observing a difference of 0.07 is very small, and smaller than}
+\CommentTok{# the significance level, hence we reject the null hypotheses }
+\CommentTok{# and say that the data provides evidence that there are difference }
+\CommentTok{# between the two population proportions, and the difference is not due}
+\CommentTok{# to sampling variability.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (d)}
+\CommentTok{# No. As we rejected the null hypotheses.}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{4.29 Testing for Fibromyalgia.}
+
+\begin{itemize}
+\item
+  A patient named Diana was diagnosed with Fibromyalgia, a
+  long-term syndrome of body pain, and was prescribed anti-depressants. Being the skeptic that she
+  is, Diana didn't initially believe that anti-depressants would help her symptoms. However after
+  a couple months of being on the medication she decides that the anti-depressants are working,
+  because she feels like her symptoms are in fact getting better.
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \tightlist
+  \item
+    Write the hypotheses in words for Diana's skeptical position when she started taking the
+    anti-depressants.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    What is a Type 1 Error in this context?
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    What is a Type 2 Error in this context?
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (a)}
+\CommentTok{# H0: The anti-depressants are not working.}
+\CommentTok{# HA: The anti-depressants are working.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (b)}
+\CommentTok{# Type 1 error is to declare the anti-depressants to be working }
+\CommentTok{# when the truth is they are useless.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (c)}
+\CommentTok{# Type 2 error is to declare the anti-depressants to be useless}
+\CommentTok{# when the truth is they are helping the symptoms.}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{4.31 Which is higher?}
+
+\begin{itemize}
+\item
+  In each part below, there is a value of interest and two scenarios (I and
+  II). For each part, report if the value of interest is larger under scenario I, scenario II, or whether
+  the value is equal under the scenarios.
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \tightlist
+  \item
+    The standard error of \(\bar{x}\) when s = 120 and (I) n = 25 or (II) n = 125.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    The margin of error of a confidence interval when the confidence level is (I) 90\% or (II) 80\%.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    The p-value for a Z-statistic of 2.5 when (I) n = 500 or (II) n = 1000.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{3}
+  \tightlist
+  \item
+    The probability of making a Type 2 Error when the alternative hypothesis is true and the
+    significance level is (I) 0.05 or (II) 0.10.
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (a)}
+\CommentTok{# SE of mean is inversely relating to sample size. SE is larger in (I).}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (b)}
+\CommentTok{# The margin of error depends on the z-score calculated by the confidence }
+\CommentTok{# interval and the standard error.}
+\CommentTok{# A higher confidence interval yield a higher z-score and hence a higher}
+\CommentTok{# margin of error. (I) has a higher margin of error.}
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{z_90 =} \KeywordTok{qnorm}\NormalTok{((}\DecValTok{1}\FloatTok{-.9}\NormalTok{)}\OperatorTok{/}\DecValTok{2}\NormalTok{), }\DataTypeTok{z_80 =} \KeywordTok{qnorm}\NormalTok{((}\DecValTok{1}\FloatTok{-.8}\NormalTok{)}\OperatorTok{/}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $z_90
+## [1] -1.644854
+## 
+## $z_80
+## [1] -1.281552
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (d)}
+\CommentTok{# Type 2 error is failing to reject the null hypotheses when the }
+\CommentTok{# alternative hypotheses is true. In other words,}
+\CommentTok{# declare a person innocent when he's actually guilty.}
+\CommentTok{# When significance level is small, it's harder to declare a person guilty, }
+\CommentTok{# or to reject the null hypotheses. Hence, we're easier to }
+\CommentTok{# declare a person innocent when he's guilty. }
+\CommentTok{# (I) has a higher probability of making type 2 error.}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{4.47 Practical vs.~statistical.}
+
+\begin{itemize}
+\tightlist
+\item
+  Determine whether the following statement is true or false, and
+  explain your reasoning: ``With large sample sizes, even small differences between the null value
+  and the point estimate can be statistically significant.''
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# True. }
+\NormalTok{n1 <-}\StringTok{ }\DecValTok{1000}
+\NormalTok{n2 <-}\StringTok{ }\DecValTok{50}
+\NormalTok{x <-}\StringTok{ }\DecValTok{50}
+\NormalTok{p <-}\StringTok{ }\DecValTok{52}
+\NormalTok{sd <-}\StringTok{ }\DecValTok{10}
+
+\NormalTok{se1 <-}\StringTok{ }\NormalTok{sd}\OperatorTok{/}\KeywordTok{sqrt}\NormalTok{(n1)}
+\NormalTok{z1 <-}\StringTok{ }\NormalTok{(}\DecValTok{1-0}\NormalTok{)}\OperatorTok{/}\NormalTok{se1}
+\NormalTok{p_value_}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(z1, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{)}
+
+\NormalTok{se2 <-}\StringTok{ }\NormalTok{sd}\OperatorTok{/}\KeywordTok{sqrt}\NormalTok{(n2)}
+\NormalTok{z2 <-}\StringTok{ }\NormalTok{(}\DecValTok{1-0}\NormalTok{)}\OperatorTok{/}\NormalTok{se2}
+\NormalTok{p_value_}\DecValTok{2}\NormalTok{ <-}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(z2, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{)}
+
+\CommentTok{# For large sample size, the standard error will be lower,}
+\CommentTok{# and hence a larger test statistics and smaller p value.}
+\KeywordTok{list}\NormalTok{(}
+  \DataTypeTok{p_value_n1000 =}\NormalTok{ p_value_}\DecValTok{1}\NormalTok{,}
+  \DataTypeTok{p_value_n50 =}\NormalTok{ p_value_}\DecValTok{2}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $p_value_n1000
+## [1] 0.0007827011
+## 
+## $p_value_n50
+## [1] 0.2397501
+\end{verbatim}
+
+\hypertarget{week-3}{%
+\chapter*{Week 3}\label{week-3}}
+\addcontentsline{toc}{chapter}{Week 3}
+
+\hypertarget{t-distribution}{%
+\section*{T-Distribution}\label{t-distribution}}
+\addcontentsline{toc}{section}{T-Distribution}
+
+\hypertarget{t-distribution-1}{%
+\subsection*{T-Distribution}\label{t-distribution-1}}
+\addcontentsline{toc}{subsection}{T-Distribution}
+
+\begin{itemize}
+\item
+  When \(\sigma\) is unknown (almost always), use the t-distribution to address
+  the uncertainty of the standard error estimate
+\item
+  Bell shaped but thicker tails than the normal distribution
+\item
+  Observations more likely to fall beyond 2 SDs from the mean (more conservative)
+\item
+  Extra thick tails helpful for mitigating the effect of a less reliable estimate for the standard error of the sampling distribution
+\item
+  Always centered at 0 (like the standard normal)
+\item
+  One parameter: \textbf{degrees of freedom (df)} - determines the thickness of tails (normal distribution has two parameters: mean and SD)
+\item
+  When degrees of freedom increases, the shape of the t-distribution approaches the normal distribution
+\end{itemize}
+
+\hypertarget{t-score}{%
+\subsubsection*{T-Score}\label{t-score}}
+\addcontentsline{toc}{subsubsection}{T-Score}
+
+\[
+T = \frac{obs-null}{SE}
+\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# P(|Z| > 2)}
+\KeywordTok{pnorm}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{*}\StringTok{ }\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.04550026
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# P(|t_df=50| > 2)}
+\KeywordTok{pt}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DataTypeTok{df =} \DecValTok{50}\NormalTok{, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{*}\StringTok{ }\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.05094707
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# P(|t_df=10| > 2)}
+\KeywordTok{pt}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DataTypeTok{df =} \DecValTok{10}\NormalTok{, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{*}\StringTok{ }\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.07338803
+\end{verbatim}
+
+\hypertarget{inference-for-a-mean}{%
+\subsection*{Inference for a Mean}\label{inference-for-a-mean}}
+\addcontentsline{toc}{subsection}{Inference for a Mean}
+
+\hypertarget{confidence-interval-1}{%
+\subsubsection*{Confidence Interval}\label{confidence-interval-1}}
+\addcontentsline{toc}{subsubsection}{Confidence Interval}
+
+\[
+\bar{x} \pm t^{\star}_{df} SE_\bar{x} \\
+\bar{x} \pm t^{\star}_{df} \frac{s}{\sqrt{n}} \\
+\bar{x} \pm t^{\star}_{n-1} \frac{s}{\sqrt{n}}
+\]
+
+\hypertarget{degrees-of-freedom-for-t-statistic-for-inference-on-one-sample-mean}{%
+\subsubsection*{Degrees of Freedom for T-Statistic for Inference on One Sample Mean}\label{degrees-of-freedom-for-t-statistic-for-inference-on-one-sample-mean}}
+\addcontentsline{toc}{subsubsection}{Degrees of Freedom for T-Statistic for Inference on One Sample Mean}
+
+\[
+df = n - 1
+\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Critical t-score for 0.95 confidence interval with df = 21}
+\KeywordTok{qt}\NormalTok{((}\DecValTok{1}\FloatTok{-0.95}\NormalTok{)}\OperatorTok{/}\DecValTok{2}\NormalTok{, }\DataTypeTok{df =} \DecValTok{21}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -2.079614
+\end{verbatim}
+
+\textbf{Example}
+
+Suppose the suggested serving of these biscuits is 30 grams. Do these data provide convincing evidence that the amount of snacks consumed by distracted eaters post lunch is different than the suggested serving size?
+
+\begin{itemize}
+\tightlist
+\item
+  x̄ = 52.1
+\item
+  s = 45.1
+\item
+  n = 22
+\item
+  t\_21 = 2.08
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Confidence interval}
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{ci =} \KeywordTok{c}\NormalTok{(}\FloatTok{52.1} \OperatorTok{-}\StringTok{ }\FloatTok{2.08} \OperatorTok{*}\StringTok{ }\FloatTok{45.1}\OperatorTok{/}\KeywordTok{sqrt}\NormalTok{(}\DecValTok{22}\NormalTok{), }\FloatTok{52.1} \OperatorTok{+}\StringTok{ }\FloatTok{2.08} \OperatorTok{*}\StringTok{ }\FloatTok{45.1}\OperatorTok{/}\KeywordTok{sqrt}\NormalTok{(}\DecValTok{22}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $ci
+## [1] 32.10007 72.09993
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# H0: mu = 30}
+\CommentTok{# HA: mu != 30}
+
+\CommentTok{# T-score}
+\NormalTok{t <-}\StringTok{ }\NormalTok{(}\FloatTok{52.1} \OperatorTok{-}\StringTok{ }\DecValTok{30}\NormalTok{) }\OperatorTok{/}\StringTok{ }\NormalTok{(}\FloatTok{45.1}\OperatorTok{/}\KeywordTok{sqrt}\NormalTok{(}\DecValTok{22}\NormalTok{))}
+
+\CommentTok{# P-value}
+\NormalTok{p_value <-}\StringTok{ }\KeywordTok{pt}\NormalTok{(t, }\DataTypeTok{df =} \DecValTok{21}\NormalTok{, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{*}\StringTok{ }\DecValTok{2}
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{t =}\NormalTok{ t, }\DataTypeTok{p_value =}\NormalTok{ p_value)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $t
+## [1] 2.298408
+## 
+## $p_value
+## [1] 0.03190849
+\end{verbatim}
+
+\hypertarget{inference-for-comparing-two-independent-means}{%
+\subsection*{Inference for Comparing Two Independent Means}\label{inference-for-comparing-two-independent-means}}
+\addcontentsline{toc}{subsection}{Inference for Comparing Two Independent Means}
+
+\hypertarget{confidence-interval-2}{%
+\subsubsection*{Confidence Interval}\label{confidence-interval-2}}
+\addcontentsline{toc}{subsubsection}{Confidence Interval}
+
+\[
+(\bar{x}_1 - \bar{x}_2) \pm t^{\star}_{df} SE_{(\bar{x}_1 - \bar{x}_2)} \\
+(\bar{x}_1 - \bar{x}_2) \pm t^{\star}_{df} \sqrt{\frac{s^2_1}{n_1} + \frac{s^2_2}{n_2}} \\
+(\bar{x}_1 - \bar{x}_2) \pm t^{\star}_{min(n_1 - 1, n_2 - 1）} \sqrt{\frac{s^2_1}{n_1} + \frac{s^2_2}{n_2}}
+\]
+
+\hypertarget{standard-error-of-difference-between-two-independent-means}{%
+\subsubsection*{Standard Error of Difference between Two Independent Means}\label{standard-error-of-difference-between-two-independent-means}}
+\addcontentsline{toc}{subsubsection}{Standard Error of Difference between Two Independent Means}
+
+\[
+SE_{(\bar{x}_1 - \bar{x}_2)} = \sqrt{\frac{s^2_1}{n_1} + \frac{s^2_2}{n_2}}
+\]
+
+\hypertarget{degrees-of-freedom-for-t-statistic-for-inference-on-difference-of-two-means}{%
+\subsubsection*{Degrees of Freedom for T-Statistic for Inference on Difference of Two Means}\label{degrees-of-freedom-for-t-statistic-for-inference-on-difference-of-two-means}}
+\addcontentsline{toc}{subsubsection}{Degrees of Freedom for T-Statistic for Inference on Difference of Two Means}
+
+\[
+df = min(n_1 - 1, n_2 - 1）
+\]
+
+\textbf{Example}
+
+\begin{itemize}
+\tightlist
+\item
+  Solitaire
+\item
+  x̄ = 52.1
+\item
+  s = 45.1
+\item
+  n = 22
+\item
+  No Distraction
+\item
+  x̄ = 27.1
+\item
+  s = 26.4
+\item
+  n = 22
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Confidence interval}
+
+\NormalTok{df =}\StringTok{ }\DecValTok{22-1}
+\NormalTok{t_}\DecValTok{21}\NormalTok{ =}\StringTok{ }\KeywordTok{qt}\NormalTok{((}\DecValTok{1}\FloatTok{-0.95}\NormalTok{)}\OperatorTok{/}\DecValTok{2}\NormalTok{, }\DataTypeTok{df =} \DecValTok{21}\NormalTok{)}
+
+\NormalTok{se =}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\FloatTok{45.1}\OperatorTok{^}\DecValTok{2}\OperatorTok{/}\DecValTok{22} \OperatorTok{+}\StringTok{ }\FloatTok{26.4}\OperatorTok{^}\DecValTok{2}\OperatorTok{/}\DecValTok{22}\NormalTok{)}
+
+\NormalTok{ci =}\StringTok{ }\KeywordTok{c}\NormalTok{((}\FloatTok{52.1} \OperatorTok{-}\StringTok{ }\FloatTok{27.1}\NormalTok{) }\OperatorTok{-}\StringTok{ }\FloatTok{2.08} \OperatorTok{*}\StringTok{ }\NormalTok{se, (}\FloatTok{52.1} \OperatorTok{-}\StringTok{ }\FloatTok{27.1}\NormalTok{) }\OperatorTok{+}\StringTok{ }\FloatTok{2.08} \OperatorTok{*}\StringTok{ }\NormalTok{se)}
+
+\CommentTok{# We are 95% confident that those who eat with distractions }
+\CommentTok{# consume 1.83 g and 48.17 g more snacks than those }
+\CommentTok{# who eat without distractions, on average.}
+\KeywordTok{list}\NormalTok{(}
+  \DataTypeTok{df =}\NormalTok{ df,}
+  \DataTypeTok{t_21 =}\NormalTok{ t_}\DecValTok{21}\NormalTok{,}
+  \DataTypeTok{se =}\NormalTok{ se,}
+  \DataTypeTok{ci =}\NormalTok{ ci}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $df
+## [1] 21
+## 
+## $t_21
+## [1] -2.079614
+## 
+## $se
+## [1] 11.14159
+## 
+## $ci
+## [1]  1.825495 48.174505
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# H0: mu1 - mu2 = 0}
+\CommentTok{# HA: mu1 - mu2 != 0}
+
+\CommentTok{# T-score}
+\NormalTok{t <-}\StringTok{ }\NormalTok{((}\FloatTok{52.1} \OperatorTok{-}\StringTok{ }\FloatTok{27.1}\NormalTok{) }\OperatorTok{-}\StringTok{ }\DecValTok{0}\NormalTok{) }\OperatorTok{/}\StringTok{ }\NormalTok{se}
+
+\CommentTok{# P-value}
+\NormalTok{p_value <-}\StringTok{ }\KeywordTok{pt}\NormalTok{(t, }\DataTypeTok{df =} \DecValTok{21}\NormalTok{, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{*}\StringTok{ }\DecValTok{2}
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{t =}\NormalTok{ t, }\DataTypeTok{p_value =}\NormalTok{ p_value)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $t
+## [1] 2.243845
+## 
+## $p_value
+## [1] 0.03575082
+\end{verbatim}
+
+\hypertarget{inference-for-comparing-two-paired-means}{%
+\subsection*{Inference for Comparing Two Paired Means}\label{inference-for-comparing-two-paired-means}}
+\addcontentsline{toc}{subsection}{Inference for Comparing Two Paired Means}
+
+\begin{itemize}
+\item
+  Same as the inference for a single population mean, only the mean is a difference between the two paired means.
+\item
+  \(\mu_{\text{diff}}\) : Parameter of Interest
+\item
+  \(\bar{x}_{\text{diff}}\) : Point Estimate
+\end{itemize}
+
+\textbf{Example}
+
+\begin{itemize}
+\tightlist
+\item
+  x̄\_diff = -0.545
+\item
+  s\_diff = 8.887
+\item
+  n\_diff = 200
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# H0: mu_diff = 0}
+\CommentTok{# HA: mu_diff != 0}
+
+\CommentTok{# Standard error}
+\NormalTok{se <-}\StringTok{ }\FloatTok{8.887} \OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\DecValTok{200}\NormalTok{)}
+
+\CommentTok{# T-score}
+\NormalTok{t <-}\StringTok{ }\NormalTok{(}\OperatorTok{-}\FloatTok{0.545} \OperatorTok{-}\StringTok{ }\DecValTok{0}\NormalTok{) }\OperatorTok{/}\StringTok{ }\NormalTok{se}
+
+\CommentTok{# P-value}
+\NormalTok{p_value <-}\StringTok{ }\KeywordTok{pt}\NormalTok{(t, }\DataTypeTok{df =} \DecValTok{199}\NormalTok{) }\OperatorTok{*}\StringTok{ }\DecValTok{2}
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{se =}\NormalTok{ se, }\DataTypeTok{t =}\NormalTok{ t, }\DataTypeTok{p_value =}\NormalTok{ p_value)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $se
+## [1] 0.6284058
+## 
+## $t
+## [1] -0.867274
+## 
+## $p_value
+## [1] 0.3868365
+\end{verbatim}
+
+\hypertarget{power}{%
+\subsection*{Power}\label{power}}
+\addcontentsline{toc}{subsection}{Power}
+
+\begin{itemize}
+\tightlist
+\item
+  \(\alpha\) : Type I error - P(reject H0 \textbar{} H0 true)
+\item
+  \(\beta\) : Type II error - P(fail to reject H0 \textbar{} HA true)
+\item
+  \(1 - \beta\) : \textbf{Power} - P(reject H0 \textbar{} HA true)
+\end{itemize}
+
+\textbf{Example}
+
+\begin{itemize}
+\tightlist
+\item
+  sd = 12
+\item
+  n = 100 (per group)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# H0: mu1 - mu2 = 0}
+\CommentTok{# HA: mu1 - mu2 != 0}
+
+\CommentTok{# Standard error}
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{se =} \KeywordTok{sqrt}\NormalTok{(}\DecValTok{12}\OperatorTok{^}\DecValTok{2}\OperatorTok{/}\DecValTok{100} \OperatorTok{+}\StringTok{ }\DecValTok{12}\OperatorTok{^}\DecValTok{2}\OperatorTok{/}\DecValTok{100}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $se
+## [1] 1.697056
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  For what values of difference would we reject the null hypothesis at the 5\% significance level?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FloatTok{1.96} \OperatorTok{*}\StringTok{ }\FloatTok{1.7}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.332
+\end{verbatim}
+
+\begin{itemize}
+\item
+  Suppose the company cares about finding any effect that is 3mmHg or larger vs
+  the standard medication.
+\item
+  What is the power of the test that can detect this effect.
+\item
+  effect size = -3
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Distribution with mu1 - mu2 = -3}
+
+\NormalTok{z <-}\StringTok{ }\NormalTok{(}\OperatorTok{-}\FloatTok{3.332} \OperatorTok{-}\StringTok{ }\NormalTok{(}\OperatorTok{-}\DecValTok{3}\NormalTok{)) }\OperatorTok{/}\StringTok{ }\FloatTok{1.7}
+
+\CommentTok{# Power of the test}
+\NormalTok{power <-}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(z)}
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{z =}\NormalTok{ z, }\DataTypeTok{power =}\NormalTok{ power)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $z
+## [1] -0.1952941
+## 
+## $power
+## [1] 0.4225814
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  What sample size will lead to a power of 80\% for this test?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Z-score that marks the 80th percentile of the normal curve}
+\KeywordTok{qnorm}\NormalTok{(}\FloatTok{0.8}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.8416212
+\end{verbatim}
+
+\hypertarget{exercises-4}{%
+\subsection*{Exercises}\label{exercises-4}}
+\addcontentsline{toc}{subsection}{Exercises}
+
+OpenIntro Statistics, 3rd edition
+5.1, 5.3, 5.5, 5.13, 5.17, 5.19, 5.21, 5.23, 5.27, 5.31, 5.35, 5.37
+5.39
+5.41, 5.43, 5.45, 5.47, 5.49, 5.51
+
+\textbf{5.1 Identify the critical t.}
+
+\begin{itemize}
+\item
+  An independent random sample is selected from an approximately normal population with unknown standard deviation. Find the degrees of freedom and the critical t-value (t*) for the given sample size and confidence level.
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \tightlist
+  \item
+    n = 6, CL = 90\%
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    n = 21, CL = 98\%
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    n = 29, CL = 95\%
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{3}
+  \tightlist
+  \item
+    n = 12, CL = 99\%
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (a)}
+\KeywordTok{qt}\NormalTok{(.}\DecValTok{05}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -2.015048
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (b)}
+\KeywordTok{qt}\NormalTok{(.}\DecValTok{01}\NormalTok{, }\DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -2.527977
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (c)}
+\KeywordTok{qt}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\DecValTok{28}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -2.048407
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (d)}
+\KeywordTok{qt}\NormalTok{(.}\DecValTok{005}\NormalTok{, }\DecValTok{11}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -3.105807
+\end{verbatim}
+
+\textbf{5.3 Find the p-value, Part I.}
+
+\begin{itemize}
+\item
+  An independent random sample is selected from an approximately normal population with an unknown standard deviation. Find the p-value for the given set of hypotheses and T test statistic. Also determine if the null hypothesis would be rejected at α = 0.05.
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \tightlist
+  \item
+    HA : μ \textgreater{} μ0, n = 11, T = 1.91
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    HA : μ \textless{} μ0, n = 17, T = −3.45
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    HA : μ != μ0, n = 7, T = 0.83
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{3}
+  \tightlist
+  \item
+    HA : μ \textgreater{} μ0, n = 28, T = 2.1
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (a)}
+\CommentTok{# H0 rejected}
+\KeywordTok{pt}\NormalTok{(}\FloatTok{1.91}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.04260244
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (b)}
+\CommentTok{# H0 rejected}
+\KeywordTok{pt}\NormalTok{(}\OperatorTok{-}\FloatTok{3.45}\NormalTok{, }\DecValTok{16}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.001646786
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (c)}
+\CommentTok{# H0 not rejected}
+\KeywordTok{pt}\NormalTok{(}\FloatTok{0.83}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{*}\StringTok{ }\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.4383084
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (d)}
+\CommentTok{# H0 rejected}
+\KeywordTok{pt}\NormalTok{(}\FloatTok{2.1}\NormalTok{, }\DecValTok{27}\NormalTok{, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.02260436
+\end{verbatim}
+
+\textbf{5.5 Working backwards, Part I.}
+
+\begin{itemize}
+\tightlist
+\item
+  A 95\% confidence interval for a population mean, μ, is given as (18.985, 21.015). This confidence interval is based on a simple random sample of 36 observations.
+\item
+  Calculate the sample mean and standard deviation. Assume that all conditions necessary for inference are satisfied. Use the t-distribution in any calculations
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# t}
+\NormalTok{t <-}\StringTok{ }\KeywordTok{qt}\NormalTok{(.}\DecValTok{025}\NormalTok{, }\DecValTok{35}\NormalTok{)}
+
+\CommentTok{# me}
+\NormalTok{me <-}\StringTok{ }\NormalTok{(}\FloatTok{21.015} \OperatorTok{-}\StringTok{ }\FloatTok{18.985}\NormalTok{) }\OperatorTok{/}\StringTok{ }\DecValTok{2}
+
+\CommentTok{# me = t * s / sqrt(n)}
+\CommentTok{# 1.015 = 2.03 * s / sqrt(36)}
+
+\CommentTok{# s}
+\NormalTok{s <-}\StringTok{ }\FloatTok{1.015} \OperatorTok{/}\StringTok{ }\FloatTok{2.03} \OperatorTok{*}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\DecValTok{36}\NormalTok{)}
+
+\CommentTok{# mean}
+\NormalTok{x <-}\StringTok{ }\FloatTok{18.985} \OperatorTok{+}\StringTok{ }\FloatTok{1.015}
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{t =}\NormalTok{ t, }\DataTypeTok{me =}\NormalTok{ me, }\DataTypeTok{s =}\NormalTok{ s, }\DataTypeTok{mean =}\NormalTok{ x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $t
+## [1] -2.030108
+## 
+## $me
+## [1] 1.015
+## 
+## $s
+## [1] 3
+## 
+## $mean
+## [1] 20
+\end{verbatim}
+
+\textbf{5.13 Car insurance savings.}
+
+\begin{itemize}
+\tightlist
+\item
+  A market researcher wants to evaluate car insurance savings at a competing company. Based on past studies he is assuming that the standard deviation of savings is 100.
+  He wants to collect data such that he can get a margin of error of no more than 10 at a 95\% confidence level. How large of a sample should he collect?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# s = 100}
+\CommentTok{# me = 10}
+
+\CommentTok{# me = z * s / sqrt(n)}
+
+\CommentTok{# 10 = 1.96 * 100 / sqrt(n)}
+\NormalTok{(}\FloatTok{1.96} \OperatorTok{*}\StringTok{ }\DecValTok{100} \OperatorTok{/}\StringTok{ }\DecValTok{10}\NormalTok{)}\OperatorTok{^}\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 384.16
+\end{verbatim}
+
+\textbf{5.17 Paired or not, Part I?}
+
+\begin{itemize}
+\item
+  In each of the following scenarios, determine if the data are paired.
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \tightlist
+  \item
+    Compare pre- (beginning of semester) and post-test (end of semester) scores of students.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    Assess gender-related salary gap by comparing salaries of randomly sampled men and women.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    Compare artery thicknesses at the beginning of a study and after 2 years of taking Vitamin E for the same group of patients.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{3}
+  \tightlist
+  \item
+    Assess effectiveness of a diet regimen by comparing the before and after weights of subjects.
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (a)}
+\CommentTok{# Yes, pre- and post-test scores are paired because they're scores of the same student, and thus are not independent.}
+
+\CommentTok{# (b)}
+\CommentTok{# No, as data are randomly sampled, they're assuemed to be independent.}
+
+\CommentTok{# (c)}
+\CommentTok{# Yes, because they're of the same group of patients.}
+
+\CommentTok{# (d)}
+\CommentTok{# Yes, because they're of the same subjects.}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{5.19 Global warming, Part I.}
+
+\begin{itemize}
+\item
+  Is there strong evidence of global warming? Let's consider a small scale example, comparing how temperatures have changed in the US from 1968 to 2008. The daily high temperature reading on January 1 was collected in 1968 and 2008 for 51 randomly selected locations in the continental US. Then the difference between the two readings (temperature in 2008 - temperature in 1968) was calculated for each of the 51 different locations. The average of these 51 values was 1.1 degrees with a standard deviation of 4.9 degrees. We are interested in determining whether these data provide strong evidence of temperature warming in the continental US.
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \tightlist
+  \item
+    Is there a relationship between the observations collected in 1968 and 2008? Or are the observations in the two groups independent? Explain.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    Write hypotheses for this research in symbols and in words.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    Check the conditions required to complete this test.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{3}
+  \tightlist
+  \item
+    Calculate the test statistic and find the p-value.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{4}
+  \tightlist
+  \item
+    What do you conclude? Interpret your conclusion in context.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{5}
+  \tightlist
+  \item
+    What type of error might we have made? Explain in context what the error means.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{6}
+  \tightlist
+  \item
+    Based on the results of this hypothesis test, would you expect a confidence interval for the average difference between the temperature measurements from 1968 and 2008 to include 0? Explain your reasoning.
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (a)}
+\CommentTok{# The observations collected in 1968 and 2008 are not independent. }
+\CommentTok{# Although the 51 locations are randomly selected, the observations collected}
+\CommentTok{# in two different years are from the same locations.}
+\CommentTok{# The data are paired.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (b)}
+\CommentTok{# H0: mu_diff = 0}
+\CommentTok{# HA: mu_diff > 0}
+
+\CommentTok{# The null hypothesis assume that the mean of the difference in temperature in 2008 and 1968 is 0.}
+\CommentTok{# The alternative hypothesis assume that the mean of the difference greater than 0, i.e. warming.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (d)}
+\NormalTok{n =}\StringTok{ }\DecValTok{51}
+\NormalTok{x =}\StringTok{ }\FloatTok{1.1}
+\NormalTok{s =}\StringTok{ }\FloatTok{4.9}
+
+\NormalTok{se <-}\StringTok{ }\FloatTok{4.9} \OperatorTok{/}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(n)}
+
+\NormalTok{t <-}\StringTok{ }\FloatTok{1.1} \OperatorTok{/}\StringTok{ }\NormalTok{se}
+
+\NormalTok{p_value <-}\StringTok{ }\KeywordTok{pt}\NormalTok{(t, }\DecValTok{50}\NormalTok{, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{) }
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{se =}\NormalTok{ se, }\DataTypeTok{t =}\NormalTok{ t, }\DataTypeTok{p_value =}\NormalTok{ p_value)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $se
+## [1] 0.6861372
+## 
+## $t
+## [1] 1.603178
+## 
+## $p_value
+## [1] 0.05759731
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (e)}
+\CommentTok{# Assume the significance level to be 0.05, the p-value is not large enough to reject the null hypothesis.}
+\CommentTok{# Hence, there is not enough evidence to say that the temperature is warming in the continental US.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (f)}
+\CommentTok{# Type II error. There is actually temperature warming but we failed to reject the null hypothesis.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (g)}
+\CommentTok{# Yes. Since the null hypothesis is not rejected, the null hypothesis assume that the mean is 0. }
+\CommentTok{# Hence the confidence interval should include 0.}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{5.21 Global warming, Part II.}
+
+\begin{itemize}
+\item
+  We considered the differences between the temperature readings in January 1 of 1968 and 2008 at 51 locations in the continental US in Exercise 5.19. The mean and standard deviation of the reported differences are 1.1 degrees and 4.9 degrees.
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \tightlist
+  \item
+    Calculate a 90\% confidence interval for the average difference between the temperature measurements between 1968 and 2008.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    Interpret this interval in context.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    Does the confidence interval provide convincing evidence that the temperature was higher in 2008 than in 1968 in the continental US? Explain
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (a)}
+\CommentTok{# t}
+\NormalTok{t <-}\StringTok{ }\KeywordTok{qt}\NormalTok{(}\FloatTok{0.05}\NormalTok{, }\DecValTok{50}\NormalTok{)}
+
+\CommentTok{# me}
+\NormalTok{me <-}\StringTok{ }\FloatTok{1.6759} \OperatorTok{*}\StringTok{ }\NormalTok{se}
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{t =}\NormalTok{ t, }\DataTypeTok{me =}\NormalTok{ me, }\DataTypeTok{ci =} \KeywordTok{c}\NormalTok{(}\FloatTok{1.1} \OperatorTok{-}\StringTok{ }\NormalTok{me, }\FloatTok{1.1} \OperatorTok{+}\StringTok{ }\NormalTok{me))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $t
+## [1] -1.675905
+## 
+## $me
+## [1] 1.149897
+## 
+## $ci
+## [1] -0.0498974  2.2498974
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (b)}
+\CommentTok{# We are 90% confident that the average difference between the temperature measurements between 1968 and 2008 }
+\CommentTok{# with a sample size of 51 is between -0.05 and 2.25.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (c)}
+\CommentTok{# The confidence interval also has a negative range. Hence there is no convincing evidence that the temperature }
+\CommentTok{# was higher in 2008 than in 1968.}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{5.23 Gifted children.}
+
+\begin{itemize}
+\tightlist
+\item
+  Researchers collected a simple random sample of 36 children who had been identified as gifted in a large city. The following histograms show the distributions of the IQ scores of mothers and fathers of these children. Also provided are some sample statistics.
+\end{itemize}
+
+\begin{longtable}[]{@{}llll@{}}
+\toprule
+/ & Mother & Father & Diff\tabularnewline
+\midrule
+\endhead
+Mean & 118.2 & 114.8 & 3.4\tabularnewline
+SD & 6.5 & 3.5 & 7.5\tabularnewline
+n & 36 & 36 & 36\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{itemize}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \tightlist
+  \item
+    Are the IQs of mothers and the IQs of fathers in this data set related? Explain.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    Conduct a hypothesis test to evaluate if the scores are equal on average. Make sure to clearly state your hypotheses, check the relevant conditions, and state your conclusion in the context of the data
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (a)}
+\CommentTok{# Yes. Since IQ could be a factor affecting marriage. The IQ of mothers and fathers are paired.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (b)}
+
+\CommentTok{# H0: mu_diff = 0}
+\CommentTok{# HA: mu_diff != 0 }
+
+\CommentTok{# The null hypothesis assumes that there are no difference between the average IQ of mother and father.}
+\CommentTok{# The alternative assumes that there are difference between the average IQ of mother and father.}
+
+\CommentTok{# A random sample of 36 obviously will be less than 10% of the population of a large city.}
+\CommentTok{# The distribution of IQ difference is slightly skewed.}
+\CommentTok{# But the sample size of 36 is large enough to meet the condition.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{se <-}\StringTok{ }\FloatTok{7.5}\OperatorTok{/}\KeywordTok{sqrt}\NormalTok{(}\DecValTok{36}\NormalTok{)}
+\NormalTok{t <-}\StringTok{ }\NormalTok{(}\FloatTok{3.4}\DecValTok{-0}\NormalTok{)}\OperatorTok{/}\NormalTok{se}
+\NormalTok{p_value <-}\StringTok{ }\KeywordTok{pt}\NormalTok{(t, }\DecValTok{35}\NormalTok{, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{*}\StringTok{ }\DecValTok{2}
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{se =}\NormalTok{ se, }\DataTypeTok{t =}\NormalTok{ t, }\DataTypeTok{p_value =}\NormalTok{ p_value)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $se
+## [1] 1.25
+## 
+## $t
+## [1] 2.72
+## 
+## $p_value
+## [1] 0.01009512
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# With a significance level of 0.05, a p-value of 0.01 is small enough to reject the null hypothesis}
+\CommentTok{# and conclude that our data provide strong evidence that there are difference between the average IQ of mother and father,}
+\CommentTok{# and the data indicate that mothers’ scores are higher than fathers’ scores for the parents of gifted children.}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{5.27 Friday the 13th, Part I.}
+
+\begin{itemize}
+\tightlist
+\item
+  In the early 1990's, researchers in the UK collected data on traffic flow, number of shoppers, and traffic accident related emergency room admissions on Friday the 13th and the previous Friday, Friday the 6th. The histograms below show the distribution of number of cars passing by a specific intersection on Friday the 6th and Friday the 13th for many such date pairs. Also given are some sample statistics, where the difference is the number of cars on the 6th minus the number of cars on the 13th.
+\end{itemize}
+
+\begin{longtable}[]{@{}llll@{}}
+\toprule
+/ & 6th & 13th & Diff\tabularnewline
+\midrule
+\endhead
+Mean & 128385 & 126550 & 1835\tabularnewline
+SD & 7259 & 7664 & 1176\tabularnewline
+n & 10 & 10 & 10\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{itemize}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \tightlist
+  \item
+    Are there any underlying structures in these data that should be considered in an analysis? Explain.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    What are the hypotheses for evaluating whether the number of people out on Friday the 6th is different than the number out on Friday the 13th?
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    Check conditions to carry out the hypothesis test from part (b).
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{3}
+  \tightlist
+  \item
+    Calculate the test statistic and the p-value.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{4}
+  \tightlist
+  \item
+    What is the conclusion of the hypothesis test?
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{5}
+  \tightlist
+  \item
+    Interpret the p-value in this context.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{6}
+  \tightlist
+  \item
+    What type of error might have been made in the conclusion of your test? Explain.
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (a)}
+\CommentTok{# The number of cars on the 6th and the number of cars on the 13th should be paired.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (b)}
+\CommentTok{# H0: mu_diff = 0}
+\CommentTok{# HA: mu_diff != 0}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (d)}
+\NormalTok{df =}\StringTok{ }\DecValTok{10} \OperatorTok{-}\StringTok{ }\DecValTok{1}
+\NormalTok{se =}\StringTok{ }\DecValTok{1176}\OperatorTok{/}\KeywordTok{sqrt}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\NormalTok{t =}\StringTok{ }\NormalTok{(}\DecValTok{1835} \OperatorTok{-}\StringTok{ }\DecValTok{0}\NormalTok{) }\OperatorTok{/}\StringTok{ }\NormalTok{se}
+
+\NormalTok{p_value =}\StringTok{ }\KeywordTok{pt}\NormalTok{(t, df, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{*}\StringTok{ }\DecValTok{2}
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{df =}\NormalTok{ df, }\DataTypeTok{se =}\NormalTok{ se, }\DataTypeTok{t =}\NormalTok{ t, }\DataTypeTok{p_value =}\NormalTok{ p_value)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $df
+## [1] 9
+## 
+## $se
+## [1] 371.8839
+## 
+## $t
+## [1] 4.934336
+## 
+## $p_value
+## [1] 0.0008085065
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (e)}
+\CommentTok{# The p-value of 0.0008 is much smaller than the significance level of 0.05}
+\CommentTok{# and hence reject the null hypothesis. }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (f)}
+\CommentTok{# The p-value is the probability of observing a difference of the mean of the number of cars}
+\CommentTok{# on 6th and 13th as large as the observation difference under}
+\CommentTok{# the assumption that the null hypothesis is true, i.e. there are no difference.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (g)}
+\CommentTok{# Type I error. There might actually be no difference but we wrongly }
+\CommentTok{# rejected the null hypothesis and state that there is a difference.}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{5.31 Chicken diet and weight, Part I.}
+
+\begin{itemize}
+\tightlist
+\item
+  Chicken farming is a multi-billion dollar industry, and any methods that increase the growth rate of young chicks can reduce consumer costs while increasing company profits, possibly by millions of dollars. An experiment was conducted to measure and compare the effectiveness of various feed supplements on the growth rate of chickens. Newly hatched chicks were randomly allocated into six groups, and each group was given a different feed supplement. Below are some summary statistics from this data set along with box plots showing the distribution of weights by feed type.
+\end{itemize}
+
+\begin{longtable}[]{@{}llll@{}}
+\toprule
+/ & Mean & SD & n\tabularnewline
+\midrule
+\endhead
+casein & 323.58 & 64.43 & 12\tabularnewline
+horsebean & 160.20 & 38.63 & 10\tabularnewline
+linseed & 218.75 & 52.24 & 12\tabularnewline
+meatmeal & 276.91 & 64.90 & 11\tabularnewline
+soybean & 246.43 & 54.13 & 14\tabularnewline
+sunflower & 328.92 & 48.84 & 12\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{itemize}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \tightlist
+  \item
+    Describe the distributions of weights of chickens that were fed linseed and horsebean.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    Do these data provide strong evidence that the average weights of chickens that were fed linseed and horsebean are different? Use a 5\% significance level.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    What type of error might we have committed? Explain.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{3}
+  \tightlist
+  \item
+    Would your conclusion change if we used α = 0.01?
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (a)}
+\CommentTok{# The distribution of chickens fed linseed is normal, whereas that of linseed is slightly skewed.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (b)}
+
+\CommentTok{# The newly hatched chicks were randomly allocated into groups, there are no evidence of dependent relationship between them.}
+
+\CommentTok{# H0: mu_linseed - mu_horsebean = 0}
+\CommentTok{# HA: mu_linseed - mu_horsebean != 0}
+
+\NormalTok{df =}\StringTok{ }\KeywordTok{min}\NormalTok{(}\DecValTok{12}\NormalTok{,}\DecValTok{10}\NormalTok{) }\OperatorTok{-}\StringTok{ }\DecValTok{1}
+\NormalTok{se =}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\FloatTok{52.24}\OperatorTok{^}\DecValTok{2}\OperatorTok{/}\DecValTok{12} \OperatorTok{+}\StringTok{ }\FloatTok{38.63}\OperatorTok{^}\DecValTok{2}\OperatorTok{/}\DecValTok{10}\NormalTok{)}
+
+\NormalTok{t =}\StringTok{ }\NormalTok{(}\FloatTok{218.75-160.2}\NormalTok{)}\OperatorTok{/}\NormalTok{se}
+
+\NormalTok{p_value =}\StringTok{ }\KeywordTok{pt}\NormalTok{(t, df, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{*}\StringTok{ }\DecValTok{2}
+
+\CommentTok{# Reject H0. There is strong evidence that average weights of checking fed linseed is different from horsebean.}
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{df =}\NormalTok{ df, }\DataTypeTok{se =}\NormalTok{ se, }\DataTypeTok{t =}\NormalTok{ t, }\DataTypeTok{p_value =}\NormalTok{ p_value)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $df
+## [1] 9
+## 
+## $se
+## [1] 19.40737
+## 
+## $t
+## [1] 3.016896
+## 
+## $p_value
+## [1] 0.01455232
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (c)}
+\CommentTok{# Type I error. Failed to reject H0.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (d)}
+\CommentTok{# If alpha is 0.01, we failed to reject H0 with a p-value of 0.015.}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{5.35 Gaming and distracted eating, Part I.}
+
+\begin{itemize}
+\tightlist
+\item
+  A group of researchers are interested in the possible effects of distracting stimuli during eating, such as an increase or decrease in the amount of food consumption.
+\item
+  To test this hypothesis, they monitored food intake for a group of 44 patients who were randomized into two equal groups. The treatment group ate lunch while playing solitaire, and the control group ate lunch without any added distractions.
+\item
+  Patients in the treatment group ate 52.1 grams of biscuits, with a standard deviation of 45.1 grams, and patients in the control group ate 27.1 grams of biscuits, with a standard deviation of 26.4 grams.
+\item
+  Do these data provide convincing evidence that the average food intake (measured in amount of biscuits consumed) is different for the patients in the treatment group? Assume that conditions for inference are satisfied.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Since the two groups of patients are randomly assigned, they're independent of each other.}
+
+\CommentTok{# H0: mu_a - mu_b = 0}
+\CommentTok{# HA: mu_a - mu_b != 0}
+
+\NormalTok{df =}\StringTok{ }\DecValTok{22} \OperatorTok{-}\StringTok{ }\DecValTok{1}
+\NormalTok{se =}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\FloatTok{45.1}\OperatorTok{^}\DecValTok{2}\OperatorTok{/}\DecValTok{22} \OperatorTok{+}\StringTok{ }\FloatTok{26.4}\OperatorTok{^}\DecValTok{2}\OperatorTok{/}\DecValTok{22}\NormalTok{)}
+\NormalTok{t =}\StringTok{ }\NormalTok{(}\FloatTok{52.1-27.1}\DecValTok{-0}\NormalTok{)}\OperatorTok{/}\NormalTok{se}
+
+\NormalTok{p_value =}\StringTok{ }\KeywordTok{pt}\NormalTok{(t, df, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{*}\StringTok{ }\DecValTok{2}
+
+\CommentTok{# Yes.}
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{df =}\NormalTok{ df, }\DataTypeTok{se =}\NormalTok{ se, }\DataTypeTok{t =}\NormalTok{ t, }\DataTypeTok{p_value =}\NormalTok{ p_value)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $df
+## [1] 21
+## 
+## $se
+## [1] 11.14159
+## 
+## $t
+## [1] 2.243845
+## 
+## $p_value
+## [1] 0.03575082
+\end{verbatim}
+
+\textbf{5.37 Prison isolation experiment, Part I.}
+* Subjects from Central Prison in Raleigh, NC, volunteered for an experiment involving an ``isolation'' experience. The goal of the experiment was to find a treatment that reduces subjects' psychopathic deviant T scores. This score measures a person's need for control or their rebellion against control, and it is part of a commonly used mental health test called the Minnesota Multiphasic Personality Inventory (MMPI) test. The experiment had three treatment groups:
+* (1) Four hours of sensory restriction plus a 15 minute ``therapeutic'' tape advising that professional help is available.
+* (2) Four hours of sensory restriction plus a 15 minute ``emotionally neutral'' tape on training hunting dogs.
+* (3) Four hours of sensory restriction but no taped message.
+* Forty-two subjects were randomly assigned to these treatment groups, and an MMPI test was administered before and after the treatment. Distributions of the differences between pre and post treatment scores (pre - post) are shown below, along with some sample statistics. Use this information to independently test the effectiveness of each treatment. Make sure to clearly state your hypotheses, check conditions, and interpret results in the context of the data.
+
+\begin{longtable}[]{@{}llll@{}}
+\toprule
+/ & Tr 1 & Tr 2 & Tr 3\tabularnewline
+\midrule
+\endhead
+Mean & 6.21 & 2.86 & -3.21\tabularnewline
+SD & 12.3 & 7.94 & 8.57\tabularnewline
+n & 14 & 14 & 14\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# The 42 subjects are randomly assigned, hence they're independent of each other.}
+
+\CommentTok{# Treatment 1 }
+
+\CommentTok{# H0: mu_diff_1 = 0}
+\CommentTok{# HA: mu_diff_1 > 0}
+
+\NormalTok{df =}\StringTok{ }\DecValTok{13} \OperatorTok{-}\StringTok{ }\DecValTok{1} 
+\NormalTok{se =}\StringTok{ }\FloatTok{12.3}\OperatorTok{/}\KeywordTok{sqrt}\NormalTok{(}\DecValTok{14}\NormalTok{)}
+\NormalTok{t =}\StringTok{ }\NormalTok{(}\FloatTok{6.21}\DecValTok{-0}\NormalTok{)}\OperatorTok{/}\NormalTok{se}
+
+\NormalTok{p_value =}\StringTok{ }\KeywordTok{pt}\NormalTok{(t, df, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{) }
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{df =}\NormalTok{ df, }\DataTypeTok{se =}\NormalTok{ se, }\DataTypeTok{t =}\NormalTok{ t, }\DataTypeTok{p_value =}\NormalTok{ p_value)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $df
+## [1] 12
+## 
+## $se
+## [1] 3.287313
+## 
+## $t
+## [1] 1.889081
+## 
+## $p_value
+## [1] 0.04164086
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Treatment 2}
+
+\CommentTok{# H0: mu_diff_2 = 0}
+\CommentTok{# HA: mu_diff_2 > 0}
+
+\NormalTok{df =}\StringTok{ }\DecValTok{13} \OperatorTok{-}\StringTok{ }\DecValTok{1} 
+\NormalTok{se =}\StringTok{ }\FloatTok{7.94}\OperatorTok{/}\KeywordTok{sqrt}\NormalTok{(}\DecValTok{14}\NormalTok{)}
+\NormalTok{t =}\StringTok{ }\NormalTok{(}\FloatTok{2.86}\DecValTok{-0}\NormalTok{)}\OperatorTok{/}\NormalTok{se}
+
+\NormalTok{p_value =}\StringTok{ }\KeywordTok{pt}\NormalTok{(t, df, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{) }
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{df =}\NormalTok{ df, }\DataTypeTok{se =}\NormalTok{ se, }\DataTypeTok{t =}\NormalTok{ t, }\DataTypeTok{p_value =}\NormalTok{ p_value)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $df
+## [1] 12
+## 
+## $se
+## [1] 2.122054
+## 
+## $t
+## [1] 1.347751
+## 
+## $p_value
+## [1] 0.1013163
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Treatment 3}
+
+\CommentTok{# H0: mu_diff_3 = 0}
+\CommentTok{# HA: mu_diff_3 > 0}
+
+\NormalTok{df =}\StringTok{ }\DecValTok{13} \OperatorTok{-}\StringTok{ }\DecValTok{1} 
+\NormalTok{se =}\StringTok{ }\FloatTok{8.57}\OperatorTok{/}\KeywordTok{sqrt}\NormalTok{(}\DecValTok{14}\NormalTok{)}
+\NormalTok{t =}\StringTok{ }\NormalTok{(}\OperatorTok{-}\FloatTok{3.21}\DecValTok{-0}\NormalTok{)}\OperatorTok{/}\NormalTok{se}
+
+\NormalTok{p_value =}\StringTok{ }\KeywordTok{pt}\NormalTok{(t, df, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{) }
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{df =}\NormalTok{ df, }\DataTypeTok{se =}\NormalTok{ se, }\DataTypeTok{t =}\NormalTok{ t, }\DataTypeTok{p_value =}\NormalTok{ p_value)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $df
+## [1] 12
+## 
+## $se
+## [1] 2.290429
+## 
+## $t
+## [1] -1.401484
+## 
+## $p_value
+## [1] 0.9068002
+\end{verbatim}
+
+\textbf{5.39 Increasing corn yield.}
+
+\begin{itemize}
+\tightlist
+\item
+  A large farm wants to try out a new type of fertilizer to evaluate whether it will improve the farm's corn production. The land is broken into plots that produce an average of 1,215 pounds of corn with a standard deviation of 94 pounds per plot. The owner is interested in detecting any average difference of at least 40 pounds per plot. How many plots of land would be needed for the experiment if the desired power level is 90\%? Assume each plot of land gets treated with either the current fertilizer or the new fertilizer.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# effect size = 40}
+\CommentTok{# power = 0.9}
+
+\NormalTok{s =}\StringTok{ }\DecValTok{94}
+
+\CommentTok{# x_old}
+\CommentTok{# x_new}
+
+\CommentTok{# se = sqrt( 94^2 / n + 94^2 / n )}
+
+\CommentTok{# 40 = (qnorm(.9) + abs(qnorm(.05/2))) * se}
+\CommentTok{# 40 = 3.24 * sqrt( 94^2 / n + 94^2 / n )}
+\CommentTok{# 40^2 = 3.24^2 * 94^2*2 / n}
+\CommentTok{# n = 3.24^2 * 94^2*2 / 40^2}
+\FloatTok{3.24}\OperatorTok{^}\DecValTok{2} \OperatorTok{*}\StringTok{ }\DecValTok{94}\OperatorTok{^}\DecValTok{2}\OperatorTok{*}\DecValTok{2} \OperatorTok{/}\StringTok{ }\DecValTok{40}\OperatorTok{^}\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 115.946
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# The sample size should be at least 116 plots}
+\CommentTok{# of land per fertilizer.}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{anova-and-bootstrapping}{%
+\section*{ANOVA and Bootstrapping}\label{anova-and-bootstrapping}}
+\addcontentsline{toc}{section}{ANOVA and Bootstrapping}
+
+\hypertarget{comparing-more-than-two-means}{%
+\subsection*{Comparing More Than Two Means}\label{comparing-more-than-two-means}}
+\addcontentsline{toc}{subsection}{Comparing More Than Two Means}
+
+\begin{itemize}
+\item
+  Compare means of 2 groups using a T statistic.
+\item
+  Compare means of 3+ groups using a new test called \textbf{analysis of variance (ANOVA)} and a new statistic called \textbf{F}.
+\item
+  ANOVA
+\item
+  H0: The mean outcome is the same across all categories.
+\item
+  HA: At least one pair of means are different from each other.
+\end{itemize}
+
+\[ F = \frac{\text{variability between groups}}{\text{variability within groups}}\]
+
+\begin{itemize}
+\tightlist
+\item
+  Obtaining a large F statistic requires that the variability between sample means is greater than the variability within the samples.
+\end{itemize}
+
+\hypertarget{anova}{%
+\subsection*{ANOVA}\label{anova}}
+\addcontentsline{toc}{subsection}{ANOVA}
+
+\begin{itemize}
+\item
+  Variability partitioning.
+\item
+  \textbf{Group} : \textbf{Between group variablity}.
+\item
+  \textbf{Error} : \textbf{Within group variablity}.
+\end{itemize}
+
+\hypertarget{degrees-of-freedom}{%
+\subsubsection*{Degrees of Freedom}\label{degrees-of-freedom}}
+\addcontentsline{toc}{subsubsection}{Degrees of Freedom}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Total degress of freedom} is calculated as sample size minus one.
+\end{itemize}
+
+\[
+df_T = n - 1
+\]
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Group degrees of freedom} is calculated as number of groups minus one.
+\end{itemize}
+
+\[
+df_G = k - 1
+\]
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Error degrees of freedom} is the difference between the above two DF.
+\end{itemize}
+
+\[
+df_E = df_T - df_G
+\]
+
+\hypertarget{sum-of-squares}{%
+\subsubsection*{Sum of Squares}\label{sum-of-squares}}
+\addcontentsline{toc}{subsubsection}{Sum of Squares}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Sum of squares total (SST)} measures the \textbf{total variability} in the response variable.
+\item
+  Calculated very similarly to variance (except not scaled by the sample size).
+\end{itemize}
+
+\[
+SST = \sum^n_{i=1} (y_i - \bar{y})^2
+\]
+
+\[
+SST = SSG + SSE
+\]
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Sum of squares groups (SSG)} measures the variability \textbf{between groups}.
+\item
+  It is the \textbf{explained variability}.
+\end{itemize}
+
+\[
+SSG = \sum^k_{j=1} n_j (\bar{y}_j - \bar{y})^2
+\]
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Sum of squares error (SSE)} measures the variability \textbf{within groups}.
+\item
+  It is the \textbf{unexplained variability}, unexplained by the group variable, due to other reasons.
+\end{itemize}
+
+\[
+SSE = SST - SSG
+\]
+
+\hypertarget{mean-squares}{%
+\subsubsection*{Mean Squares}\label{mean-squares}}
+\addcontentsline{toc}{subsubsection}{Mean Squares}
+
+\begin{itemize}
+\item
+  Mean sqares is the average variability between and withing groups, calculated as the total variability (sum of squares) scaled by the associated degress of freedom.
+\item
+  \textbf{Mean squares group (MSG)}
+\end{itemize}
+
+\[
+MSG = \frac{SSG}{df_G}
+\]
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Mean squares error (MSE)}
+\end{itemize}
+
+\[
+MSE = \frac{SSE}{df_E}
+\]
+
+\hypertarget{f-statistic}{%
+\subsubsection*{F-Statistic}\label{f-statistic}}
+\addcontentsline{toc}{subsubsection}{F-Statistic}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{F-statistic} is the ratio of the average between group and within
+  group variabilities.
+\item
+  It is never negative. Hence it's right-skewed.
+\end{itemize}
+
+\[
+F = \frac{MSG}{MSE}
+\]
+
+\hypertarget{p-value-1}{%
+\subsubsection*{P-Value}\label{p-value-1}}
+\addcontentsline{toc}{subsubsection}{P-Value}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{P-value} is the probability of at least as large a ratio between the ``between'' and ``within'' group variabilities if in fact the means of all groups are equal.
+\end{itemize}
+
+\textbf{Example}
+
+\begin{itemize}
+\tightlist
+\item
+  F-statistics = 21.735
+\item
+  DF\_G = 3
+\item
+  DF\_E = 791
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# If p-value is small (less than alpha), the data provide convincing}
+\CommentTok{# evidence that at least one pair of population means are different}
+\CommentTok{# from each other (but we can't tell which one).}
+
+\CommentTok{# If p-value is large, the data do not provide convincing evidence that }
+\CommentTok{# at least one pair of population means are different from each other,}
+\CommentTok{# the observed differences in sample means are attributable to }
+\CommentTok{# sampling variability (or chance).}
+
+\KeywordTok{pf}\NormalTok{(}\DataTypeTok{q =} \FloatTok{21.735}\NormalTok{, }\DataTypeTok{df1 =} \DecValTok{3}\NormalTok{, }\DataTypeTok{df2 =} \DecValTok{791}\NormalTok{, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.559855e-13
+\end{verbatim}
+
+\hypertarget{conditions-for-anova}{%
+\subsection*{Conditions for ANOVA}\label{conditions-for-anova}}
+\addcontentsline{toc}{subsection}{Conditions for ANOVA}
+
+\begin{itemize}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\arabic{enumi})}
+  \tightlist
+  \item
+    \textbf{Independence}
+  \end{enumerate}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Within groups: sampled observations must be independent.
+  \item
+    Random sample / assignment
+  \item
+    Each \(n_j\) less than 10\% of respective population
+  \item
+    Between groups: the groups must be independent of each other (non-paired).
+  \item
+    Carefully consider whether the groups may be dependent -\textgreater{} repeated measures anova
+  \end{itemize}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\arabic{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    \textbf{Approximate normality}: distribution should be nearly normal within each group.
+  \end{enumerate}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Especially important when sample sizes are small.
+  \end{itemize}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\arabic{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    \textbf{Equal variance}: groups should have roughly equal variability.
+  \end{enumerate}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Especially important when sample sizes differ between groups.
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{multiple-comparisons}{%
+\subsection*{Multiple Comparisons}\label{multiple-comparisons}}
+\addcontentsline{toc}{subsection}{Multiple Comparisons}
+
+\begin{itemize}
+\item
+  Which means are different?
+\item
+  Two sample T tests for differences in each possible pair of groups.
+\item
+  Multiple tests will inflate the Type I error rate (\(\alpha\) significance level).
+\item
+  Solution: use \textbf{modified significance level}.
+\item
+  Testing many pairs of groups is called \textbf{multiple comparisons}.
+\item
+  The \textbf{Bonferroni correction} \(\alpha^\star\) suggests that a more stringent significance level is more appropriate for these tests.
+\item
+  Adjust \(\alpha\) by the number of comparisons \(K\) being considered.
+\end{itemize}
+
+\[
+K = \frac{k(k-1)}{2}
+\]
+
+\[
+\alpha^\star = \frac{\alpha}{K}
+\]
+
+\begin{itemize}
+\item
+  Constant variance: use consistent standard error and degrees of freedom for all tests.
+\item
+  Compare the p-values from each test to the modified significance level.
+\item
+  \textbf{Standard error for multiple pairwise comparisons}
+\end{itemize}
+
+\[
+SE = \sqrt{
+\frac{MSE}{n_1} + \frac{MSE}{n_2}
+}
+\]
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Degrees of freedom for multiple pairwise comparisons}
+\end{itemize}
+
+\[
+df = df_E
+\]
+
+\textbf{Example}
+
+\begin{itemize}
+\tightlist
+\item
+  If the explanatory variable in an ANOVA has 3 levels, and the F-test in ANOVA yields a significant result, how many pairwise comparisons are needed to compare each group to one another?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{3} \OperatorTok{*}\StringTok{ }\NormalTok{(}\DecValTok{3-1}\NormalTok{) }\OperatorTok{/}\StringTok{ }\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\textbf{Example}
+
+\begin{itemize}
+\tightlist
+\item
+  4 class levels
+\item
+  \(\alpha\) = 0.05 for the original ANOVA
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Number of comparisons}
+\NormalTok{K <-}\StringTok{ }\DecValTok{4} \OperatorTok{*}\StringTok{ }\NormalTok{(}\DecValTok{4-1}\NormalTok{) }\OperatorTok{/}\StringTok{ }\DecValTok{2}
+\CommentTok{# Corrected significance level}
+\NormalTok{alpha_corrected <-}\StringTok{ }\FloatTok{0.05} \OperatorTok{/}\StringTok{ }\NormalTok{K}
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{K =}\NormalTok{ K, }\DataTypeTok{alpha_corrected =}\NormalTok{ alpha_corrected)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $K
+## [1] 6
+## 
+## $alpha_corrected
+## [1] 0.008333333
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Is there a difference between the average vocabulary scores between middle and lower class Americans\textgreater{} (A single pairwise comparison.)
+\item
+  DF\_E = 691
+\item
+  MSE = 3.628
+\item
+  Lower class
+\item
+  N = 41
+\item
+  Mean = 5.07
+\item
+  Middle class
+\item
+  N = 331
+\item
+  Mean = 6.76
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# H0: mu_middle - mu_lower = 0}
+\CommentTok{# HA: mu_middle - mu_lower != 0}
+
+\NormalTok{se <-}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\FloatTok{3.628}\OperatorTok{/}\DecValTok{41} \OperatorTok{+}\StringTok{ }\FloatTok{3.628}\OperatorTok{/}\DecValTok{331}\NormalTok{)}
+
+\NormalTok{t <-}\StringTok{ }\NormalTok{((}\FloatTok{6.76} \OperatorTok{-}\StringTok{ }\FloatTok{5.07}\NormalTok{) }\OperatorTok{-}\StringTok{ }\DecValTok{0}\NormalTok{) }\OperatorTok{/}\StringTok{ }\NormalTok{se}
+
+\NormalTok{p_value <-}\StringTok{ }\KeywordTok{pt}\NormalTok{(t, }\DataTypeTok{df =} \DecValTok{791}\NormalTok{, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{*}\StringTok{ }\DecValTok{2}
+
+\CommentTok{# P-value is smaller than the alpha 0.00833. Reject the null hypothesis.}
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{se =}\NormalTok{ se, }\DataTypeTok{t =}\NormalTok{ t, }\DataTypeTok{p_value =}\NormalTok{ p_value)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $se
+## [1] 0.3153546
+## 
+## $t
+## [1] 5.359046
+## 
+## $p_value
+## [1] 1.09828e-07
+\end{verbatim}
+
+\hypertarget{bootstrapping}{%
+\subsection*{Bootstrapping}\label{bootstrapping}}
+\addcontentsline{toc}{subsection}{Bootstrapping}
+
+\begin{itemize}
+\item
+  Take a bootstrap sample - a random sample taken \textbf{with replacement} from \textbf{the original sample}, of \textbf{the same size} as the original sample.
+\item
+  Calculate the bootstrap statistic - a statistic such as mean, median, proportion, etc. computed on the bootstrap samples.
+\item
+  Repeat the above two steps many times to create a bootstrap distribution - a distribution of bootstrap statistics.
+\item
+  \textbf{Percentile method}
+\item
+  \textbf{Standard error method}
+\item
+  Not as rigid conditions as CLT based methods.
+\item
+  If the bootstrap distribution is extremely skewed or sparse, the bootstrap interval might be unreliable.
+\item
+  A representative sample is still required - if the sample is biased, the estimates resulting from this sample will also be biased.
+\end{itemize}
+
+\hypertarget{exercises-5}{%
+\subsection*{Exercises}\label{exercises-5}}
+\addcontentsline{toc}{subsection}{Exercises}
+
+OpenIntro Statistics, 3rd edition
+5.41, 5.43, 5.45, 5.47, 5.49, 5.51
+
+\textbf{5.41 Fill in the blank.}
+
+\begin{itemize}
+\tightlist
+\item
+  When doing an ANOVA, you observe large differences in means between groups. Within the ANOVA framework, this would most likely be interpreted as evidence strongly favoring the ? hypothesis.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# alternative}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{5.43 Chicken diet and weight, Part III.}
+
+\begin{itemize}
+\tightlist
+\item
+  In Exercises 5.31 and 5.33 we compared the effects of two types of feed at a time. A better analysis would first consider all feed types at once: casein, horsebean, linseed, meat meal, soybean, and sunflower. The ANOVA output below can be used to test for differences between the average weights of chicks on different diets.
+\end{itemize}
+
+\begin{longtable}[]{@{}llllll@{}}
+\toprule
+/ & Df & Sum Sq & Mean Sq & F value & Pr(\textgreater{}F)\tabularnewline
+\midrule
+\endhead
+feed & 5 & 231,129.16 & 46,225.83 & 15.36 & 0.0000\tabularnewline
+Residuals & 65 & 195,556.02 & 3,008.55 & &\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{itemize}
+\tightlist
+\item
+  Conduct a hypothesis test to determine if these data provide convincing evidence that the average weight of chicks varies across some (or all) groups. Make sure to check relevant conditions. Figures and summary statistics are shown below.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# H0: The mean outcome is the same across all feed types.}
+\CommentTok{# HA: At least one pair of means are different from each other.}
+
+\CommentTok{# F = MSG / MSE}
+\NormalTok{f =}\StringTok{ }\FloatTok{46225.83}\OperatorTok{/}\FloatTok{3008.55}
+
+\NormalTok{p_value =}\StringTok{ }\KeywordTok{pf}\NormalTok{(f, }\DecValTok{5}\NormalTok{, }\DecValTok{65}\NormalTok{, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{)}
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{f =}\NormalTok{ f, }\DataTypeTok{p_value =}\NormalTok{ p_value)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $f
+## [1] 15.36482
+## 
+## $p_value
+## [1] 5.936286e-10
+\end{verbatim}
+
+\textbf{5.45 Coffee, depression, and physical activity.}
+
+\begin{itemize}
+\tightlist
+\item
+  Caffeine is the world's most widely used stimulant, with approximately 80\% consumed in the form of coffee. Participants in a study investigating the relationship between coffee consumption and exercise were asked to report the number of hours they spent per week on moderate (e.g., brisk walking) and vigorous (e.g., strenuous sports and jogging) exercise. Based on these data the researchers estimated the total hours of metabolic equivalent tasks (MET) per week, a value always greater than 0. The table below gives summary statistics of MET for women in this study based on the amount of coffee consumed.
+\end{itemize}
+
+\begin{longtable}[]{@{}lllllll@{}}
+\toprule
+/ & ≤ 1 cup/week & 2-6 cups/week & 1 cup/day & 2-3 cups/day & ≥ 4 cups/day & Total\tabularnewline
+\midrule
+\endhead
+Mean & 18.7 & 19.6 & 19.3 & 18.9 & 17.5 &\tabularnewline
+SD & 21.1 & 25.5 & 22.5 & 22.0 & 22.0 &\tabularnewline
+n & 12,215 & 6,617 & 17,234 & 12,290 & 2,383 & 50,739\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{itemize}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \tightlist
+  \item
+    Write the hypotheses for evaluating if the average physical activity level varies among the different levels of coffee consumption.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    Check conditions and describe any assumptions you must make to proceed with the test.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    Below is part of the output associated with this test. Fill in the empty cells.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{3}
+  \tightlist
+  \item
+    What is the conclusion of the test?
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (a)}
+\CommentTok{# H0: The mean MET is the same across all groups of coffee consumption.}
+\CommentTok{# HA: At least one pair of means is different.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (c)}
+\NormalTok{df_total =}\StringTok{ }\DecValTok{50739} \OperatorTok{-}\StringTok{ }\DecValTok{1}
+\NormalTok{df_coffee =}\StringTok{ }\DecValTok{5} \OperatorTok{-}\StringTok{ }\DecValTok{1}
+\NormalTok{df_residuals =}\StringTok{ }\NormalTok{df_total }\OperatorTok{-}\StringTok{ }\NormalTok{df_coffee}
+
+\KeywordTok{list}\NormalTok{(}
+  \DataTypeTok{df_total =}\NormalTok{ df_total, }
+  \DataTypeTok{df_coffee =}\NormalTok{ df_coffee, }
+  \DataTypeTok{df_residuals =}\NormalTok{ df_residuals}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $df_total
+## [1] 50738
+## 
+## $df_coffee
+## [1] 4
+## 
+## $df_residuals
+## [1] 50734
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sum_sq_coffee =}\StringTok{ }\DecValTok{25575327} \OperatorTok{-}\StringTok{ }\DecValTok{25564819}
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{sum_sq_coffee =}\NormalTok{ sum_sq_coffee)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $sum_sq_coffee
+## [1] 10508
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mean_sq_coffee =}\StringTok{ }\DecValTok{10508} \OperatorTok{/}\StringTok{ }\NormalTok{df_coffee}
+\NormalTok{mean_sq_residuals =}\StringTok{ }\DecValTok{25564819} \OperatorTok{/}\StringTok{ }\NormalTok{df_residuals}
+
+\KeywordTok{list}\NormalTok{(mean_sq_coffee, mean_sq_residuals)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] 2627
+## 
+## [[2]]
+## [1] 503.8991
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# F = MSG / MSE}
+\NormalTok{f =}\StringTok{ }\NormalTok{mean_sq_coffee }\OperatorTok{/}\StringTok{ }\NormalTok{mean_sq_residuals}
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{f =}\NormalTok{ f)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $f
+## [1] 5.213345
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{pf}\NormalTok{(}\FloatTok{5.21}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{50734}\NormalTok{, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.0003412589
+\end{verbatim}
+
+\begin{longtable}[]{@{}llllll@{}}
+\toprule
+/ & Df & Sum Sq & Mean Sq & F value & Pr(\textgreater{}F)\tabularnewline
+\midrule
+\endhead
+coffee & 4 & 10508 & 2627 & 5.21 & \textbf{0.0003}\tabularnewline
+Residuals & 50734 & \textbf{25,564,819} & 503.9 & / & /\tabularnewline
+Total & 50738 & \textbf{25,575,327} & / & / & /\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (d)}
+\CommentTok{# Since p-value is very small,}
+\CommentTok{# reject the null hypothesis and conclude that there is}
+\CommentTok{# at least one mean of MET that is different.}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{5.47 GPA and major.}
+
+\begin{itemize}
+\tightlist
+\item
+  Undergraduate students taking an introductory statistics course at Duke University conducted a survey about GPA and major. The side-by-side box plots show the distribution of GPA among three groups of majors. Also provided is the ANOVA output.
+\end{itemize}
+
+\begin{longtable}[]{@{}llllll@{}}
+\toprule
+/ & Df & Sum Sq & Mean Sq & F value & Pr(\textgreater{}F)\tabularnewline
+\midrule
+\endhead
+major & 2 & 0.03 & 0.015 & 0.185 & 0.8313\tabularnewline
+Residuals & 195 & 15.77 & 0.081 & / & /\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{itemize}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \tightlist
+  \item
+    Write the hypotheses for testing for a difference between average GPA across majors.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    What is the conclusion of the hypothesis test?
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    How many students answered these questions on the survey, i.e.~what is the sample size?
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (a)}
+\CommentTok{# H0: The average GPA across majors is the same.}
+\CommentTok{# HA: At least one pair of average GPA is different.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (b)}
+\CommentTok{# The p-value is too large and we cannot reject the null hypothesis.}
+\CommentTok{# We cannot conclude that there're any difference between }
+\CommentTok{# average GPA across majors.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (c)}
+\DecValTok{195}\OperatorTok{+}\DecValTok{2}\OperatorTok{+}\DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 198
+\end{verbatim}
+
+\textbf{5.49 True / False: ANOVA, Part I.}
+
+\begin{itemize}
+\item
+  Determine if the following statements are true or false in ANOVA, and explain your reasoning for statements you identify as false.
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \tightlist
+  \item
+    As the number of groups increases, the modified significance level for pairwise tests increases as well.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    As the total sample size increases, the degrees of freedom for the residuals increases as well.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    The constant variance condition can be somewhat relaxed when the sample sizes are relatively consistent across groups.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{3}
+  \tightlist
+  \item
+    The independence assumption can be relaxed when the total sample size is large.
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (a)}
+\CommentTok{# K = (k * (k-1)) / 2}
+\CommentTok{# a_modified = a / K}
+
+\CommentTok{# False}
+\CommentTok{# The larger the number of groups, the larger the number of comparisons K,}
+\CommentTok{# hence the smaller the modified significance level.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (b)}
+\CommentTok{# df_residuals = df_total - df_group}
+\CommentTok{# df_residuals = (n) - (k - 1)}
+
+\CommentTok{# True}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (c)}
+\CommentTok{# True}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (d)}
+\CommentTok{# False}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{5.51 Prison isolation experiment, Part II.}
+* Exercise 5.37 introduced an experiment that was conducted with the goal of identifying a treatment that reduces subjects' psychopathic deviant T scores, where this score measures a person's need for control or his rebellion against control. In Exercise 5.37 you evaluated the success of each treatment individually. An alternative analysis involves comparing the success of treatments. The relevant ANOVA output is given below.
+
+\begin{longtable}[]{@{}llllll@{}}
+\toprule
+/ & Df & Sum Sq & Mean Sq & F value & Pr(\textgreater{}F)\tabularnewline
+\midrule
+\endhead
+treatment & 2 & 639.48 & 319.74 & 3.33 & 0.0461\tabularnewline
+Residuals & 39 & 3740.43 & 95.91 & &\tabularnewline
+\bottomrule
+\end{longtable}
+
+\emph{s\_pooled = 9.793 on df = 39}
+
+\begin{itemize}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \tightlist
+  \item
+    What are the hypotheses?
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    What is the conclusion of the test? Use a 5\% significance level.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{(\alph{enumi})}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    If in part (b) you determined that the test is significant, conduct pairwise tests to determine which groups are different from each other. If you did not reject the null hypothesis in part (b), recheck your answer.
+  \end{enumerate}
+\end{itemize}
+
+\begin{longtable}[]{@{}llll@{}}
+\toprule
+/ & Tr 1 & Tr 2 & Tr 3\tabularnewline
+\midrule
+\endhead
+Mean & 6.21 & 2.86 & -3.21\tabularnewline
+SD & 12.3 & 7.94 & 8.57\tabularnewline
+n & 14 & 14 & 14\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (b)}
+\CommentTok{# Since p is smaller than 0.05, reject the null hypothesis}
+\CommentTok{# and conclude that at least one pair of mean score is different.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# (c)}
+
+\CommentTok{# K = (k * (k-1)) / 2}
+\NormalTok{K =}\StringTok{ }\DecValTok{3} \OperatorTok{*}\StringTok{ }\DecValTok{2} \OperatorTok{/}\StringTok{ }\DecValTok{2}
+
+\CommentTok{# a_modified = a / K}
+\NormalTok{a_modified =}\StringTok{ }\FloatTok{0.05} \OperatorTok{/}\StringTok{ }\NormalTok{K}
+
+\KeywordTok{list}\NormalTok{(}\DataTypeTok{K =}\NormalTok{ K, }\DataTypeTok{a_modified =}\NormalTok{ a_modified)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $K
+## [1] 3
+## 
+## $a_modified
+## [1] 0.01666667
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{s_pooled =}\StringTok{ }\FloatTok{9.793}
+\NormalTok{df =}\StringTok{ }\DecValTok{39}
+
+\NormalTok{se =}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(}\FloatTok{9.793}\OperatorTok{^}\DecValTok{2}\OperatorTok{/}\DecValTok{14} \OperatorTok{+}\StringTok{ }\FloatTok{9.793}\OperatorTok{^}\DecValTok{2}\OperatorTok{/}\DecValTok{14}\NormalTok{)}
+
+\CommentTok{# tr 1, tr 2}
+\NormalTok{t1 =}\StringTok{ }\NormalTok{(}\FloatTok{6.21-2.86}\NormalTok{)}\OperatorTok{/}\NormalTok{se}
+\NormalTok{p1 =}\StringTok{ }\KeywordTok{pt}\NormalTok{(t1, df, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{*}\StringTok{ }\DecValTok{2}
+
+\CommentTok{# tr 1, tr 3}
+\NormalTok{t2 =}\StringTok{ }\NormalTok{(}\FloatTok{6.21}\OperatorTok{-}\NormalTok{(}\OperatorTok{-}\FloatTok{3.21}\NormalTok{))}\OperatorTok{/}\NormalTok{se}
+\NormalTok{p2 =}\StringTok{ }\KeywordTok{pt}\NormalTok{(t2, df, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{*}\StringTok{ }\DecValTok{2}
+
+\CommentTok{# tr 1, tr 3}
+\NormalTok{t3 =}\StringTok{ }\NormalTok{(}\FloatTok{2.86}\OperatorTok{-}\NormalTok{(}\OperatorTok{-}\FloatTok{3.21}\NormalTok{))}\OperatorTok{/}\NormalTok{se}
+\NormalTok{p3 =}\StringTok{ }\KeywordTok{pt}\NormalTok{(t3, df, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{) }\OperatorTok{*}\StringTok{ }\DecValTok{2}
+
+\KeywordTok{list}\NormalTok{(}
+  \DataTypeTok{se =}\NormalTok{ se,}
+  \DataTypeTok{tr1 =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{t =}\NormalTok{ t1, }\DataTypeTok{p =}\NormalTok{ p1),}
+  \DataTypeTok{tr2 =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{t =}\NormalTok{ t2, }\DataTypeTok{p =}\NormalTok{ p2),}
+  \DataTypeTok{tr3 =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{t =}\NormalTok{ t3, }\DataTypeTok{p =}\NormalTok{ p3)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $se
+## [1] 3.701406
+## 
+## $tr1
+## $tr1$t
+## [1] 0.9050615
+## 
+## $tr1$p
+## [1] 0.3709903
+## 
+## 
+## $tr2
+## $tr2$t
+## [1] 2.544979
+## 
+## $tr2$p
+## [1] 0.01499763
+## 
+## 
+## $tr3
+## $tr3$t
+## [1] 1.639917
+## 
+## $tr3$p
+## [1] 0.1090649
+\end{verbatim}
+
+\hypertarget{week-4}{%
+\chapter*{Week 4}\label{week-4}}
+\addcontentsline{toc}{chapter}{Week 4}
+
+\hypertarget{inference-for-proportions}{%
+\section*{Inference for Proportions}\label{inference-for-proportions}}
+\addcontentsline{toc}{section}{Inference for Proportions}
+
+\begin{itemize}
+\tightlist
+\item
+  Inference for proportions works with \textbf{categorical variables}.
+\item
+  One categorical variable
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Two levels: success-failure
+  \item
+    More than two levels
+  \end{itemize}
+\item
+  Two categorical variables
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Two levels: success-failture
+  \item
+    More than two levels
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{sampling-variability-and-clt-for-proportions}{%
+\subsection*{Sampling Variability and CLT for Proportions}\label{sampling-variability-and-clt-for-proportions}}
+\addcontentsline{toc}{subsection}{Sampling Variability and CLT for Proportions}
+
+\hypertarget{central-limit-theorem-for-a-proportion}{%
+\subsubsection*{Central Limit Theorem for a Proportion}\label{central-limit-theorem-for-a-proportion}}
+\addcontentsline{toc}{subsubsection}{Central Limit Theorem for a Proportion}
+
+\hypertarget{central-limit-theorem-for-a-proportion-1}{%
+\paragraph{Central Limit Theorem for a Proportion}\label{central-limit-theorem-for-a-proportion-1}}
+\addcontentsline{toc}{paragraph}{Central Limit Theorem for a Proportion}
+
+\begin{itemize}
+\tightlist
+\item
+  When observations are independent and the sample size is sufficiently large, the sample proportion \(\hat{p}\) will tend to follow a normal distribution with the following mean and standard error.
+\end{itemize}
+
+\[
+\mu_{\hat{p}} = p
+\]
+
+\[
+SE_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}}
+\]
+
+\hypertarget{conditions-for-central-limit-theorem-for-a-proportion}{%
+\paragraph{Conditions for Central Limit Theorem for a Proportion}\label{conditions-for-central-limit-theorem-for-a-proportion}}
+\addcontentsline{toc}{paragraph}{Conditions for Central Limit Theorem for a Proportion}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Independence
+\item
+  \textbf{Success-Failure Condition}: The sample size should be sufficiently large with \(np \ge 10\) and \(n(1-p) \ge 10\).
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  If the success-failure condition is not met:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    The center of the sampling distribution will still be around the true population proportion.
+  \item
+    The spread of the sampling distribution can still be approximated using the same formula for the standard error.
+  \item
+    The shape of the distribution will depend on whether the true population proportion \(p\) is closer to 0 or closer to 1.
+  \end{itemize}
+\end{itemize}
+
+\textbf{Example}
+
+\begin{itemize}
+\tightlist
+\item
+  90\% of all plant species are classified as angiosperms. These are flowering plants.
+\item
+  If you were to randomly sample 200 plants from the list of all known plant species, what is the probability that at least 95\% of the plants in your sample will be flowering plants?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p =}\StringTok{ }\FloatTok{0.9}
+\NormalTok{n =}\StringTok{ }\DecValTok{200}
+\CommentTok{# P(p_hat > 0.95)?}
+\NormalTok{p_hat =}\StringTok{ }\FloatTok{0.95}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Check the conditions:}
+\CommentTok{# 1. Random sampled + 10% of all plants -> Independent }
+\CommentTok{# 2. Success-failure condition}
+\KeywordTok{ans}\NormalTok{(}\DataTypeTok{n_success =}\NormalTok{ n }\OperatorTok{*}\StringTok{ }\FloatTok{0.9}\NormalTok{, }\DataTypeTok{n_failture =}\NormalTok{ n }\OperatorTok{*}\StringTok{ }\NormalTok{(}\DecValTok{1}\FloatTok{-0.9}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 180
+## 20
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{se =}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(p }\OperatorTok{*}\StringTok{ }\NormalTok{(}\DecValTok{1}\OperatorTok{-}\NormalTok{p) }\OperatorTok{/}\StringTok{ }\NormalTok{n)}
+\NormalTok{z =}\StringTok{ }\NormalTok{(p_hat }\OperatorTok{-}\StringTok{ }\NormalTok{p) }\OperatorTok{/}\StringTok{ }\NormalTok{se}
+\NormalTok{prob =}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(z, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{)}
+\KeywordTok{ans}\NormalTok{(se, z, prob)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 0.0212132
+## 2.357023
+## 0.009211063
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  If you were to randomly sample 200 plants from the list of all known plant species, would it be considered unusual if 87.5\% of the plants in a random sample of 200 were angiosperms?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# 0.875 is within 2 se from the sample mean,}
+\CommentTok{# hence it is not unusual.}
+\NormalTok{p_hat =}\StringTok{ }\FloatTok{0.875}
+\NormalTok{z =}\StringTok{ }\NormalTok{(p_hat }\OperatorTok{-}\StringTok{ }\NormalTok{p) }\OperatorTok{/}\StringTok{ }\NormalTok{se}
+\KeywordTok{ans}\NormalTok{(z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -1.178511
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  What would you expect the shape of the sampling distribution of percentages of angiosperms in random samples of 50 plants to look like? (Remember, 90\% of all plants species are classified as angiosperms.)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# The success-failture condition does not met}
+\CommentTok{# as the number of failure is 5, which is smaller}
+\CommentTok{# than 10. The shape of the sampling distribution}
+\CommentTok{# will be strongly left skewed as p = 0.9.}
+\KeywordTok{ans}\NormalTok{(}\DataTypeTok{n_success =} \DecValTok{50} \OperatorTok{*}\StringTok{ }\FloatTok{0.9}\NormalTok{, }\DataTypeTok{n_failture =} \DecValTok{50} \OperatorTok{*}\StringTok{ }\FloatTok{0.1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 45
+## 5
+\end{verbatim}
+
+\hypertarget{confidence-interval-for-a-proportion}{%
+\subsubsection*{Confidence Interval for a Proportion}\label{confidence-interval-for-a-proportion}}
+\addcontentsline{toc}{subsubsection}{Confidence Interval for a Proportion}
+
+\hypertarget{confidence-interval-for-a-proportion-1}{%
+\paragraph{Confidence Interval for a Proportion}\label{confidence-interval-for-a-proportion-1}}
+\addcontentsline{toc}{paragraph}{Confidence Interval for a Proportion}
+
+\[
+\text{CI}_{p} = \hat{p} \pm z^\star SE_{\hat{p}}
+\]
+
+\hypertarget{me-for-a-proportion}{%
+\paragraph{ME for a Proportion}\label{me-for-a-proportion}}
+\addcontentsline{toc}{paragraph}{ME for a Proportion}
+
+\[
+\text{ME}_{p} = z^\star \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}
+\]
+
+\begin{itemize}
+\tightlist
+\item
+  If we have the value of \(\hat{p}\), we can use that in the calculation of the required sample size.
+\item
+  If not, use \(\hat{p} = 0.5\). 50-50 is a good guess. It
+  gives the most conservative estimate - highest possible sample size.
+\end{itemize}
+
+\textbf{Example}
+
+\begin{itemize}
+\tightlist
+\item
+  The general social survey found that 571 out of 670, that's roughly 85\% of Americans, answered the question on experiment design correctly.
+\item
+  We are asked to estimate using a 95\% confidence interval, the proportion of all Americans who have good intuition about experiment design.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n =}\StringTok{ }\DecValTok{670}
+\NormalTok{p =}\StringTok{ }\DecValTok{571}\OperatorTok{/}\DecValTok{670}
+\NormalTok{se =}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(p }\OperatorTok{*}\StringTok{ }\NormalTok{(}\DecValTok{1}\OperatorTok{-}\NormalTok{p) }\OperatorTok{/}\StringTok{ }\NormalTok{n)}
+\NormalTok{me =}\StringTok{ }\FloatTok{1.96} \OperatorTok{*}\StringTok{ }\NormalTok{se}
+\NormalTok{ci =}\StringTok{ }\KeywordTok{c}\NormalTok{(p }\OperatorTok{-}\StringTok{ }\NormalTok{me, p }\OperatorTok{+}\StringTok{ }\NormalTok{me)}
+\CommentTok{# We are 95% confident that 82.5% to 88.9% of all Americans}
+\CommentTok{# have good intuition about experimental design.}
+\KeywordTok{ans}\NormalTok{(p, se, me, ci)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 0.8522388
+## 0.01370956
+## 0.02687073
+## 0.8253681
+## 0.8791095
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  The margin of error for this previous confidence interval was 2.7\%. If, for a new confidence interval based on a new sample, we wanted to reduce the margin of error to 1\% while keeping the confidence level the same. At least how many respondents should we sample?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# me = z * se}
+\CommentTok{# me = z * sqrt(p * (1 - p) / n)}
+\CommentTok{# n = (p * (1 - p)) / (me / z)^2}
+\KeywordTok{ans}\NormalTok{(}\KeywordTok{ceiling}\NormalTok{(p }\OperatorTok{*}\StringTok{ }\NormalTok{(}\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{p) }\OperatorTok{/}\StringTok{ }\NormalTok{(}\FloatTok{0.01} \OperatorTok{/}\StringTok{ }\FloatTok{1.96}\NormalTok{)}\OperatorTok{^}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 4838
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  If we wanted to estimate the percentage of Data Analysis and Statistical Inference students who have good intuition about experimental design using a 95\% confidence interval and a margin of error no larger than 3\%, at least how many students would we need to sample?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# me = z * sqrt(p * (1 - p) / n)}
+\CommentTok{# n = (p * (1 - p)) / (me / z)^2}
+\NormalTok{n =}\StringTok{ }\NormalTok{(}\FloatTok{0.5} \OperatorTok{*}\StringTok{ }\FloatTok{0.5}\NormalTok{) }\OperatorTok{/}\StringTok{ }\NormalTok{(}\FloatTok{0.03} \OperatorTok{/}\StringTok{ }\FloatTok{1.96}\NormalTok{)}\OperatorTok{^}\DecValTok{2}
+\KeywordTok{ans}\NormalTok{(}\KeywordTok{ceiling}\NormalTok{(n))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 1068
+\end{verbatim}
+
+\hypertarget{hypothesis-test-for-a-proportion}{%
+\subsubsection*{Hypothesis Test for a Proportion}\label{hypothesis-test-for-a-proportion}}
+\addcontentsline{toc}{subsubsection}{Hypothesis Test for a Proportion}
+
+\hypertarget{hypothesis-testing-for-a-single-proportion}{%
+\paragraph{Hypothesis Testing for a Single Proportion}\label{hypothesis-testing-for-a-single-proportion}}
+\addcontentsline{toc}{paragraph}{Hypothesis Testing for a Single Proportion}
+
+\[
+H_0: p = \text{null value}\\
+H_A: p < or > or\ne \text{null value}
+\]
+\textbf{Example}
+
+\begin{itemize}
+\tightlist
+\item
+  A 2013 Pew Research poll found that 60\% of 1,983 randomly sampled American adults believe in evolution. Does this provide convincing evidence that majority of Americans believe in evolution?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n =}\StringTok{ }\DecValTok{1983}
+\NormalTok{p =}\StringTok{ }\FloatTok{0.5}
+\NormalTok{p_hat =}\StringTok{ }\FloatTok{0.6}
+
+\CommentTok{# Randomly sampled + n < 10% of population -> independent}
+\CommentTok{# Success-failure condition calculate with expected p (the null p) -> true}
+\NormalTok{success_failure =}\StringTok{ }\NormalTok{(n }\OperatorTok{*}\StringTok{ }\NormalTok{p) }\OperatorTok{>}\StringTok{ }\DecValTok{10} \OperatorTok{&}\StringTok{ }\NormalTok{(n }\OperatorTok{*}\StringTok{ }\NormalTok{(}\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{p)) }\OperatorTok{>}\StringTok{ }\DecValTok{10}
+
+\CommentTok{# H0: p = 0.5}
+\CommentTok{# HA: p > 0.5}
+
+\NormalTok{se =}\StringTok{ }\KeywordTok{sqrt}\NormalTok{(p_hat }\OperatorTok{*}\StringTok{ }\NormalTok{(}\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{p_hat) }\OperatorTok{/}\StringTok{ }\NormalTok{n)}
+\NormalTok{z =}\StringTok{ }\NormalTok{(p_hat }\OperatorTok{-}\StringTok{ }\NormalTok{p) }\OperatorTok{/}\StringTok{ }\NormalTok{se}
+\NormalTok{pvalue =}\StringTok{ }\KeywordTok{pnorm}\NormalTok{(z, }\DataTypeTok{lower.tail =} \OtherTok{FALSE}\NormalTok{)}
+
+\CommentTok{# The p-value is significantly smaller than the significance level 0.05,}
+\CommentTok{# hence reject null hypothesis and conclude that there is strong evidence}
+\CommentTok{# convincing that the majority (> 0.5) of American adults believe in evolution.}
+
+\CommentTok{# There is almost 0% chance of obtaining a random sample of 1,983 Americans where 60% or more believe in evolution, if in fact 50% of Americans believe }
+\CommentTok{# in evolution.}
+\KeywordTok{ans}\NormalTok{(success_failure, se, z, pvalue)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## TRUE
+## 0.01100131
+## 9.089829
+## 4.959725e-20
+\end{verbatim}
+
+\hypertarget{simulation-based-inference-for-proportions-and-chi-square-testing}{%
+\section*{Simulation Based Inference for Proportions and Chi-Square Testing}\label{simulation-based-inference-for-proportions-and-chi-square-testing}}
+\addcontentsline{toc}{section}{Simulation Based Inference for Proportions and Chi-Square Testing}
+
+\bibliography{book.bib}
+
+
+\end{document}

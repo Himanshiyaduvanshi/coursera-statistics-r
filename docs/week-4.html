@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Week 4 | Statistics with R</title>
+  <meta name="description" content="Notes and assignments for the Coursera specialization “Statistics with R”." />
+  <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Week 4 | Statistics with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://github.com/cecilialee/coursera-statistics-r" />
+  
+  <meta property="og:description" content="Notes and assignments for the Coursera specialization “Statistics with R”." />
+  <meta name="github-repo" content="seankross/bookdown-start" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Week 4 | Statistics with R" />
+  
+  <meta name="twitter:description" content="Notes and assignments for the Coursera specialization “Statistics with R”." />
+  
+
+<meta name="author" content="Cecilia Lee" />
+
+
+<meta name="date" content="2019-07-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="week-3.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Statistics with R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Syllabus</a></li>
+<li class="part"><span><b>I Inferential Statistics</b></span></li>
+<li class="chapter" data-level="" data-path="week-1.html"><a href="week-1.html"><i class="fa fa-check"></i>Week 1</a><ul>
+<li class="chapter" data-level="" data-path="week-1.html"><a href="week-1.html#central-limit-theorem"><i class="fa fa-check"></i>Central Limit Theorem</a><ul>
+<li class="chapter" data-level="" data-path="week-1.html"><a href="week-1.html#sampling-variability-and-clt"><i class="fa fa-check"></i>Sampling Variability and CLT</a></li>
+<li class="chapter" data-level="" data-path="week-1.html"><a href="week-1.html#exercises"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="week-1.html"><a href="week-1.html#confidence-interval"><i class="fa fa-check"></i>Confidence Interval</a><ul>
+<li class="chapter" data-level="" data-path="week-1.html"><a href="week-1.html#confidence-interval-for-a-mean"><i class="fa fa-check"></i>Confidence Interval (for a Mean)</a></li>
+<li class="chapter" data-level="" data-path="week-1.html"><a href="week-1.html#accuracy-vs-precision"><i class="fa fa-check"></i>Accuracy vs Precision</a></li>
+<li class="chapter" data-level="" data-path="week-1.html"><a href="week-1.html#required-sample-size-for-margin-of-error-me"><i class="fa fa-check"></i>Required Sample Size for Margin of Error (ME)</a></li>
+<li class="chapter" data-level="" data-path="week-1.html"><a href="week-1.html#exercises-1"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="week-2.html"><a href="week-2.html"><i class="fa fa-check"></i>Week 2</a><ul>
+<li class="chapter" data-level="" data-path="week-2.html"><a href="week-2.html#hypothesis-testing"><i class="fa fa-check"></i>Hypothesis Testing</a><ul>
+<li class="chapter" data-level="" data-path="week-2.html"><a href="week-2.html#hypothesis-testing-framework"><i class="fa fa-check"></i>Hypothesis Testing Framework</a></li>
+<li class="chapter" data-level="" data-path="week-2.html"><a href="week-2.html#hypothesis-testing-for-a-mean"><i class="fa fa-check"></i>Hypothesis Testing (for a Mean)</a></li>
+<li class="chapter" data-level="" data-path="week-2.html"><a href="week-2.html#exercises-2"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="week-2.html"><a href="week-2.html#significance"><i class="fa fa-check"></i>Significance</a><ul>
+<li class="chapter" data-level="" data-path="week-2.html"><a href="week-2.html#inference-for-other-estimators"><i class="fa fa-check"></i>Inference for Other Estimators</a></li>
+<li class="chapter" data-level="" data-path="week-2.html"><a href="week-2.html#decision-errors"><i class="fa fa-check"></i>Decision Errors</a></li>
+<li class="chapter" data-level="" data-path="week-2.html"><a href="week-2.html#significance-vs-confidence-level"><i class="fa fa-check"></i>Significance vs Confidence Level</a></li>
+<li class="chapter" data-level="" data-path="week-2.html"><a href="week-2.html#statistical-vs-practical-significance"><i class="fa fa-check"></i>Statistical vs Practical Significance</a></li>
+<li class="chapter" data-level="" data-path="week-2.html"><a href="week-2.html#exercises-3"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html"><i class="fa fa-check"></i>Week 3</a><ul>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#t-distribution"><i class="fa fa-check"></i>T-Distribution</a><ul>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#t-distribution-1"><i class="fa fa-check"></i>T-Distribution</a></li>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#inference-for-a-mean"><i class="fa fa-check"></i>Inference for a Mean</a></li>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#inference-for-comparing-two-independent-means"><i class="fa fa-check"></i>Inference for Comparing Two Independent Means</a></li>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#inference-for-comparing-two-paired-means"><i class="fa fa-check"></i>Inference for Comparing Two Paired Means</a></li>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#power"><i class="fa fa-check"></i>Power</a></li>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#exercises-4"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#anova-and-bootstrapping"><i class="fa fa-check"></i>ANOVA and Bootstrapping</a><ul>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#comparing-more-than-two-means"><i class="fa fa-check"></i>Comparing More Than Two Means</a></li>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#anova"><i class="fa fa-check"></i>ANOVA</a></li>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#conditions-for-anova"><i class="fa fa-check"></i>Conditions for ANOVA</a></li>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#multiple-comparisons"><i class="fa fa-check"></i>Multiple Comparisons</a></li>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#bootstrapping"><i class="fa fa-check"></i>Bootstrapping</a></li>
+<li class="chapter" data-level="" data-path="week-3.html"><a href="week-3.html#exercises-5"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="week-4.html"><a href="week-4.html"><i class="fa fa-check"></i>Week 4</a><ul>
+<li class="chapter" data-level="" data-path="week-4.html"><a href="week-4.html#inference-for-proportions"><i class="fa fa-check"></i>Inference for Proportions</a><ul>
+<li class="chapter" data-level="" data-path="week-4.html"><a href="week-4.html#sampling-variability-and-clt-for-proportions"><i class="fa fa-check"></i>Sampling Variability and CLT for Proportions</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="week-4.html"><a href="week-4.html#simulation-based-inference-for-proportions-and-chi-square-testing"><i class="fa fa-check"></i>Simulation Based Inference for Proportions and Chi-Square Testing</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Statistics with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="week-4" class="section level1 unnumbered">
+<h1>Week 4</h1>
+<div id="inference-for-proportions" class="section level2 unnumbered">
+<h2>Inference for Proportions</h2>
+<ul>
+<li>Inference for proportions works with <strong>categorical variables</strong>.</li>
+<li>One categorical variable
+<ul>
+<li>Two levels: success-failure</li>
+<li>More than two levels</li>
+</ul></li>
+<li>Two categorical variables
+<ul>
+<li>Two levels: success-failture</li>
+<li>More than two levels</li>
+</ul></li>
+</ul>
+<div id="sampling-variability-and-clt-for-proportions" class="section level3 unnumbered">
+<h3>Sampling Variability and CLT for Proportions</h3>
+<div id="central-limit-theorem-for-a-proportion" class="section level4 unnumbered">
+<h4>Central Limit Theorem for a Proportion</h4>
+<div id="central-limit-theorem-for-a-proportion-1" class="section level5 unnumbered">
+<h5>Central Limit Theorem for a Proportion</h5>
+<ul>
+<li>When observations are independent and the sample size is sufficiently large, the sample proportion <span class="math inline">\(\hat{p}\)</span> will tend to follow a normal distribution with the following mean and standard error.</li>
+</ul>
+<p><span class="math display">\[
+\mu_{\hat{p}} = p
+\]</span></p>
+<p><span class="math display">\[
+SE_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}}
+\]</span></p>
+</div>
+<div id="conditions-for-central-limit-theorem-for-a-proportion" class="section level5 unnumbered">
+<h5>Conditions for Central Limit Theorem for a Proportion</h5>
+<ol style="list-style-type: decimal">
+<li>Independence</li>
+<li><strong>Success-Failure Condition</strong>: The sample size should be sufficiently large with <span class="math inline">\(np \ge 10\)</span> and <span class="math inline">\(n(1-p) \ge 10\)</span>.</li>
+</ol>
+<ul>
+<li>If the success-failure condition is not met:
+<ul>
+<li>The center of the sampling distribution will still be around the true population proportion.</li>
+<li>The spread of the sampling distribution can still be approximated using the same formula for the standard error.</li>
+<li>The shape of the distribution will depend on whether the true population proportion <span class="math inline">\(p\)</span> is closer to 0 or closer to 1.</li>
+</ul></li>
+</ul>
+<p><strong>Example</strong></p>
+<ul>
+<li>90% of all plant species are classified as angiosperms. These are flowering plants.</li>
+<li>If you were to randomly sample 200 plants from the list of all known plant species, what is the probability that at least 95% of the plants in your sample will be flowering plants?</li>
+</ul>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb212-1" data-line-number="1">p =<span class="st"> </span><span class="fl">0.9</span></a>
+<a class="sourceLine" id="cb212-2" data-line-number="2">n =<span class="st"> </span><span class="dv">200</span></a>
+<a class="sourceLine" id="cb212-3" data-line-number="3"><span class="co"># P(p_hat &gt; 0.95)?</span></a>
+<a class="sourceLine" id="cb212-4" data-line-number="4">p_hat =<span class="st"> </span><span class="fl">0.95</span></a></code></pre></div>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb213-1" data-line-number="1"><span class="co"># Check the conditions:</span></a>
+<a class="sourceLine" id="cb213-2" data-line-number="2"><span class="co"># 1. Random sampled + 10% of all plants -&gt; Independent </span></a>
+<a class="sourceLine" id="cb213-3" data-line-number="3"><span class="co"># 2. Success-failure condition</span></a>
+<a class="sourceLine" id="cb213-4" data-line-number="4"><span class="kw">ans</span>(<span class="dt">n_success =</span> n <span class="op">*</span><span class="st"> </span><span class="fl">0.9</span>, <span class="dt">n_failture =</span> n <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="fl">-0.9</span>))</a></code></pre></div>
+<pre><code>## 180
+## 20</code></pre>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb215-1" data-line-number="1">se =<span class="st"> </span><span class="kw">sqrt</span>(p <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>p) <span class="op">/</span><span class="st"> </span>n)</a>
+<a class="sourceLine" id="cb215-2" data-line-number="2">z =<span class="st"> </span>(p_hat <span class="op">-</span><span class="st"> </span>p) <span class="op">/</span><span class="st"> </span>se</a>
+<a class="sourceLine" id="cb215-3" data-line-number="3">prob =<span class="st"> </span><span class="kw">pnorm</span>(z, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb215-4" data-line-number="4"><span class="kw">ans</span>(se, z, prob)</a></code></pre></div>
+<pre><code>## 0.0212132
+## 2.357023
+## 0.009211063</code></pre>
+<ul>
+<li>If you were to randomly sample 200 plants from the list of all known plant species, would it be considered unusual if 87.5% of the plants in a random sample of 200 were angiosperms?</li>
+</ul>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb217-1" data-line-number="1"><span class="co"># 0.875 is within 2 se from the sample mean,</span></a>
+<a class="sourceLine" id="cb217-2" data-line-number="2"><span class="co"># hence it is not unusual.</span></a>
+<a class="sourceLine" id="cb217-3" data-line-number="3">p_hat =<span class="st"> </span><span class="fl">0.875</span></a>
+<a class="sourceLine" id="cb217-4" data-line-number="4">z =<span class="st"> </span>(p_hat <span class="op">-</span><span class="st"> </span>p) <span class="op">/</span><span class="st"> </span>se</a>
+<a class="sourceLine" id="cb217-5" data-line-number="5"><span class="kw">ans</span>(z)</a></code></pre></div>
+<pre><code>## -1.178511</code></pre>
+<ul>
+<li>What would you expect the shape of the sampling distribution of percentages of angiosperms in random samples of 50 plants to look like? (Remember, 90% of all plants species are classified as angiosperms.)</li>
+</ul>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb219-1" data-line-number="1"><span class="co"># The success-failture condition does not met</span></a>
+<a class="sourceLine" id="cb219-2" data-line-number="2"><span class="co"># as the number of failure is 5, which is smaller</span></a>
+<a class="sourceLine" id="cb219-3" data-line-number="3"><span class="co"># than 10. The shape of the sampling distribution</span></a>
+<a class="sourceLine" id="cb219-4" data-line-number="4"><span class="co"># will be strongly left skewed as p = 0.9.</span></a>
+<a class="sourceLine" id="cb219-5" data-line-number="5"><span class="kw">ans</span>(<span class="dt">n_success =</span> <span class="dv">50</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.9</span>, <span class="dt">n_failture =</span> <span class="dv">50</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.1</span>)</a></code></pre></div>
+<pre><code>## 45
+## 5</code></pre>
+</div>
+</div>
+<div id="confidence-interval-for-a-proportion" class="section level4 unnumbered">
+<h4>Confidence Interval for a Proportion</h4>
+<div id="confidence-interval-for-a-proportion-1" class="section level5 unnumbered">
+<h5>Confidence Interval for a Proportion</h5>
+<p><span class="math display">\[
+\text{CI}_{p} = \hat{p} \pm z^\star SE_{\hat{p}}
+\]</span></p>
+</div>
+<div id="me-for-a-proportion" class="section level5 unnumbered">
+<h5>ME for a Proportion</h5>
+<p><span class="math display">\[
+\text{ME}_{p} = z^\star \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}
+\]</span></p>
+<ul>
+<li>If we have the value of <span class="math inline">\(\hat{p}\)</span>, we can use that in the calculation of the required sample size.</li>
+<li>If not, use <span class="math inline">\(\hat{p} = 0.5\)</span>. 50-50 is a good guess. It
+gives the most conservative estimate - highest possible sample size.</li>
+</ul>
+<p><strong>Example</strong></p>
+<ul>
+<li>The general social survey found that 571 out of 670, that’s roughly 85% of Americans, answered the question on experiment design correctly.</li>
+<li>We are asked to estimate using a 95% confidence interval, the proportion of all Americans who have good intuition about experiment design.</li>
+</ul>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb221-1" data-line-number="1">n =<span class="st"> </span><span class="dv">670</span></a>
+<a class="sourceLine" id="cb221-2" data-line-number="2">p =<span class="st"> </span><span class="dv">571</span><span class="op">/</span><span class="dv">670</span></a>
+<a class="sourceLine" id="cb221-3" data-line-number="3">se =<span class="st"> </span><span class="kw">sqrt</span>(p <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>p) <span class="op">/</span><span class="st"> </span>n)</a>
+<a class="sourceLine" id="cb221-4" data-line-number="4">me =<span class="st"> </span><span class="fl">1.96</span> <span class="op">*</span><span class="st"> </span>se</a>
+<a class="sourceLine" id="cb221-5" data-line-number="5">ci =<span class="st"> </span><span class="kw">c</span>(p <span class="op">-</span><span class="st"> </span>me, p <span class="op">+</span><span class="st"> </span>me)</a>
+<a class="sourceLine" id="cb221-6" data-line-number="6"><span class="co"># We are 95% confident that 82.5% to 88.9% of all Americans</span></a>
+<a class="sourceLine" id="cb221-7" data-line-number="7"><span class="co"># have good intuition about experimental design.</span></a>
+<a class="sourceLine" id="cb221-8" data-line-number="8"><span class="kw">ans</span>(p, se, me, ci)</a></code></pre></div>
+<pre><code>## 0.8522388
+## 0.01370956
+## 0.02687073
+## 0.8253681
+## 0.8791095</code></pre>
+<ul>
+<li>The margin of error for this previous confidence interval was 2.7%. If, for a new confidence interval based on a new sample, we wanted to reduce the margin of error to 1% while keeping the confidence level the same. At least how many respondents should we sample?</li>
+</ul>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb223-1" data-line-number="1"><span class="co"># me = z * se</span></a>
+<a class="sourceLine" id="cb223-2" data-line-number="2"><span class="co"># me = z * sqrt(p * (1 - p) / n)</span></a>
+<a class="sourceLine" id="cb223-3" data-line-number="3"><span class="co"># n = (p * (1 - p)) / (me / z)^2</span></a>
+<a class="sourceLine" id="cb223-4" data-line-number="4"><span class="kw">ans</span>(<span class="kw">ceiling</span>(p <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p) <span class="op">/</span><span class="st"> </span>(<span class="fl">0.01</span> <span class="op">/</span><span class="st"> </span><span class="fl">1.96</span>)<span class="op">^</span><span class="dv">2</span>))</a></code></pre></div>
+<pre><code>## 4838</code></pre>
+<ul>
+<li>If we wanted to estimate the percentage of Data Analysis and Statistical Inference students who have good intuition about experimental design using a 95% confidence interval and a margin of error no larger than 3%, at least how many students would we need to sample?</li>
+</ul>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb225-1" data-line-number="1"><span class="co"># me = z * sqrt(p * (1 - p) / n)</span></a>
+<a class="sourceLine" id="cb225-2" data-line-number="2"><span class="co"># n = (p * (1 - p)) / (me / z)^2</span></a>
+<a class="sourceLine" id="cb225-3" data-line-number="3">n =<span class="st"> </span>(<span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span><span class="fl">0.5</span>) <span class="op">/</span><span class="st"> </span>(<span class="fl">0.03</span> <span class="op">/</span><span class="st"> </span><span class="fl">1.96</span>)<span class="op">^</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb225-4" data-line-number="4"><span class="kw">ans</span>(<span class="kw">ceiling</span>(n))</a></code></pre></div>
+<pre><code>## 1068</code></pre>
+</div>
+</div>
+<div id="hypothesis-test-for-a-proportion" class="section level4 unnumbered">
+<h4>Hypothesis Test for a Proportion</h4>
+<div id="hypothesis-testing-for-a-single-proportion" class="section level5 unnumbered">
+<h5>Hypothesis Testing for a Single Proportion</h5>
+<p><span class="math display">\[
+H_0: p = \text{null value}\\
+H_A: p &lt; or &gt; or\ne \text{null value}
+\]</span>
+<strong>Example</strong></p>
+<ul>
+<li>A 2013 Pew Research poll found that 60% of 1,983 randomly sampled American adults believe in evolution. Does this provide convincing evidence that majority of Americans believe in evolution?</li>
+</ul>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb227-1" data-line-number="1">n =<span class="st"> </span><span class="dv">1983</span></a>
+<a class="sourceLine" id="cb227-2" data-line-number="2">p =<span class="st"> </span><span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb227-3" data-line-number="3">p_hat =<span class="st"> </span><span class="fl">0.6</span></a>
+<a class="sourceLine" id="cb227-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb227-5" data-line-number="5"><span class="co"># Randomly sampled + n &lt; 10% of population -&gt; independent</span></a>
+<a class="sourceLine" id="cb227-6" data-line-number="6"><span class="co"># Success-failure condition calculate with expected p (the null p) -&gt; true</span></a>
+<a class="sourceLine" id="cb227-7" data-line-number="7">success_failure =<span class="st"> </span>(n <span class="op">*</span><span class="st"> </span>p) <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span> <span class="op">&amp;</span><span class="st"> </span>(n <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p)) <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb227-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb227-9" data-line-number="9"><span class="co"># H0: p = 0.5</span></a>
+<a class="sourceLine" id="cb227-10" data-line-number="10"><span class="co"># HA: p &gt; 0.5</span></a>
+<a class="sourceLine" id="cb227-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb227-12" data-line-number="12">se =<span class="st"> </span><span class="kw">sqrt</span>(p_hat <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>p_hat) <span class="op">/</span><span class="st"> </span>n)</a>
+<a class="sourceLine" id="cb227-13" data-line-number="13">z =<span class="st"> </span>(p_hat <span class="op">-</span><span class="st"> </span>p) <span class="op">/</span><span class="st"> </span>se</a>
+<a class="sourceLine" id="cb227-14" data-line-number="14">pvalue =<span class="st"> </span><span class="kw">pnorm</span>(z, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb227-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb227-16" data-line-number="16"><span class="co"># The p-value is significantly smaller than the significance level 0.05,</span></a>
+<a class="sourceLine" id="cb227-17" data-line-number="17"><span class="co"># hence reject null hypothesis and conclude that there is strong evidence</span></a>
+<a class="sourceLine" id="cb227-18" data-line-number="18"><span class="co"># convincing that the majority (&gt; 0.5) of American adults believe in evolution.</span></a>
+<a class="sourceLine" id="cb227-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb227-20" data-line-number="20"><span class="co"># There is almost 0% chance of obtaining a random sample of 1,983 Americans where 60% or more believe in evolution, if in fact 50% of Americans believe </span></a>
+<a class="sourceLine" id="cb227-21" data-line-number="21"><span class="co"># in evolution.</span></a>
+<a class="sourceLine" id="cb227-22" data-line-number="22"><span class="kw">ans</span>(success_failure, se, z, pvalue)</a></code></pre></div>
+<pre><code>## TRUE
+## 0.01100131
+## 9.089829
+## 4.959725e-20</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="simulation-based-inference-for-proportions-and-chi-square-testing" class="section level2 unnumbered">
+<h2>Simulation Based Inference for Proportions and Chi-Square Testing</h2>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="week-3.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
