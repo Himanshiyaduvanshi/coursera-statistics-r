@@ -177,5 +177,8 @@ pvalue = pnorm(z, lower.tail = FALSE)
 ans(success_failure, se, z, pvalue)
 ```
 
+#### Estimating the Difference Between Two Proportions {-}
+
+- To estimate the difference between two proportions, we label one of our categorical variables the **explanatory variable** and the other one our **response variable**.
 
 ## Simulation Based Inference for Proportions and Chi-Square Testing {-}
