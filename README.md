@@ -1,5 +1,7 @@
 # Statistics with R
 
+https://cecilialee.github.io/coursera-statistics-r
+
 https://www.coursera.org/specializations/statistics
 
 1. Introduction to Probability and Data
