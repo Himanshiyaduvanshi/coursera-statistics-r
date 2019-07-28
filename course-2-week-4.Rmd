@@ -7,33 +7,35 @@ source('utils.R')
 ## Inference for Proportions {-}
 
 - Inference for proportions works with **categorical variables**.
-- One categorical variable
-  - Two levels: success-failure
-  - More than two levels
-- Two categorical variables
-  - Two levels: success-failture
-  - More than two levels
-    
+  - One categorical variable
+    - Two levels: success-failure
+    - More than two levels
+  - Two categorical variables
+    - Two levels: success-failture
+    - More than two levels
+
 ### Sampling Variability and CLT for Proportions {-}
 
 #### Central Limit Theorem for a Proportion {-}
 
-##### Central Limit Theorem for a Proportion {-}
-
 - When observations are independent and the sample size is sufficiently large, the sample proportion $\hat{p}$ will tend to follow a normal distribution with the following mean and standard error.
 
-$$
-\mu_{\hat{p}} = p
-$$
+##### Mean for a Proportion {-}
 
 $$
-SE_{\hat{p}} = \sqrt{\frac{p(1-p)}{n}}
+\mu = p
+$$
+
+##### Standard Error for a Proportion {-}
+
+$$
+SE = \sqrt{\frac{p(1-p)}{n}}
 $$
 
 ##### Conditions for Central Limit Theorem for a Proportion {-}
 
-1. Independence
-2. **Success-Failure Condition**: The sample size should be sufficiently large with $np \ge 10$ and $n(1-p) \ge 10$.
+- Independence
+- **Success-Failure Condition**: The sample size should be sufficiently large with $np \ge 10$ and $n(1-p) \ge 10$.
 
 
 - If the success-failure condition is not met:
@@ -78,7 +80,7 @@ z = (p_hat - p) / se
 ans(z)
 ```
 
-* What would you expect the shape of the sampling distribution of percentages of angiosperms in random samples of 50 plants to look like? (Remember, 90% of all plants species are classified as angiosperms.)
+- What would you expect the shape of the sampling distribution of percentages of angiosperms in random samples of 50 plants to look like? (Remember, 90% of all plants species are classified as angiosperms.)
 
 ```{r}
 # The success-failture condition does not met
@@ -93,13 +95,13 @@ ans(n_success = 50 * 0.9, n_failture = 50 * 0.1)
 ##### Confidence Interval for a Proportion {-}
 
 $$
-\text{CI}_{p} = \hat{p} \pm z^\star SE_{\hat{p}}
+\text{CI} = \hat{p} \pm z^\star SE_{\hat{p}}
 $$
 
 ##### ME for a Proportion {-}
 
 $$
-\text{ME}_{p} = z^\star \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}
+\text{ME} = z^\star \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}
 $$
 
 - If we have the value of $\hat{p}$, we can use that in the calculation of the required sample size.
@@ -142,7 +144,7 @@ ans(ceiling(n))
 
 #### Hypothesis Test for a Proportion {-}
 
-##### Hypothesis Testing for a Single Proportion {-}
+##### Hypothesis Testing for a Proportion {-}
 
 $$
 H_0: p = \text{null value}\\
@@ -180,5 +182,66 @@ ans(success_failure, se, z, pvalue)
 #### Estimating the Difference Between Two Proportions {-}
 
 - To estimate the difference between two proportions, we label one of our categorical variables the **explanatory variable** and the other one our **response variable**.
+
+##### Standard Error for the Difference between Two Proportions {-}
+
+$$
+SE = \sqrt{
+\frac{\hat{p}_1(1-\hat{p}_1)}{n_1} +
+\frac{\hat{p}_2(1-\hat{p}_2)}{n_2}
+}
+$$
+
+##### Confidence Interval for the Difference between Two Proportions {-}
+
+$$
+\text{CI} = (\hat{p}_1 - \hat{p}_2) \pm z^\star SE_{(\hat{p}_1 - \hat{p}_2)}
+$$
+
+##### Conditions for Comparing two Independent Proportions {-}
+
+- Independence
+  - Within groups
+    - Random sample / assignment
+    - If sampling without replacement, n < 10% of population
+  - Between groups
+    - The two groups must be independent of each other (non-paired)
+- Success-failure condition
+  - Each sample should meet the success-failure condition
+
+**Example**
+
+- How do Coursera students and the American public at large compare with respect to their views on laws banning possession of handguns?
+
+```{r echo=FALSE}
+data.frame(
+  group = c('US', 'Coursera'),
+  suc = c(257, 59),
+  n = c(1028, 84),
+  p_hat = c(0.25, 0.71)
+) %>% kable()
+```
+
+```{r}
+p_c = 0.71
+n_c = 84
+
+p_us = 0.25
+n_us = 1028
+
+se = sqrt(p_c*(1-p_c)/n_c + p_us*(1-p_us)/n_us)
+
+p = p_c - p_us
+ci = c(p - 1.96 * se, p + 1.96 * se)
+
+ans(se, p, ci)
+```
+
+- Based on the confidence interval we calculated, should we expect to find a significant difference (at the equivalent significance level) between the population proportions of Coursera students and the American public at large who believe there should be a law banning the possession of handguns?
+
+```{r}
+# In this hypothesis test the null value for the difference between the two population proportions 
+# would be 0, and 0 isn't in the interval, hence we should expect to find a difference.
+```
 
 ## Simulation Based Inference for Proportions and Chi-Square Testing {-}
