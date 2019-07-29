@@ -1,8 +1,8 @@
-# Week 4 {-}
+# Week 4 
 
 
 
-## Inference for Proportions {-}
+## Inference for Proportions 
 
 - Inference for proportions works with **categorical variables**.
   - One categorical variable
@@ -12,25 +12,25 @@
     - Two levels: success-failture
     - More than two levels
 
-### Sampling Variability and CLT for Proportions {-}
+### Sampling Variability and CLT for Proportions 
 
-#### Central Limit Theorem for a Proportion {-}
+#### Central Limit Theorem for a Proportion 
 
 - When observations are independent and the sample size is sufficiently large, the sample proportion $\hat{p}$ will tend to follow a normal distribution with the following mean and standard error.
 
-##### Mean for a Proportion {-}
+#### Mean for a Proportion 
 
 $$
 \mu = p
 $$
 
-##### Standard Error for a Proportion {-}
+#### Standard Error for a Proportion 
 
 $$
 SE = \sqrt{\frac{p(1-p)}{n}}
 $$
 
-##### Conditions for Central Limit Theorem for a Proportion {-}
+#### Conditions for Central Limit Theorem for a Proportion 
 
 - Independence
 - **Success-Failure Condition**: The sample size should be sufficiently large with $np \ge 10$ and $n(1-p) \ge 10$.
@@ -113,15 +113,15 @@ ans(n_success = 50 * 0.9, n_failture = 50 * 0.1)
 ## 5
 ```
 
-#### Confidence Interval for a Proportion {-}
+### Confidence Interval for a Proportion 
 
-##### Confidence Interval for a Proportion {-}
+#### Confidence Interval for a Proportion 
 
 $$
 \text{CI} = \hat{p} \pm z^\star SE_{\hat{p}}
 $$
 
-##### ME for a Proportion {-}
+#### ME for a Proportion 
 
 $$
 \text{ME} = z^\star \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}
@@ -184,9 +184,12 @@ ans(ceiling(n))
 ## 1068
 ```
 
-#### Hypothesis Test for a Proportion {-}
+### Hypothesis Test for a Proportion 
 
-##### Hypothesis Testing for a Proportion {-}
+- When we check the success-failure condition for the convidence interval, we use the **observed proportion**.
+- When we check the success-failure condition for doing a hypothesis test, we use the **expected proportion** (the null proportion).
+
+#### Hypothesis Testing for a Proportion 
 
 $$
 H_0: p = \text{null value}\\
@@ -229,26 +232,26 @@ ans(success_failure, se, z, pvalue)
 ## 4.959725e-20
 ```
 
-#### Estimating the Difference Between Two Proportions {-}
+### Estimating the Difference Between Two Proportions 
 
 - To estimate the difference between two proportions, we label one of our categorical variables the **explanatory variable** and the other one our **response variable**.
 
-##### Standard Error for the Difference between Two Proportions {-}
+#### Standard Error for the Difference between Two Proportions 
 
 $$
 SE = \sqrt{
 \frac{\hat{p}_1(1-\hat{p}_1)}{n_1} +
 \frac{\hat{p}_2(1-\hat{p}_2)}{n_2}
-}
+} 
 $$
 
-##### Confidence Interval for the Difference between Two Proportions {-}
+#### Confidence Interval for the Difference between Two Proportions 
 
 $$
 \text{CI} = (\hat{p}_1 - \hat{p}_2) \pm z^\star SE_{(\hat{p}_1 - \hat{p}_2)}
 $$
 
-##### Conditions for Comparing two Independent Proportions {-}
+#### Conditions for Comparing two Independent Proportions 
 
 - Independence
   - Within groups
@@ -300,4 +303,80 @@ ans(se, p, ci)
 # would be 0, and 0 isn't in the interval, hence we should expect to find a difference.
 ```
 
-## Simulation Based Inference for Proportions and Chi-Square Testing {-}
+### Hypothesis Test for Comparing Two Proportions 
+
+- Recall that when we check the success-failure condition for doing a hypothesis test, we use the **expected proportion** (the null proportion).
+- But for doing a hypothesis test with two proportions, since the null value is $H0: p1 = p2$, we use the **pooled proportion**.
+
+#### Pooled Proportion 
+
+$$
+\begin{align}
+\hat{p}_{pool} &= \frac{\text{total success}}{\text{total }n} \\
+&= \frac{\text{# of success}_1 + \text{# of success}_2}
+{n_1 + n_2}
+\end{align}
+$$
+
+- The success-failure condition is thus $n_1 \hat{p}_{pool} \ge 10$, $n_1 (1 - \hat{p}_{pool}) \ge 10$, $n_2 \hat{p}_{pool} \ge 10$, $n_2 (1 - \hat{p}_{pool}) \ge 10$.
+
+#### Standard Error for Hypothesis Test for Comparing Two Proportions
+
+$$
+SE = \sqrt{
+\frac{\hat{p}_{pool}(1-\hat{p}_{pool})}{n_1} +
+\frac{\hat{p}_{pool}(1-\hat{p}_{pool})}{n_2}
+} 
+$$
+
+**Example**
+
+- Evaluate whether males and females are equally likely to answer "Yes" to the question about whether any of their children have ever been the victim of bullying.
+
+
+group     yes   no   not_sure   total   p_hat
+-------  ----  ---  ---------  ------  ------
+Male       34   52          4      90    0.38
+Female     61   61          0     122    0.50
+
+
+```r
+# H0: p_male = p_female
+# HA: p_male != p_female
+
+p_male = 0.38
+p_female = 0.50
+
+n_male = 90
+n_female = 122
+
+p_pool = (34 + 61) / (n_male + n_female)
+
+conditions = n_male * p_pool >= 10 &
+  n_male * (1 - p_pool) >= 10 &
+  n_female * p_pool >= 10 &
+  n_female * (1 - p_pool) >= 10
+
+p = p_male - p_female
+
+se = sqrt(
+  p_pool*(1-p_pool)/n_male + p_pool*(1-p_pool)/n_female
+)
+
+z = (p - 0) / se
+
+pvalue = pnorm(z) * 2
+
+ans(p_pool, p, se, z, pvalue)
+```
+
+```
+## 0.4481132
+## -0.12
+## 0.06910121
+## -1.736583
+## 0.08246075
+```
+
+
+### Simulation Based Inference for Proportions and Chi-Square Testing 

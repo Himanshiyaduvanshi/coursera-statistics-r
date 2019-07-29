@@ -1,8 +1,8 @@
-# Week 2 {-}
+# Week 2 
 
-## Hypothesis Testing {-}
+## Hypothesis Testing 
 
-### Hypothesis Testing Framework {-}
+### Hypothesis Testing Framework 
 
 * We start with a **null hypothesis (H0)** that represents the status quo.
 * We also have an **alternative hypothesis (HA)** that represents our research question, i.e. what we're testing for.
@@ -12,21 +12,21 @@ simulation or theorectical methods - methods that rely on the CLT.
 hypothesis, we stick with the null hypothesis. If they do, then we reject the null hypothesis in
 favor of the alternative.
 
-### Hypothesis Testing (for a Mean) {-}
+### Hypothesis Testing (for a Mean) 
 
-#### Hypothesis {-}
+#### Hypothesis 
 
 * null - H0 : Ofen either a skeptical perspective or a claim to be tested (=)
 * alternative - HA : Represents an alternative claim under consideration and is often represented by a range of possible parameter values. (<, >, !=)
 * The skeptic will not abandon the H0 unless the evidence in favor of the HA is so strong that she rejects H0 in favor of HA.
 * Hypothesis is always about population parameters, but never about sample statistics.
 
-#### P-Value {-}
+#### P-Value 
 
 * **P(observed or more extreme outcome | H0 true)**
 * We use the test statistic to calculate the p-value, the probability of observing data at least as favorable to the alternative hypothesis as our current data set, if the null hypothesis was true.
-* If the p-value is low (lower than the **significance level** $ \alpha $, which is usually 5%) we say that it would be very unlikely to observe the data if the null hypothesis were true, and hence **reject H0**.
-* If the p-value is high (higher than $ \alpha $) we say that it is likely to observe the data even if the null
+* If the p-value is low (lower than the **significance level** $\alpha$, which is usually 5%) we say that it would be very unlikely to observe the data if the null hypothesis were true, and hence **reject H0**.
+* If the p-value is high (higher than $\alpha$) we say that it is likely to observe the data even if the null
 hypothesis were true, and hence **do not reject H0**.
 
 **Example**
@@ -79,7 +79,7 @@ list(z = z, p_value = p_value)
 # likely to happen simply by chance or sampling variability.
 ```
 
-#### Two-Sided Tests {-}
+####### Two-Sided Tests 
 
 * Often instead of looking for a divergence from the null in a specific direction, we might be interested
 in divergence in any direction.
@@ -118,7 +118,7 @@ list(
 ## [1] 0.418
 ```
 
-#### Step-by-Step {-}
+####### Step-by-Step 
 
 1. Set the **hypotheses**
     * $H_0 : \mu = \text{null value}$
@@ -233,7 +233,7 @@ list(p_value = pnorm(-1.73) * 2)
 # that a random sample of size 144 would yield a sample mean of 16.
 ```
 
-### Exercises {-}
+## Exercises 
 
 OpenIntro Statistics, 3rd edition<br>
 4.17, 4.19, 4.23, 4.25, 4.27
@@ -443,9 +443,9 @@ list(se = se, z = z, required_mean = required_mean)
 ## [1] 28.03402
 ```
 
-## Significance {-}
+## Significance 
 
-### Inference for Other Estimators {-}
+### Inference for Other Estimators 
 
 * Any **nearly normal sampling distributions**
     * Sample mean $\bar{x}$
@@ -457,12 +457,12 @@ list(se = se, z = z, required_mean = required_mean)
     * An unbiased estimate does not naturally over or underestimate the parameter but instead it provides a good estimate. 
     * We know that the sample mean is an example of an unbiased point estimate.
     
-#### Confidence Intervals {-}
+####### Confidence Intervals 
 
 * **Confidence intervals** for nearly normal point estimates
     $$ \text{point estimate} \pm z^{\star} \times SE $$
     
-#### Hypothesis Testing {-}
+####### Hypothesis Testing 
 
 * **Hypothesis testing** for nearly normal point estimates
     $$ Z = \frac{\text{ point estimate } - \text{ null value }}{SE} $$
@@ -523,7 +523,7 @@ list(p = p, z = z, p_value = p_value)
 ## [1] 0
 ```
 
-### Decision Errors {-}
+### Decision Errors 
 
 * **Type I error** ($\alpha$) is rejecting the H0 when H0 is true. (Declaring the defendant guilty when they are actually innocent.)
 * **Type II error** ($\beta$) is failing to reject H0 when HA is true. (Declaring the defendant innocent when they are actually guilty.)
@@ -532,7 +532,7 @@ list(p = p, z = z, p_value = p_value)
 
 * We (almost) never know if H0 or HA is true, but we need to consider all possibilities.
 
-#### Type I Error Rate {-}
+#### Type I Error Rate 
 
 * We reject the null hypothesis when the p-value is less than 0.05 ($\alpha = 0.05$). 
 * This means that, for those cases where the null hypothesis is actually true, we do not want to incorrectly reject it more than 5% of those times.
@@ -544,7 +544,7 @@ $$ P(\text{Type I error } | H_0 \text{ true}) = \alpha $$
 * If Type I Error is dangerous or especially costly, choose a small significance level (e.g. 0.01). Goal: We want to be very cautious about rejecting H0, so we demand very strong evidence favoring HA before we should do so.
 * If Type II Error is relatively more dangerous or much more costly, choose a higher significance level (e.g. 0.10). Goal: We want to be cautious about failing to reject H0 when the null is actually false.
 
-#### Type II Error Rate {-}
+#### Type II Error Rate 
 
 * If the alternative hypothesis is actually true, what is the chance that we make a type two error? In other words, what is the chance that we fail to reject the null hypothesis, even when we should reject it?
 * The answer to this is not obvious. 
@@ -552,7 +552,7 @@ $$ P(\text{Type I error } | H_0 \text{ true}) = \alpha $$
 * In other words, if the true population average is very different from the null value, it will be much easier to detect a difference.
 * Clearly then, $\beta$, the probability of making a type two area depends on our effect size. An **effect size** is defined as the difference between the point estimate and the null value.
 
-### Significance vs Confidence Level {-}
+#### Significance vs Confidence Level 
 
 * Broadly we can say that a significance level and a confidence level are complements of each other.
 * A two sided hypothesis with threshold of $\alpha$ is equivalent to a confidence interval with $CL = 1 - \alpha$.
@@ -560,12 +560,12 @@ $$ P(\text{Type I error } | H_0 \text{ true}) = \alpha $$
 * If H0 is rejected, a confidence interval that agrees with the result of the hypothesis test should not include the null value.
 * If H0 is failed to be rejected, a confidence interval that agrees with the result of the hypothesis test should include the null value.
 
-### Statistical vs Practical Significance {-}
+#### Statistical vs Practical Significance 
 
 * Real differences between the point estimate and the null value are easier to detect with large samples. 
 * However very large samples will result in statistical significance even for tiny differences between the sample mean and the null value or our effect size, even when the difference is not practically significant.
 
-### Exercises  {-}
+## Exercises  
 
 OpenIntro Statistics, 3rd edition<br>
 4.43, 4.45<br>
@@ -701,7 +701,14 @@ anti-depressants.
 
 
 ```r
-# (c)
+ (c)
+```
+
+```
+## function (...)  .Primitive("c")
+```
+
+```r
 # Type 2 error is to declare the anti-depressants to be useless
 # when the truth is they are helping the symptoms.
 ```

@@ -1,7 +1,7 @@
 --- 
 title: "Statistics with R"
 author: "Cecilia Lee"
-date: "2019-07-28"
+date: "2019-07-29"
 bibliography: book.bib
 description: Notes and assignments for the Coursera specialization "Statistics with
   R".

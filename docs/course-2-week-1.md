@@ -1,10 +1,10 @@
-# (PART) Inferential Statistics {-} 
+# (PART) Inferential Statistics {-}
 
-# Week 1 {-}
+# Week 1 
 
-## Central Limit Theorem {-}
+## Central Limit Theorem 
 
-### Sampling Variability and CLT {-}
+### Sampling Variability and CLT 
 
 **Example**
 
@@ -49,7 +49,7 @@ list(p_xbar_greater_3.6 = 1 - pnorm(3.6, mu, se))
 ## [1] 0.1787223
 ```
 
-### Exercises {-}
+## Exercises 
 
 OpenIntro Statistics, 4th edition <br>
 5.1, 5.3, 5.5
@@ -161,9 +161,9 @@ list(se = round(sqrt(0.08 * (1-0.08) / 800), 4))
 # (e) The variability will increase as the sample size decreases.
 ```
 
-## Confidence Interval {-}
+## Confidence Interval 
 
-### Confidence Interval (for a Mean) {-}
+### Confidence Interval (for a Mean) 
 
 $$ ME = z^\star \frac{s}{\sqrt{n}} $$
 
@@ -200,7 +200,7 @@ qnorm((1-0.99)/2)
 ## [1] -2.575829
 ```
 
-### Accuracy vs Precision {-}
+### Accuracy vs Precision 
 
 * Commonly used CI are 90%, 95%, 98%, and 99%.
 * A wider interval (higher CI) indicates a higher probability of capturing the true polulation, which increases the accuracy, but decreases the precision.
@@ -231,7 +231,7 @@ list(
 ## [1] 0.15
 ```
 
-### Required Sample Size for Margin of Error (ME) {-}
+### Required Sample Size for Margin of Error (ME) 
 
 * All else held constant, as sample size increases, the margin of error decreases.
 
@@ -337,7 +337,7 @@ list(ci = c(mu - me, mu + me))
 ## [1] 2.62665 3.77335
 ```
 
-### Exercises {-}
+## Exercises 
 
 OpenIntro Statistics, 4th edition<br>
 5.7, 5.9, 5.11, 5.13

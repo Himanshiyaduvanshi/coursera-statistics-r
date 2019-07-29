@@ -2,9 +2,10 @@ bookdown::gitbook:
   css: style.css
   split_by: chapter
   toc_depth: 4
+  number_sections: false
   config:
     toc:
-      collapse: subsection
+      collapse: section
       before: |
         <li><a href="./">Statistics with R</a></li>
       after: |

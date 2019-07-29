@@ -1,8 +1,8 @@
-# Week 3 {-}
+# Week 3 
 
-## T-Distribution {-}
+## T-Distribution 
 
-### T-Distribution {-}
+### T-Distribution 
 
 * When $\sigma$ is unknown (almost always), use the t-distribution to address
 the uncertainty of the standard error estimate
@@ -14,7 +14,7 @@ the uncertainty of the standard error estimate
 * One parameter: **degrees of freedom (df)** - determines the thickness of tails (normal distribution has two parameters: mean and SD)
 * When degrees of freedom increases, the shape of the t-distribution approaches the normal distribution
 
-#### T-Score {-}
+#### T-Score 
 
 $$
 T = \frac{obs-null}{SE}
@@ -48,9 +48,9 @@ pt(2, df = 10, lower.tail = FALSE) * 2
 ## [1] 0.07338803
 ```
 
-### Inference for a Mean {-}
+### Inference for a Mean 
 
-#### Confidence Interval {-}
+#### Confidence Interval 
 
 $$
 \bar{x} \pm t^{\star}_{df} SE_\bar{x} \\
@@ -58,7 +58,7 @@ $$
 \bar{x} \pm t^{\star}_{n-1} \frac{s}{\sqrt{n}}
 $$
 
-#### Degrees of Freedom for T-Statistic for Inference on One Sample Mean {-}
+#### Degrees of Freedom for T-Statistic for Inference on One Sample Mean 
 
 $$
 df = n - 1
@@ -118,9 +118,9 @@ list(t = t, p_value = p_value)
 ## [1] 0.03190849
 ```
 
-### Inference for Comparing Two Independent Means {-}
+### Inference for Comparing Two Independent Means 
 
-#### Confidence Interval {-}
+#### Confidence Interval 
 
 $$
 (\bar{x}_1 - \bar{x}_2) \pm t^{\star}_{df} SE_{(\bar{x}_1 - \bar{x}_2)} \\
@@ -128,13 +128,13 @@ $$
 (\bar{x}_1 - \bar{x}_2) \pm t^{\star}_{min(n_1 - 1, n_2 - 1）} \sqrt{\frac{s^2_1}{n_1} + \frac{s^2_2}{n_2}}
 $$
 
-#### Standard Error of Difference between Two Independent Means {-}
+#### Standard Error of Difference between Two Independent Means 
 
 $$
 SE_{(\bar{x}_1 - \bar{x}_2)} = \sqrt{\frac{s^2_1}{n_1} + \frac{s^2_2}{n_2}}
 $$
 
-#### Degrees of Freedom for T-Statistic for Inference on Difference of Two Means {-}
+#### Degrees of Freedom for T-Statistic for Inference on Difference of Two Means 
 
 $$
 df = min(n_1 - 1, n_2 - 1）
@@ -209,7 +209,7 @@ list(t = t, p_value = p_value)
 ## [1] 0.03575082
 ```
 
-### Inference for Comparing Two Paired Means {-}
+### Inference for Comparing Two Paired Means 
 
 * Same as the inference for a single population mean, only the mean is a difference between the two paired means.
 
@@ -251,7 +251,7 @@ list(se = se, t = t, p_value = p_value)
 ## [1] 0.3868365
 ```
 
-### Power {-}
+### Power 
 
 * $\alpha$ : Type I error - P(reject H0 | H0 true)
 * $\beta$ : Type II error - P(fail to reject H0 | HA true)
@@ -325,7 +325,7 @@ qnorm(0.8)
 ## [1] 0.8416212
 ```
 
-### Exercises {-}
+## Exercises 
 
 OpenIntro Statistics, 3rd edition<br>
 5.1, 5.3, 5.5, 5.13, 5.17, 5.19, 5.21, 5.23, 5.27, 5.31, 5.35, 5.37<br>
@@ -1025,9 +1025,9 @@ s = 94
 # of land per fertilizer.
 ```
 
-## ANOVA and Bootstrapping {-}
+## ANOVA and Bootstrapping 
 
-### Comparing More Than Two Means {-}
+### Comparing More Than Two Means 
 
 * Compare means of 2 groups using a T statistic.
 * Compare means of 3+ groups using a new test called **analysis of variance (ANOVA)** and a new statistic called **F**.
@@ -1042,7 +1042,7 @@ $$ F = \frac{\text{variability between groups}}{\text{variability within groups}
 
 * Obtaining a large F statistic requires that the variability between sample means is greater than the variability within the samples.
 
-### ANOVA {-}
+### ANOVA 
 
 * Variability partitioning.
 
@@ -1051,7 +1051,7 @@ $$ F = \frac{\text{variability between groups}}{\text{variability within groups}
 * **Error** : **Within group variablity**.
 
 
-#### Degrees of Freedom {-}
+#### Degrees of Freedom 
 
 * **Total degress of freedom** is calculated as sample size minus one.
 
@@ -1071,7 +1071,7 @@ $$
 df_E = df_T - df_G
 $$
 
-#### Sum of Squares {-}
+#### Sum of Squares 
 
 * **Sum of squares total (SST)** measures the **total variability** in the response variable. 
 * Calculated very similarly to variance (except not scaled by the sample size).
@@ -1098,7 +1098,7 @@ $$
 SSE = SST - SSG
 $$
 
-#### Mean Squares {-}
+#### Mean Squares 
 
 * Mean sqares is the average variability between and withing groups, calculated as the total variability (sum of squares) scaled by the associated degress of freedom.
 
@@ -1114,7 +1114,7 @@ $$
 MSE = \frac{SSE}{df_E}
 $$
 
-#### F-Statistic {-}
+#### F-Statistic 
 
 * **F-statistic** is the ratio of the average between group and within 
 group variabilities.
@@ -1124,7 +1124,7 @@ $$
 F = \frac{MSG}{MSE}
 $$
 
-#### P-Value {-}
+#### P-Value 
 
 * **P-value** is the probability of at least as large a ratio between the "between" and "within" group variabilities if in fact the means of all groups are equal.
 
@@ -1153,20 +1153,20 @@ pf(q = 21.735, df1 = 3, df2 = 791, lower.tail = FALSE)
 ## [1] 1.559855e-13
 ```
 
-### Conditions for ANOVA {-}
+### Conditions for ANOVA 
 
-* (1) **Independence**
+* **Independence**
   * Within groups: sampled observations must be independent.
   * Random sample / assignment
   * Each $n_j$ less than 10% of respective population
   * Between groups: the groups must be independent of each other (non-paired).
   * Carefully consider whether the groups may be dependent -> repeated measures anova
-* (2) **Approximate normality**: distribution should be nearly normal within each group.
+* **Approximate normality**: distribution should be nearly normal within each group.
   * Especially important when sample sizes are small.
-* (3) **Equal variance**: groups should have roughly equal variability.
+* **Equal variance**: groups should have roughly equal variability.
   * Especially important when sample sizes differ between groups.
 
-### Multiple Comparisons {-}
+### Multiple Comparisons 
 
 * Which means are different?
 
@@ -1282,7 +1282,7 @@ list(se = se, t = t, p_value = p_value)
 ## [1] 1.09828e-07
 ```
 
-### Bootstrapping {-}
+### Bootstrapping 
 
 * Take a bootstrap sample - a random sample taken **with replacement** from **the original sample**, of **the same size** as the original sample.
 * Calculate the bootstrap statistic - a statistic such as mean, median, proportion, etc. computed on the bootstrap samples.
@@ -1297,7 +1297,7 @@ list(se = se, t = t, p_value = p_value)
 * If the bootstrap distribution is extremely skewed or sparse, the bootstrap interval might be unreliable.
 * A representative sample is still required - if the sample is biased, the estimates resulting from this sample will also be biased.
 
-### Exercises {-}
+## Exercises 
 
 OpenIntro Statistics, 3rd edition<br>
 5.41, 5.43, 5.45, 5.47, 5.49, 5.51
