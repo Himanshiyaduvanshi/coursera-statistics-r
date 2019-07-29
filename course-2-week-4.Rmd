@@ -319,4 +319,4 @@ ans(p_pool, p, se, z, pvalue)
 ```
 
 
-### Simulation Based Inference for Proportions and Chi-Square Testing 
+## Simulation Based Inference for Proportions and Chi-Square Testing 
