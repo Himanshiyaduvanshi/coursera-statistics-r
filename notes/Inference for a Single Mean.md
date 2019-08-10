@@ -98,3 +98,4 @@ Two-sized test
 ```r
 p_value = pt(T, df, lower.tail) * 2
 ```
+

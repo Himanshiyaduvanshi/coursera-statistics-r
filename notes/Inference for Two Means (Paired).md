@@ -59,7 +59,7 @@ $$
 - Generally the value of $t^\star_{df}$ is slightly larger than what we would get under the normal model with $z^\star$.- The larger the $df$, the closer the t-distribution is to the normal distribution.
 - When the $df$ is about 30 or more, the t-distribution is nearly indistinguishable from the normal distribution.
 
-#### Confidence Interval
+#### Confidence Interval 
 
 **Critical T-Score** $t^\star_{df}$
 

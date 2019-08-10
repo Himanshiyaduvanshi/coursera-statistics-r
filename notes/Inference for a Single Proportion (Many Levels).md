@@ -41,12 +41,16 @@
 
 #### Parameters
 
+![image-20190810161512876](/Users/cecilia/Dropbox/dropbox/repos/github/coursera-statistics-r/notes/images/image-20190810161512876.png)
+
 **Degrees of Freedom** $df$
 $$
 df = k - 1
 $$
 
+- $k$ is the number of levels / bins.
 - To determine if the calculated $\chi^2$ statistic is considered unusally high or not we need to describe its distribution.
+- As the degrees of freedom increases: the distribution becomes more symmetric, the center moves to the right, and the variability inflates.
 
 #### Goodness-of-Fit Test (Hypothesis Test)
 
@@ -72,6 +76,15 @@ $$
 $$
 \chi^2 = \sum^k_{i=1} \frac{(O_i-E_i)^2}{E_i}
 $$
+
+- $O$ : Observed counts.
+- $E$ : Expected counts.
+- In general, the expected counts are determined by:
+  - Identifying the null proportion associated with each bin.
+  - Multiplying each null proportion by the total count to obtain the expected counts.
+- Squaring each standardized difference before adding them together does two things:
+  - Any standardized difference that is squared will now be positive.
+  - Differences that already look unusual will become much larger after being squared.
 
 **P-Value**
 
