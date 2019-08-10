@@ -1,5 +1,3 @@
-
-
 # Inference for a Single Proportion (Two Levels)
 
 ## Definition
@@ -133,6 +131,7 @@ p_value = pnorm(Z, lower.tail) * 2
 
 - When sample size is too small, the success-failure condition is not met. Hence, we cannot rely on the central limit theorem to do our inference.
 - Under such circumstance, we can use simulation-based inference.
+- Roughly 10,000 seems sufficient.
 
 ```r
 library(statsr)
@@ -141,5 +140,16 @@ inference(
     method = 'simulation', null = 0.5, 
     success, alternative
 )
+```
+
+- We can compute the exact p-value using the binomial model.
+
+$$
+P(k \text{ successes}) = {n \choose k} p^k (1-p)^{n-k} 
+= \frac{n!}{k!(n-k)!} p^k (1-p)^{n-k}
+$$
+
+```
+dbinom(k, n, p)
 ```
 

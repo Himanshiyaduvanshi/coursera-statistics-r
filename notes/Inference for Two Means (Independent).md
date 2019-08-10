@@ -1,5 +1,3 @@
-
-
 # Inference for Two Means (Independent)
 
 ## Definition

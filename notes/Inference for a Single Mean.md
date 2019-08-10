@@ -1,5 +1,3 @@
-
-
 # Inference for a Single Mean
 
 ## Definition

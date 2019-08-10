@@ -1,5 +1,3 @@
-
-
 # Inference for a Single Proportion (Many Levels)
 
 ## Definition
@@ -78,13 +76,24 @@ $$
 $$
 
 - $O$ : Observed counts.
+
 - $E$ : Expected counts.
+
 - In general, the expected counts are determined by:
+
   - Identifying the null proportion associated with each bin.
   - Multiplying each null proportion by the total count to obtain the expected counts.
+
 - Squaring each standardized difference before adding them together does two things:
+
   - Any standardized difference that is squared will now be positive.
   - Differences that already look unusual will become much larger after being squared.
+
+  ```r
+  sum(mapply(function(o, e) (o-e)^2/e, observed, expected))
+  ```
+
+  
 
 **P-Value**
 

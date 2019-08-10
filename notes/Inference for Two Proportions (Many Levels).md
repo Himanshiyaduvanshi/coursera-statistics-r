@@ -1,10 +1,10 @@
-
-
 # Inference for Two Proportions (Many Levels)
 
 ## Definition
 
 **Population Distribution** 
+
+* The goal is to evaluate whether the response variable is independent of the explanatory variable.
 
 **Sample Distribution** 
 
@@ -49,6 +49,8 @@ $$
 
 #### Parameters
 
+![image-20190810161512876](/Users/cecilia/Dropbox/dropbox/repos/github/coursera-statistics-r/notes/images/image-20190810161512876.png)
+
 **Degrees of Freedom** $df$
 
 $$
@@ -79,11 +81,21 @@ $$
 \chi^2 = \sum^k_{i=1} \frac{(O_i-E_i)^2}{E_i}
 $$
 
+- $O$ : Observed counts.
+
+- $E$ : Expected counts.
+- $k$ : Number of cells.
+
+```r
+sum(mapply(function(o, e) (o-e)^2/e, observed, expected)) 
+```
+
 **P-Value**
 
 - The p-value for a chi-square test is defined as the tail area above the calculated test statistic.
 - Because the test statistic is always positive, a higher test statistic means a higher deviation from the null hypothesis.
 
 ```r
-p_value = pchisq(chi2, df, lower.tail = FALSE)
+p_value = pchisq(chi2, df, lower.tail = FALSE) 
 ```
+
