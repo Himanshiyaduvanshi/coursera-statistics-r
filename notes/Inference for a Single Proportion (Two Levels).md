@@ -130,7 +130,8 @@ p_value = pnorm(Z, lower.tail) * 2
 ## Simulation-Based Inference
 
 - When sample size is too small, the success-failure condition is not met. Hence, we cannot rely on the central limit theorem to do our inference.
-- Under such circumstance, we can use simulation-based inference.
+- Note that the t-distribution is only appropriate to use for means. When sample size isn't sufficiently large, and the parameter of interest is a proportion or a difference between two proportions, we need to use simulation.
+- In hypothesis testing, for one categorical variable, generate simulated samples based on the null hypothesis, and then calculate the number of samples that are at least as extreme as the observed data.
 - Roughly 10,000 seems sufficient.
 
 ```r
