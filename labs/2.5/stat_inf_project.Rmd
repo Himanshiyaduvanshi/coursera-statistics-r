@@ -35,6 +35,29 @@ load("gss.Rdata")
 
 *Describe how the observations in the sample are collected, and the implications of this data collection method on the scope of inference (generalizability / causality). Note that you might will need to look into documentation on the GSS to answer this question. See http://gss.norc.org/ as well as the "More information on the data" section below.*
 
+**Overview**
+
+Since 1972, the General Social Survey (GSS) has been monitoring societal change and studying the growing complexity of American society. The GSS aims to gather data on contemporary American society in order to monitor and explain trends and constants in attitudes, behaviors, and attributes; to examine the structure and functioning of society in general as well as the role played by relevant subgroups; to compare the United States to other societies in order to place American society in comparative perspective and develop cross-national models of human society; and to make high-quality data easily accessible to scholars, students, policy makers, and others, with minimal cost and waiting.
+
+GSS questions cover a diverse range of issues including national spending priorities, marijuana use, crime and punishment, race relations, quality of life, confidence in institutions, and sexual behavior.
+
+**Study Method**
+
+http://gss.norc.org/documents/codebook/GSS_Codebook_intro.pdf
+
+The data come from the General Social Surveys, interviews administered to NORC national samples using a standard questionnaire. 
+
+Each survey from 1972 to 2004 was an independently drawn
+sample of English-speaking persons 18 years of age or over, living in non-institutional arrangements within the United States. Starting in
+2006 Spanish-speakers were added to the target population. Block quota sampling was used in 1972, 1973, and 1974 surveys and for half of
+the 1975 and 1976 surveys. Full probability sampling was employed in half of the 1975 and 1976 surveys and the 1977, 1978, 1980,
+1982-1991, 1993-1998, 2000, 2002, 2004, 2006, 2008, 2010, 2012, 2014, 2016, and 2018 surveys. Also, the 2004, 2006, 2008, 2010, 2012,
+2014, 2016, and 2018 surveys had sub-sampled non-respondents.
+
+**Generalizability**
+
+**Causality**
+
 * * *
 
 ## Part 2: Research question
