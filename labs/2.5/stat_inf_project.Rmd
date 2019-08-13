@@ -51,11 +51,29 @@ Inference of a causal connection can only be done through experiment with random
 
 *Come up with a research question that you want to answer using these data. You should phrase your research question in a way that matches up with the scope of inference your dataset allows for. You are welcomed to create new variables based on existing ones. Along with your research question include a brief discussion (1-2 sentences) as to why this question is of interest to you and/or your audience.*
 
+In 1955, homosexual sex was illegal and homosexuality was understood by psychiatrists to be a mental illness. In 2008, Phyllis and Del were married by San Francisco Mayor Gavin Newsom. Celebrating the newly established right of same-sex marriage, they were the first lesbian couple to marry in San Francisco. There has been a slow and hard-fought battle for the public and legal acceptance of homosexuality. 
+
+1. **Does the GSS data provide evidence that the proportion of American population accepting homosexuality changes over time?** 
+
+Education play the role of promoting tolerance of homosexual sex by teaching support of nonconformity.
+
+2. **Does the GSS data also show evidence on the correlations between attitudes toward homosexuality and education?**
+
 * * *
 
 ## Part 3: Exploratory data analysis
 
 *Perform exploratory data analysis (EDA) that addresses the research question you outlined above. Your EDA should contain numerical summaries and visualizations. Each R output and plot should be accompanied by a brief interpretation.*
+
+Always Wrong 
+Almst Always Wrg  
+Sometimes Wrong 
+Not Wrong At All  
+Other
+
+year
+homosex
+degree
 
 * * *
 
