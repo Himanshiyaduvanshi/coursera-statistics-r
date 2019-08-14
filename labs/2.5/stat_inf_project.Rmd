@@ -15,6 +15,10 @@ output:
 library(ggplot2)
 library(dplyr)
 library(statsr)
+
+library(janitor)
+library(tidyr)
+library(wesanderson)
 ```
 
 ### Load data
@@ -26,8 +30,6 @@ your work.
 ```{r load-data}
 load("gss.Rdata")
 ```
-
-
 
 * * *
 
@@ -74,6 +76,34 @@ Other
 year
 homosex
 degree
+
+```{r}
+data <- gss %>% select(year, homosex, degree) 
+```
+
+```{r}
+data %>% 
+  filter(!is.na(homosex)) %>% 
+  tabyl(year, homosex) %>%
+  adorn_percentages() %>%
+  gather(key, value, -year) %>% 
+  mutate(
+    year = factor(year, ordered = TRUE),
+    key = factor(
+      key, 
+      levels = c(
+        "Always Wrong", "Almst Always Wrg", "Sometimes Wrong", "Other", "Not Wrong At All"
+      ),
+      ordered = TRUE
+    )) %>% 
+  ggplot() + geom_col(aes(x=year,y=value,fill=key)) +
+  theme_minimal() +
+  theme(legend.position = "bottom", axis.text.x = element_text(angle = 90)) +
+  scale_fill_manual(values = wes_palette("Royal2", 5)) +
+  labs(x = "Year", y = "Proportion", fill = "Attitude")
+```
+
+
 
 * * *
 
