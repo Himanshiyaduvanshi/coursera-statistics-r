@@ -24,10 +24,6 @@ library(skimr)
 
 ### Load data
 
-Make sure your data and R Markdown files are in the same directory. When loaded
-your data file will be called `gss`. Delete this note when before you submit 
-your work. 
-
 ```{r load-data}
 load("gss.Rdata")
 ```
@@ -52,7 +48,7 @@ Inference of a causal connection can only be done through experiment with random
 
 In 1955, homosexual sex was illegal and homosexuality was understood by psychiatrists to be a mental illness. In 2008, Phyllis and Del were married by San Francisco Mayor Gavin Newsom. Celebrating the newly established right of same-sex marriage, they were the first lesbian couple to marry in San Francisco. There has been a slow and hard-fought battle for the public and legal acceptance of homosexuality. 
 
-**Does the GSS data provide evidence that the proportion of American population accepting homosexuality changes over time?** 
+**Does the GSS data provide evidence that the proportion of American population accepting homosexuality increases over time?** 
 
 * * *
 
@@ -157,37 +153,22 @@ Both the summry table and the plot above showed a difference between the proport
 
 ## Part 4: Inference
 
-To perform statistical inference to examine whether there are more people accepting homosexuality in 2012 than in 1973, we first determine the method to be used. Since our sample size is large enough, we will perform theoretical-based inference - confidence interval and hypothesis test.
-
-**Confidence Interval**
-
-Before computing 
-
-```{r}
-data %>% 
-  group_by(year) %>% 
-  summarise(n = n()) %>% 
-  kable()
-```
-
-First we check the independence condition. We learnt earlier that the GSS data are collected through random sampling. The sample size in 1973 and 2012 are 1448 and 1239 respectively - definitely smaller than 10% of the American population. Since our date come from two independent random samples, they are are independent within and between the two groups. The independence condition is satisfied.
-
-
+To perform statistical inference to examine whether there are more people accepting homosexuality in 2012 than in 1973, we are estimating the difference between two proportions - proportion of American population accepting homosexuality in 2012 versus proportion of American population accepting homosexuality in 1973. Our point estimate will be the difference between two sample proportions. 
 
 **Hypothesis Test**
 
-We conduct a hypothesis test to examine whether there are more people accepting homosexuality in 2012 than in 1973.
-
-
-
-The null hypothesis states that the proportion of American population accepting homosexuality in 2012 is the same as that in 1973. The alternative hypothesis states that the proportion of American population accepting homosexuality in 2012 is greater than that in 1973.
+We set up our hypothesis as below:
 
 $$
 H_0: p_{2012} = p_{1973}\\
 H_A: p_{2012} > p_{1973}
 $$
 
-Before doing inference, we need to check the conditions. 
+The null hypothesis states that the proportion of American population accepting homosexuality in 2012 is the same as that in 1973. The alternative hypothesis states that the proportion of American population accepting homosexuality in 2012 is greater than that in 1973. We are going to preform a one-sided test.
+
+Before testing, we need to check the conditions. 
+
+First we check the independence condition.
 
 ```{r}
 data %>% 
@@ -196,14 +177,76 @@ data %>%
   kable()
 ```
 
-First we check the independence condition. We learnt earlier that the GSS data are collected through random sampling. The sample size in 1973 and 2012 are 1448 and 1239 respectively - definitely smaller than 10% of the American population. Since our date come from two independent random samples, they are are independent within and between the two groups. The independence condition is satisfied.
+We learnt earlier that the GSS data is collected through random sampling. The sample size in 1973 and 2012 are 1448 and 1239 respectively - definitely smaller than 10% of the American population. Since our date come from two independent random samples, they are are independent within and between the two groups. The independence condition is satisfied.
+
+Next, we check the success-failure condition. Since our null value is 0, $H_0: p_{2012} - p_{1973} = 0$, we need to use the pooled proportion to check the conditions.
 
 ```{r}
-data %>% 
-  tabyl(year, homosex) %>% 
-  kable()
+n_1973 <- data %>% filter(year == 1973) %>% nrow()
+n_2012 <- data %>% filter(year == 2012) %>% nrow()
+accept_1973 <- data %>% filter(year == 1973, homosex == "accept_homosex") %>% nrow()
+accept_2012 <- data %>% filter(year == 2012, homosex == "accept_homosex") %>% nrow()
+
+p_pool <- (accept_1973 + accept_2012) / (n_1973 + n_2012)
+p_pool
 ```
 
-Secondly we check the success-failure condition. The success-failure condition expect to see at least 10 success and 10 failure in the sample and in our sample the condition holds for both groups. The success-failure condition is also met.
+```{r}
+c(
+  n_1973 * p_pool,
+  n_1973 * (1-p_pool),
+  n_2012 * p_pool,
+  n_2012 * (1-p_pool)
+)
+```
 
+The success-failure condition expect to see at least 10 success and 10 failure in the sample and in our sample the condition holds for both groups. The success-failure condition is also met.
 
+Since both the independence and success-failure conditions are met, we can perform theoretical-based inference with hypothesis test. Simulation-based inference is also possible in our case, but with our large sample size, we can stick with theoretical-based inference.
+
+```{r}
+inference(
+  y = homosex, x = as.factor(year), data = data, statistic = 'proportion',
+  type = 'ht', method = 'theoretical', success = 'accept_homosex', null = 0,
+  alternative = 'greater', sig_level = 0.05, order = c('2012', '1973')
+)
+```
+
+The p-value is < 0.0001, much lower than our significance level 0.05. Hence, we reject the null hypothesis and conclude that the GSS data provide strong evidence that the the proportion of American population accepting homosexuality in 2012 is greater than that in 1973.
+
+**Confidence Interval**
+
+For inference with confidence interval, the independence condition is the same as above, but this time we have to check the success-failure condition with the observed proportion instead of the pooled proportion.
+
+```{r}
+p_1973 <- accept_1973 / n_1973
+p_2012 <- accept_2012 / n_2012
+
+c(
+  n_1973 * p_1973,
+  n_1973 * (1-p_1973),
+  n_2012 * p_2012,
+  n_2012 * (1-p_2012)
+)
+```
+
+The success-failure condition expect to see at least 10 success and 10 failure in the sample and in our sample the condition holds for both groups. The success-failure condition is also met.
+
+Since conditions are satisfied, we can also perform inference with confidence interval.
+
+```{r}
+inference(
+  y = homosex, x = as.factor(year), data = data, statistic = 'proportion',
+  type = 'ci', method = 'theoretical', success = 'accept_homosex', 
+  order = c('2012', '1973'), conf_level = 0.95
+)
+```
+
+We are 95% confident that proportion of American population accepting homosexuality in 2012
+is greater than that in 1973 by 30.45% - 44.63%.
+
+Our confidence interval is far away from zero, which agrees with the results of our hypotheis test (p-value < 0.0001).
+
+**Conclusion**
+
+With the inference results reported above, we conclude that the GSS data provide evidence that the proportion of American population accepting homosexuality increases significantly over time.
